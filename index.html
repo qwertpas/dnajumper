@@ -3,152 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gordon Jumper | Robotics Project</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Outfit:wght@300;600;800&display=swap" rel="stylesheet">
+    <title>Powerful Springless Jumping using DNA-structured Transmission</title>
     <style>
-        :root {
-            --bg-primary: #0a0a0f;
-            --bg-secondary: #12121a;
-            --accent: #00ffc8;
-            --accent-dim: #00ffc820;
-            --text: #e8e8ed;
-            --text-dim: #6b6b7a;
-            --border: #2a2a3a;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Outfit', sans-serif;
-            background: var(--bg-primary);
-            color: var(--text);
-            min-height: 100vh;
-            line-height: 1.6;
-        }
-
-        /* Geometric background pattern */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 80%, var(--accent-dim) 0%, transparent 40%),
-                radial-gradient(circle at 80% 20%, #6366f120 0%, transparent 40%),
-                linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
-            z-index: -1;
-        }
-
-        .container {
-            max-width: 1100px;
+            font-family: Georgia, 'Times New Roman', serif;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 2rem;
-        }
-
-        header {
-            padding: 4rem 0 3rem;
-            text-align: center;
-            animation: fadeIn 0.8s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .logo {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-            color: var(--accent);
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
+            padding: 2rem 1rem;
+            line-height: 1.6;
+            color: #222;
+            background: #fff;
         }
 
         h1 {
-            font-size: clamp(2.5rem, 8vw, 4.5rem);
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
         }
 
-        .tagline {
-            font-size: 1.1rem;
-            color: var(--text-dim);
-            font-weight: 300;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .videos-section {
-            margin-top: 4rem;
-        }
-
-        .section-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+        .authors {
+            text-align: center;
             margin-bottom: 2rem;
-            animation: fadeIn 0.8s ease-out 0.2s backwards;
+            color: #444;
         }
 
-        .section-header::before {
-            content: '';
-            width: 40px;
-            height: 2px;
-            background: var(--accent);
+        .teaser {
+            width: 100%;
+            margin: 1.5rem 0;
+        }
+
+        .teaser img {
+            width: 100%;
+            display: block;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #ccc;
+            margin: 2rem 0;
         }
 
         h2 {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
-            font-weight: 400;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
+            font-size: 1.2rem;
+            margin-top: 2rem;
+            margin-bottom: 0.5rem;
         }
 
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 1.5rem;
+        .links {
+            margin: 1.5rem 0;
         }
 
-        .video-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            animation: fadeIn 0.8s ease-out 0.4s backwards;
+        .links a {
+            color: #0066cc;
+            margin-right: 1.5rem;
         }
 
-        .video-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-        }
-
-        .video-wrapper {
+        .video-container {
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            padding-bottom: 56.25%;
+            margin: 1rem 0;
             background: #000;
         }
 
-        .video-wrapper video,
-        .video-wrapper iframe {
+        .video-container video,
+        .video-container iframe {
             position: absolute;
             top: 0;
             left: 0;
@@ -156,143 +75,34 @@
             height: 100%;
             border: none;
         }
-
-        .video-placeholder {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, var(--bg-secondary) 0%, #1a1a2a 100%);
-            color: var(--text-dim);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-        }
-
-        .video-placeholder svg {
-            width: 48px;
-            height: 48px;
-            margin-bottom: 1rem;
-            stroke: var(--accent);
-            opacity: 0.5;
-        }
-
-        .video-info {
-            padding: 1.25rem;
-        }
-
-        .video-title {
-            font-weight: 600;
-            font-size: 1rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .video-date {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            color: var(--text-dim);
-        }
-
-        footer {
-            margin-top: 6rem;
-            padding: 2rem 0;
-            border-top: 1px solid var(--border);
-            text-align: center;
-            animation: fadeIn 0.8s ease-out 0.6s backwards;
-        }
-
-        footer p {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            color: var(--text-dim);
-        }
-
-        footer a {
-            color: var(--accent);
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* Responsive */
-        @media (max-width: 600px) {
-            .container {
-                padding: 1rem;
-            }
-            
-            header {
-                padding: 2rem 0;
-            }
-            
-            .video-grid {
-                grid-template-columns: 1fr;
-            }
-        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="logo">// Robotics Project</div>
-            <h1>Gordon Jumper</h1>
-            <p class="tagline">Project videos and documentation</p>
-        </header>
+    <h1>Powerful Springless Jumping using DNA-structured Transmission</h1>
+    <p class="authors">
+        Christopher Xu<br>
+        Hawkes Lab, UCSB
+    </p>
 
-        <section class="videos-section">
-            <div class="section-header">
-                <h2>Videos</h2>
-            </div>
-            
-            <div class="video-grid">
-                <!-- VIDEO CARD TEMPLATE - Copy and modify as needed -->
-                
-                <!-- Example: Local video file -->
-                <div class="video-card">
-                    <div class="video-wrapper">
-                        <!-- Replace with your video: <video controls src="videos/your-video.mp4"></video> -->
-                        <div class="video-placeholder">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25h-9A2.25 2.25 0 0 0 2.25 7.5v9a2.25 2.25 0 0 0 2.25 2.25Z" />
-                            </svg>
-                            <span>Add video here</span>
-                        </div>
-                    </div>
-                    <div class="video-info">
-                        <div class="video-title">Video Title</div>
-                        <div class="video-date">2026-01-09</div>
-                    </div>
-                </div>
+    <!-- Optional: teaser image strip -->
+    <!-- <div class="teaser"><img src="images/teaser.png" alt="Teaser"></div> -->
 
-                <!-- Example: YouTube embed -->
-                <div class="video-card">
-                    <div class="video-wrapper">
-                        <!-- Replace VIDEO_ID with your YouTube video ID -->
-                        <!-- <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe> -->
-                        <div class="video-placeholder">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25h-9A2.25 2.25 0 0 0 2.25 7.5v9a2.25 2.25 0 0 0 2.25 2.25Z" />
-                            </svg>
-                            <span>Add video here</span>
-                        </div>
-                    </div>
-                    <div class="video-info">
-                        <div class="video-title">Another Video</div>
-                        <div class="video-date">2026-01-09</div>
-                    </div>
-                </div>
+    <hr>
 
-            </div>
-        </section>
+    <!-- <h2>Abstract</h2>
+    <p>
+        Brief description of your project goes here. Explain the mechanism, key results, and contributions.
+    </p>
 
-        <footer>
-            <p>Gordon Jumper &mdash; <a href="https://github.com/YOUR_USERNAME/YOUR_REPO">GitHub</a></p>
-        </footer>
+    <div class="links">
+        <strong>Paper:</strong> <a href="#">[PDF]</a>
+        <strong>Code:</strong> <a href="https://github.com/qwertpas/dnajumper">[GitHub]</a>
+    </div> -->
+
+    <h2>Videos</h2>
+    <div class="video-container">
+        <video controls src="videos/jump8v-trim2.mov"></video>
     </div>
+
 </body>
 </html>
