@@ -12,6 +12,7 @@ Commands:
     V<volts>  - Set voltage (e.g., V0.3)
     VOLT<n>   - Set voltage control mode with nV (e.g., VOLT2)
     VEL<n>    - Set velocity control mode with n rad/s (e.g., VEL20)
+    R         - Load rebound after current/last target reaches and drops 2 rad after 500ms
     H/HOME    - Home to 0 rad at 5 rad/s, then restore previous mode
     PRBS [amp] [bit_ms] [dur_s] - PRBS excitation for sysid (default: 5V, 20ms, 10s)
     STOP/OFF  - Stop motor
@@ -217,7 +218,7 @@ def main():
     print("=" * 50)
     print("Motor Control Terminal")
     print(f"Connecting to {ESP32_IP}:{UDP_PORT}")
-    print("Commands: T<angle>, V<volts>, VOLT<n>, VEL<n>, H, PRBS, STOP, ZERO, STATUS, LOG")
+    print("Commands: T<angle>, V<volts>, VOLT<n>, VEL<n>, R, H, PRBS, STOP, ZERO, STATUS, LOG")
     print("Chains:   v<V1>t<T1>v<V2>t<T2>... (e.g., v4t5v6t15)")
     print("Type 'quit' or 'exit' to exit")
     print("=" * 50)
@@ -263,4 +264,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

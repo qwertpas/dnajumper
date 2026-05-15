@@ -14,6 +14,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from glob import glob
 from os import name as os_name
+from pathlib import Path
 
 import serial
 
@@ -466,6 +467,7 @@ class PlotWindow:
         self.filter_ft = False
         self.zero_ft = [0.0] * len(FT_CHANNELS)
         self.auto_zero_pending = True
+        self.csv_save_dir: str | None = None
         self.display_filters = [
             [NotchFilter(freq_hz) for freq_hz in NOTCH_FREQS] for _ in FT_CHANNELS
         ]
@@ -640,14 +642,16 @@ class PlotWindow:
             return
 
         default_name = f"mindaq_ft_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+        default_path = str(Path(self.csv_save_dir) / default_name) if self.csv_save_dir else default_name
         path, _ = QtWidgets.QFileDialog.getSaveFileName(
             self.win,
             "Save CSV",
-            default_name,
+            default_path,
             "CSV Files (*.csv)",
         )
         if not path:
             return
+        self.csv_save_dir = str(Path(path).parent)
 
         header = ["timestamp_s"]
         header.append("seq")

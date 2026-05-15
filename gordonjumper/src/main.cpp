@@ -186,6 +186,16 @@ bool spinning = false;
 float start_err = 1;
 float set_voltage = 0.2f;
 
+// ---- Rebound action ----
+const float REBOUND_DROP_RAD = 2.0f;
+const uint32_t REBOUND_DELAY_US = 500000;
+bool reboundLoaded = false;
+bool reboundWaiting = false;
+bool haveReachedTarget = false;
+float reboundTarget = 0;
+float reachedTarget = 0;
+uint32_t reachedTime = 0;
+
 // ---- Chained command queue ----
 enum ChainCmdType { CHAIN_VOLTAGE, CHAIN_TARGET };
 struct ChainCmd { ChainCmdType type; float value; };
@@ -193,6 +203,35 @@ const int MAX_CHAIN_LEN = 10;
 ChainCmd chainQueue[MAX_CHAIN_LEN];
 int chainLen = 0;   // Total commands in queue
 int chainIdx = 0;   // Next command to execute
+
+void clearRebound() {
+    reboundLoaded = false;
+    reboundWaiting = false;
+}
+
+void loadRebound(uint32_t now) {
+    reboundTarget = spinning ? target : reachedTarget;
+    reboundLoaded = true;
+    reboundWaiting = !spinning;
+    if (!spinning && !haveReachedTarget) {
+        reachedTarget = target;
+        reachedTime = now;
+        haveReachedTarget = true;
+    }
+}
+
+void startRebound(float currentAngle) {
+    target = constrain(-reboundTarget, -188, 188);
+    start_err = target - currentAngle;
+    spinning = true;
+    chainLen = 0;
+    chainIdx = 0;
+    clearRebound();
+    logStopTime = 0;
+    logging = true;
+    logReady = false;
+    Serial.printf("REBOUND: T%.1f (err %.1f)\n", target, start_err);
+}
 
 // Parse chained command string like "v4t5v6t15" into chainQueue
 // Returns true if valid chain with at least one command parsed
@@ -372,6 +411,7 @@ void loop() {
                 } else if (cmd.type == CHAIN_TARGET) {
                     target = constrain(cmd.value, -188, 188);
                     start_err = target - angle;
+                    haveReachedTarget = false;
                     Serial.printf("CHAIN: T%.1f (err %.1f)\n", target, start_err);
                     chainContinued = true;
                     break;  // Continue spinning to new target
@@ -380,6 +420,15 @@ void loop() {
         }
         
         if (!chainContinued) {
+            if (spinning) {
+                reachedTarget = target;
+                reachedTime = now;
+                haveReachedTarget = true;
+                if (reboundLoaded) {
+                    reboundWaiting = true;
+                }
+            }
+
             // Handle homing completion - restore previous mode, don't hold position
             bool wasHoming = homing;
             if (homing) {
@@ -398,7 +447,7 @@ void loop() {
             }
 
             // When movement ends, schedule logging to stop after 0.1s
-            if (spinning && logging && logStopTime == 0) {
+            if (spinning && logging && logStopTime == 0 && !reboundLoaded) {
                 logStopTime = now + 100000;  // 0.1 seconds after target reached
             }
             spinning = false;
@@ -437,6 +486,15 @@ void loop() {
     if (multi.obs_angular_displacement_.IsFresh()) {
         raw_angle = multi.obs_angular_displacement_.get_reply();
         angle = raw_angle - zero_angle;
+    }
+
+    if (reboundLoaded && reboundWaiting && !spinning && haveReachedTarget &&
+        (int32_t)(now - (reachedTime + REBOUND_DELAY_US)) >= 0) {
+        bool droppedFromPositive = reachedTarget > 0 && angle <= reachedTarget - REBOUND_DROP_RAD;
+        bool droppedFromNegative = reachedTarget < 0 && angle >= reachedTarget + REBOUND_DROP_RAD;
+        if (droppedFromPositive || droppedFromNegative) {
+            startRebound(angle);
+        }
     }
 
     // ---- Logging (circular buffer) ----
@@ -491,6 +549,8 @@ void loop() {
                      !cmd.startsWith("VOLT") && !cmd.startsWith("VEL")) {
                 // Parse as chained command
                 if (parseChain(cmd)) {
+                    clearRebound();
+                    haveReachedTarget = false;
                     // Start logging
                     if (logStartTime == 0) {
                         logStartTime = micros();
@@ -511,6 +571,7 @@ void loop() {
                             target = constrain(c.value, -188, 188);
                             start_err = target - angle;
                             spinning = true;
+                            haveReachedTarget = false;
                             response += "T" + String(c.value, 1) + " ";
                             break;  // Start spinning, remaining commands execute on target reach
                         }
@@ -529,6 +590,8 @@ void loop() {
                 spinning = true;
                 chainLen = 0;  // Clear any pending chain
                 chainIdx = 0;
+                clearRebound();
+                haveReachedTarget = false;
                 
                 // Start logging (only set start time if buffer was cleared)
                 if (logStartTime == 0) {
@@ -540,6 +603,16 @@ void loop() {
                 
                 Serial.printf("TARGET SET %.1f, ERR %.1f (logging)\n", target, start_err);
                 udpReply("TARGET SET " + String(target, 1) + ", ERR " + String(start_err, 1) + " (logging)\n");
+
+            } else if (cmd == "R" || cmd == "REBOUND") {
+                if (spinning || haveReachedTarget) {
+                    loadRebound(now);
+                    String state = reboundWaiting ? "WAITING" : "LOADED";
+                    Serial.printf("REBOUND %s T%.1f\n", state.c_str(), reboundTarget);
+                    udpReply("REBOUND " + state + " T" + String(reboundTarget, 1) + "\n");
+                } else {
+                    udpReply("NO TARGET FOR REBOUND\n");
+                }
 
             } else if(cmd.startsWith("VOLT")) {
                 float val = cmd.substring(4).toFloat();
@@ -571,6 +644,7 @@ void loop() {
                 homing = false;
                 chainLen = 0;  // Clear chain
                 chainIdx = 0;
+                clearRebound();
                 multi.ctrl_volts_.set(com, 0.0f);
                 multi.ctrl_brake_.set(com);
                 comSend();
@@ -579,6 +653,8 @@ void loop() {
             }else if (cmd.startsWith("ZERO") || cmd == "Z") {
                 zero_angle = raw_angle;
                 target = 0;
+                clearRebound();
+                haveReachedTarget = false;
                 Serial.println("ZEROED");
                 udpReply("ZEROED\n");
 
@@ -594,6 +670,8 @@ void loop() {
                 homing = true;
                 chainLen = 0;
                 chainIdx = 0;
+                clearRebound();
+                haveReachedTarget = false;
                 Serial.printf("HOMING from %.1f rad\n", angle);
                 udpReply("HOMING from " + String(angle, 1) + " rad\n");
 
@@ -607,6 +685,7 @@ void loop() {
                     " " + String("MODE:") + modeStr +
                     " " + String("VSET:") + String(set_voltage, 2) +
                     " " + String("VELSET:") + String(set_velocity, 1) +
+                    " " + String("REBOUND:") + String(reboundLoaded ? (reboundWaiting ? "WAITING" : "LOADED") : "0") +
                     " " + String("VBAT:") + String(vbat, 2) +
                     " " + String("VEL:") + String(vel, 1) +
                     " " + String("UART_US:") + String(lastUartTimeUs) +
@@ -661,6 +740,8 @@ void loop() {
                 prbs_v_cmd = 0.0f;
                 prbs_running = true;
                 spinning = false;
+                clearRebound();
+                haveReachedTarget = false;
                 // Start logging (reset buffer for PRBS sysid)
                 logHead = 0;
                 logCount = 0;
