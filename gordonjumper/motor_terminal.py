@@ -13,6 +13,7 @@ Commands:
     VOLT<n>   - Set voltage control mode with nV (e.g., VOLT2)
     VEL<n>    - Set velocity control mode with n rad/s (e.g., VEL20)
     R         - Load rebound after current/last target reaches and drops 2 rad after 500ms
+    RTH<n>    - Set rebound reversal threshold in rad (e.g., RTH1.5)
     H/HOME    - Home to 0 rad at 5 rad/s, then restore previous mode
     PRBS [amp] [bit_ms] [dur_s] - PRBS excitation for sysid (default: 5V, 20ms, 10s)
     STOP/OFF  - Stop motor
@@ -23,6 +24,7 @@ Commands:
 
 Chained Commands:
     v<V1>t<T1>v<V2>t<T2>... - Chain voltage/target commands without braking
+    t<T>r - Move to target, then load rebound (e.g., t29r)
     Example: v4t5v6t15
         - Set voltage to 4V, go to 5 rad
         - On reaching 5 rad, immediately set 6V and continue to 15 rad
@@ -218,8 +220,8 @@ def main():
     print("=" * 50)
     print("Motor Control Terminal")
     print(f"Connecting to {ESP32_IP}:{UDP_PORT}")
-    print("Commands: T<angle>, V<volts>, VOLT<n>, VEL<n>, R, H, PRBS, STOP, ZERO, STATUS, LOG")
-    print("Chains:   v<V1>t<T1>v<V2>t<T2>... (e.g., v4t5v6t15)")
+    print("Commands: T<angle>, V<volts>, VOLT<n>, VEL<n>, R, RTH<n>, H, PRBS, STOP, ZERO, STATUS, LOG")
+    print("Chains:   v<V1>t<T1>v<V2>t<T2>... or t<T>r (e.g., v4t5v6t15, t29r)")
     print("Type 'quit' or 'exit' to exit")
     print("=" * 50)
     

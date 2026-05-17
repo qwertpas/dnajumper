@@ -187,51 +187,23 @@ float start_err = 1;
 float set_voltage = 0.2f;
 
 // ---- Rebound action ----
-const float REBOUND_DROP_RAD = 2.0f;
+float reboundDropRad = 2.0f;
 const uint32_t REBOUND_DELAY_US = 500000;
 bool reboundLoaded = false;
 bool reboundWaiting = false;
 bool haveReachedTarget = false;
 float reboundTarget = 0;
 float reachedTarget = 0;
+int reachedDirection = 0;
 uint32_t reachedTime = 0;
 
 // ---- Chained command queue ----
-enum ChainCmdType { CHAIN_VOLTAGE, CHAIN_TARGET };
+enum ChainCmdType { CHAIN_VOLTAGE, CHAIN_TARGET, CHAIN_REBOUND };
 struct ChainCmd { ChainCmdType type; float value; };
 const int MAX_CHAIN_LEN = 10;
 ChainCmd chainQueue[MAX_CHAIN_LEN];
 int chainLen = 0;   // Total commands in queue
 int chainIdx = 0;   // Next command to execute
-
-void clearRebound() {
-    reboundLoaded = false;
-    reboundWaiting = false;
-}
-
-void loadRebound(uint32_t now) {
-    reboundTarget = spinning ? target : reachedTarget;
-    reboundLoaded = true;
-    reboundWaiting = !spinning;
-    if (!spinning && !haveReachedTarget) {
-        reachedTarget = target;
-        reachedTime = now;
-        haveReachedTarget = true;
-    }
-}
-
-void startRebound(float currentAngle) {
-    target = constrain(-reboundTarget, -188, 188);
-    start_err = target - currentAngle;
-    spinning = true;
-    chainLen = 0;
-    chainIdx = 0;
-    clearRebound();
-    logStopTime = 0;
-    logging = true;
-    logReady = false;
-    Serial.printf("REBOUND: T%.1f (err %.1f)\n", target, start_err);
-}
 
 // Parse chained command string like "v4t5v6t15" into chainQueue
 // Returns true if valid chain with at least one command parsed
@@ -278,6 +250,11 @@ bool parseChain(const String &cmd) {
                 chainLen++;
             }
             pos = numEnd;
+        } else if (c == 'R' || c == 'r') {
+            chainQueue[chainLen].type = CHAIN_REBOUND;
+            chainQueue[chainLen].value = 0;
+            chainLen++;
+            pos++;
         } else {
             pos++;  // Skip unknown characters
         }
@@ -289,6 +266,37 @@ bool parseChain(const String &cmd) {
 enum ControlMode { MODE_VOLTAGE, MODE_VELOCITY };
 ControlMode control_mode = MODE_VOLTAGE;
 float set_velocity = 20.0f;  // rad/s for velocity mode
+
+void clearRebound() {
+    reboundLoaded = false;
+    reboundWaiting = false;
+}
+
+void loadRebound(uint32_t now) {
+    reboundTarget = spinning ? target : reachedTarget;
+    reboundLoaded = true;
+    reboundWaiting = !spinning;
+    if (!spinning && !haveReachedTarget) {
+        reachedTarget = target;
+        reachedDirection = (start_err >= 0) ? 1 : -1;
+        reachedTime = now;
+        haveReachedTarget = true;
+    }
+}
+
+void startRebound(float currentAngle) {
+    target = constrain(-reboundTarget, -188, 188);
+    start_err = target - currentAngle;
+    spinning = true;
+    control_mode = MODE_VOLTAGE;
+    chainLen = 0;
+    chainIdx = 0;
+    clearRebound();
+    logStopTime = 0;
+    logging = true;
+    logReady = false;
+    Serial.printf("REBOUND: T%.1f (err %.1f)\n", target, start_err);
+}
 
 // ---- Homing state ----
 bool homing = false;
@@ -358,6 +366,15 @@ void loop() {
     power.volts_.get(com);
     multi.obs_angular_velocity_.get(com);
     multi.obs_angular_displacement_.get(com);
+
+    if (reboundLoaded && reboundWaiting && !spinning && haveReachedTarget &&
+        (int32_t)(now - (reachedTime + REBOUND_DELAY_US)) >= 0) {
+        bool reversedAfterPositiveMove = reachedDirection > 0 && angle <= reachedTarget - reboundDropRad;
+        bool reversedAfterNegativeMove = reachedDirection < 0 && angle >= reachedTarget + reboundDropRad;
+        if (reversedAfterPositiveMove || reversedAfterNegativeMove) {
+            startRebound(angle);
+        }
+    }
     
     float error = target - angle;
     float current_set_volts = 0;
@@ -415,6 +432,9 @@ void loop() {
                     Serial.printf("CHAIN: T%.1f (err %.1f)\n", target, start_err);
                     chainContinued = true;
                     break;  // Continue spinning to new target
+                } else if (cmd.type == CHAIN_REBOUND) {
+                    loadRebound(now);
+                    Serial.printf("CHAIN: R T%.1f\n", reboundTarget);
                 }
             }
         }
@@ -422,6 +442,7 @@ void loop() {
         if (!chainContinued) {
             if (spinning) {
                 reachedTarget = target;
+                reachedDirection = (start_err >= 0) ? 1 : -1;
                 reachedTime = now;
                 haveReachedTarget = true;
                 if (reboundLoaded) {
@@ -488,15 +509,6 @@ void loop() {
         angle = raw_angle - zero_angle;
     }
 
-    if (reboundLoaded && reboundWaiting && !spinning && haveReachedTarget &&
-        (int32_t)(now - (reachedTime + REBOUND_DELAY_US)) >= 0) {
-        bool droppedFromPositive = reachedTarget > 0 && angle <= reachedTarget - REBOUND_DROP_RAD;
-        bool droppedFromNegative = reachedTarget < 0 && angle >= reachedTarget + REBOUND_DROP_RAD;
-        if (droppedFromPositive || droppedFromNegative) {
-            startRebound(angle);
-        }
-    }
-
     // ---- Logging (circular buffer) ----
     if (logging) {
         logBuffer[logHead].angle = angle;
@@ -543,9 +555,9 @@ void loop() {
                     udpReply("CANCELLED\n");
                 }
             }
-            // ---- Chained command detection (e.g., V4T5V6T15) ----
+            // ---- Chained command detection (e.g., V4T5V6T15, T29R) ----
             else if ((cmd.startsWith("V") || cmd.startsWith("T")) && 
-                     cmd.indexOf('V') >= 0 && cmd.indexOf('T') >= 0 &&
+                     ((cmd.indexOf('V') >= 0 && cmd.indexOf('T') >= 0) || cmd.indexOf('R') >= 0) &&
                      !cmd.startsWith("VOLT") && !cmd.startsWith("VEL")) {
                 // Parse as chained command
                 if (parseChain(cmd)) {
@@ -574,6 +586,9 @@ void loop() {
                             haveReachedTarget = false;
                             response += "T" + String(c.value, 1) + " ";
                             break;  // Start spinning, remaining commands execute on target reach
+                        } else if (c.type == CHAIN_REBOUND) {
+                            loadRebound(now);
+                            response += "R ";
                         }
                     }
                     response += "(logging)\n";
@@ -603,6 +618,12 @@ void loop() {
                 
                 Serial.printf("TARGET SET %.1f, ERR %.1f (logging)\n", target, start_err);
                 udpReply("TARGET SET " + String(target, 1) + ", ERR " + String(start_err, 1) + " (logging)\n");
+
+            } else if (cmd.startsWith("RTH")) {
+                float val = cmd.substring(3).toFloat();
+                reboundDropRad = constrain(val, 0.1f, 20.0f);
+                Serial.printf("REBOUND THRESHOLD %.2f rad\n", reboundDropRad);
+                udpReply("REBOUND THRESHOLD " + String(reboundDropRad, 2) + " rad\n");
 
             } else if (cmd == "R" || cmd == "REBOUND") {
                 if (spinning || haveReachedTarget) {
@@ -686,6 +707,7 @@ void loop() {
                     " " + String("VSET:") + String(set_voltage, 2) +
                     " " + String("VELSET:") + String(set_velocity, 1) +
                     " " + String("REBOUND:") + String(reboundLoaded ? (reboundWaiting ? "WAITING" : "LOADED") : "0") +
+                    " " + String("RTH:") + String(reboundDropRad, 2) +
                     " " + String("VBAT:") + String(vbat, 2) +
                     " " + String("VEL:") + String(vel, 1) +
                     " " + String("UART_US:") + String(lastUartTimeUs) +
