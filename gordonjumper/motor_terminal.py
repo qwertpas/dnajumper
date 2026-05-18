@@ -36,6 +36,7 @@ import struct
 import base64
 import csv
 import sys
+import os
 import numpy as np
 from datetime import datetime
 
@@ -118,6 +119,7 @@ def decode_log_data(base64_data):
 
 def save_csv(samples, filename):
     """Save samples to CSV file."""
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
     with open(filename, 'w', newline='') as f:
         writer = csv.DictWriter(f, fieldnames=['time_us', 'time_ms', 'angle', 'vel', 'vbat', 'set_volts'])
         writer.writeheader()
@@ -165,6 +167,8 @@ def handle_log_command(sock):
         except socket.timeout:
             pass
         return
+
+    os.makedirs(save_dir, exist_ok=True)
     
     # Send Y confirmation to download (and clear)
     sock.sendto(b'Y', (ESP32_IP, UDP_PORT))

@@ -96,12 +96,18 @@ const int TX_PIN = 13; // ESP32 TX → Vertiq RX
 const int RX_PIN = 12; // ESP32 RX → Vertiq TX
 const int MTR_GND = 11;
 const int LED_PIN = 48;
-const int MOTOR_ID = 2; // IQ module address
+const int MOTOR_ID_MIN = 0;
+const int MOTOR_ID_MAX = 16;
+const uint32_t MOTOR_STARTUP_DELAY_MS = 1000;
+const uint32_t MOTOR_RESCAN_MS = 1000;
 
 GenericInterface com; // Use GenericInterface directly for batching
-PowerMonitorClient power(MOTOR_ID);
-BrushlessDriveClient mot(MOTOR_ID);
-MultiTurnAngleControlClient multi(MOTOR_ID);
+PowerMonitorClient *power = nullptr;
+BrushlessDriveClient *mot = nullptr;
+MultiTurnAngleControlClient *multi = nullptr;
+int motor_id = -1;
+bool motor_found = false;
+uint32_t last_motor_scan_ms = 0;
 
 // ---- Wi-Fi SoftAP + UDP ----
 WiFiUDP udp;
@@ -115,30 +121,103 @@ void udpReply(const String &message) {
 }
 
 // Helper to send all bytes in the com TX queue
-void comSend() {
+void comSend(GenericInterface &iface) {
     uint8_t buf[128];
     uint8_t len;
-    if (com.GetTxBytes(buf, len)) {
+    if (iface.GetTxBytes(buf, len)) {
         Serial1.write(buf, len);
+    }
+}
+
+void comSend() {
+    comSend(com);
+}
+
+void comReadClients(GenericInterface &iface, PowerMonitorClient &readPower, MultiTurnAngleControlClient &readMulti) {
+    uint8_t buf[128];
+    uint8_t len;
+    while (Serial1.available()) {
+        len = Serial1.readBytes(buf, min((int)sizeof(buf), Serial1.available()));
+        iface.SetRxBytes(buf, len);
+        
+        uint8_t *packet;
+        uint8_t pLen;
+        while (iface.PeekPacket(&packet, &pLen)) {
+            readMulti.ReadMsg(packet, pLen);
+            readPower.ReadMsg(packet, pLen);
+            iface.DropPacket();
+        }
     }
 }
 
 // Helper to read and parse packets
 void comRead() {
-    uint8_t buf[128];
-    uint8_t len;
+    if (power && multi) {
+        comReadClients(com, *power, *multi);
+    }
+}
+
+bool probeMotorAddress(int id) {
+    GenericInterface probeCom;
+    PowerMonitorClient probePower(id);
+    MultiTurnAngleControlClient probeMulti(id);
+
     while (Serial1.available()) {
-        len = Serial1.readBytes(buf, min((int)sizeof(buf), Serial1.available()));
-        com.SetRxBytes(buf, len);
-        
-        uint8_t *packet;
-        uint8_t pLen;
-        while (com.PeekPacket(&packet, &pLen)) {
-            multi.ReadMsg(packet, pLen);
-            power.ReadMsg(packet, pLen);
-            com.DropPacket();
+        Serial1.read();
+    }
+
+    for (int attempt = 0; attempt < 2; attempt++) {
+        probePower.volts_.get(probeCom);
+        probeMulti.obs_angular_displacement_.get(probeCom);
+        comSend(probeCom);
+
+        uint32_t start = micros();
+        while (micros() - start < 3000) {
+            comReadClients(probeCom, probePower, probeMulti);
+            if (probePower.volts_.IsFresh() || probeMulti.obs_angular_displacement_.IsFresh()) {
+                return true;
+            }
+        }
+        delay(2);
+    }
+
+    return false;
+}
+
+void useMotorAddress(int id, bool found) {
+    delete power;
+    delete mot;
+    delete multi;
+
+    motor_id = found ? id : -1;
+    motor_found = found;
+    power = new PowerMonitorClient(id);
+    mot = new BrushlessDriveClient(id);
+    multi = new MultiTurnAngleControlClient(id);
+}
+
+void scanMotorAddress() {
+    last_motor_scan_ms = millis();
+    Serial.printf("Scanning Vertiq addresses %d..%d\n", MOTOR_ID_MIN, MOTOR_ID_MAX);
+    for (int id = MOTOR_ID_MIN; id <= MOTOR_ID_MAX; id++) {
+        Serial.printf("  probe %d\n", id);
+        if (probeMotorAddress(id)) {
+            useMotorAddress(id, true);
+            Serial.printf("Vertiq found at address %d\n", id);
+            return;
         }
     }
+
+    useMotorAddress(MOTOR_ID_MIN, false);
+    Serial.println("No Vertiq found");
+}
+
+void stopMotor() {
+    if (!motor_found) {
+        return;
+    }
+    multi->ctrl_volts_.set(com, 0.0f);
+    comSend();
 }
 
 // State for LOG command flow
@@ -171,8 +250,9 @@ void setup() {
 
     // ---- Motor UART ----
     Serial1.begin(921600, SERIAL_8N1, RX_PIN, TX_PIN);
-    multi.ctrl_volts_.set(com, 0.0f);
-    comSend();
+    delay(MOTOR_STARTUP_DELAY_MS);
+    scanMotorAddress();
+    stopMotor();
     Serial.println("Motor interface initialized at 921600 baud");
     
     Serial.printf("Log buffer: %lu samples (%lu bytes)\n", LOG_BUFFER_SIZE, LOG_BUFFER_SIZE * sizeof(LogSample));
@@ -361,11 +441,17 @@ void loop() {
     }
     lastLoopTime = now;
     loopcount++;
+
+    if (!motor_found && millis() - last_motor_scan_ms >= MOTOR_RESCAN_MS) {
+        scanMotorAddress();
+        stopMotor();
+    }
     
+    if (motor_found) {
     // ---- Batch read sensors and set control ----
-    power.volts_.get(com);
-    multi.obs_angular_velocity_.get(com);
-    multi.obs_angular_displacement_.get(com);
+    power->volts_.get(com);
+    multi->obs_angular_velocity_.get(com);
+    multi->obs_angular_displacement_.get(com);
 
     if (reboundLoaded && reboundWaiting && !spinning && haveReachedTarget &&
         (int32_t)(now - (reachedTime + REBOUND_DELAY_US)) >= 0) {
@@ -386,8 +472,8 @@ void loop() {
         if ((now_prbs - prbs_start_time) >= prbs_duration_us) {
             prbs_running = false;
             prbs_v_cmd = 0.0f;
-            multi.ctrl_volts_.set(com, 0.0f);
-            multi.ctrl_brake_.set(com);
+            multi->ctrl_volts_.set(com, 0.0f);
+            multi->ctrl_brake_.set(com);
             logging = false;
             logReady = true;
             digitalWrite(LED_PIN, LOW);
@@ -399,7 +485,7 @@ void loop() {
                 prbs_v_cmd = (r & 1u) ? prbs_amplitude : -prbs_amplitude;
             }
             current_set_volts = prbs_v_cmd;
-            multi.ctrl_volts_.set(com, current_set_volts);
+            multi->ctrl_volts_.set(com, current_set_volts);
             digitalWrite(LED_PIN, HIGH);
         }
     }
@@ -407,11 +493,11 @@ void loop() {
     else if(spinning && start_err*error>0) {
         if (control_mode == MODE_VOLTAGE) {
             current_set_volts = (error > 0) ? set_voltage : -set_voltage;
-            multi.ctrl_volts_.set(com, current_set_volts);
+            multi->ctrl_volts_.set(com, current_set_volts);
         } else {
             // Velocity control mode
             float vel_cmd = (error > 0) ? set_velocity : -set_velocity;
-            multi.ctrl_velocity_.set(com, vel_cmd);
+            multi->ctrl_velocity_.set(com, vel_cmd);
         }
         digitalWrite(LED_PIN, HIGH);
     } else {
@@ -461,10 +547,10 @@ void loop() {
             
             if (control_mode == MODE_VELOCITY && !wasHoming) {
                 // Hold position using angle control (but not after homing)
-                multi.ctrl_angle_.set(com, target + zero_angle);
+                multi->ctrl_angle_.set(com, target + zero_angle);
             } else {
-                multi.ctrl_volts_.set(com, 0.0f);
-                multi.ctrl_brake_.set(com);
+                multi->ctrl_volts_.set(com, 0.0f);
+                multi->ctrl_brake_.set(com);
             }
 
             // When movement ends, schedule logging to stop after 0.1s
@@ -493,19 +579,19 @@ void loop() {
     // Wait for replies (with 1.5ms timeout)
     while (micros() - uartStart < 1500) {
         comRead();
-        if (power.volts_.IsFresh() && 
-            multi.obs_angular_velocity_.IsFresh() && 
-            multi.obs_angular_displacement_.IsFresh()) {
+        if (power->volts_.IsFresh() && 
+            multi->obs_angular_velocity_.IsFresh() && 
+            multi->obs_angular_displacement_.IsFresh()) {
             break;
         }
     }
     lastUartTimeUs = micros() - uartStart;
     
     // Get values from entries
-    if (power.volts_.IsFresh()) vbat = power.volts_.get_reply();
-    if (multi.obs_angular_velocity_.IsFresh()) vel = multi.obs_angular_velocity_.get_reply();
-    if (multi.obs_angular_displacement_.IsFresh()) {
-        raw_angle = multi.obs_angular_displacement_.get_reply();
+    if (power->volts_.IsFresh()) vbat = power->volts_.get_reply();
+    if (multi->obs_angular_velocity_.IsFresh()) vel = multi->obs_angular_velocity_.get_reply();
+    if (multi->obs_angular_displacement_.IsFresh()) {
+        raw_angle = multi->obs_angular_displacement_.get_reply();
         angle = raw_angle - zero_angle;
     }
 
@@ -518,6 +604,7 @@ void loop() {
         logBuffer[logHead].time_us = now - logStartTime;
         logHead = (logHead + 1) % LOG_BUFFER_SIZE;
         logCount++;
+    }
     }
 
     // ---- Handle UDP commands ----
@@ -554,6 +641,8 @@ void loop() {
                     awaitingLogConfirm = false;
                     udpReply("CANCELLED\n");
                 }
+            } else if (!motor_found && !(cmd.startsWith("STATUS") || cmd == "S")) {
+                udpReply("NO MOTOR\n");
             }
             // ---- Chained command detection (e.g., V4T5V6T15, T29R) ----
             else if ((cmd.startsWith("V") || cmd.startsWith("T")) && 
@@ -666,8 +755,8 @@ void loop() {
                 chainLen = 0;  // Clear chain
                 chainIdx = 0;
                 clearRebound();
-                multi.ctrl_volts_.set(com, 0.0f);
-                multi.ctrl_brake_.set(com);
+                multi->ctrl_volts_.set(com, 0.0f);
+                multi->ctrl_brake_.set(com);
                 comSend();
                 udpReply("STOPPED\n");
 
@@ -701,6 +790,8 @@ void loop() {
                 udpReply(
                     "STATUS " +
                     String("SPINNING:") + String(spinning ? 1 : 0) +
+                    " " + String("MOTOR:") + String(motor_found ? "FOUND" : "NONE") +
+                    " " + String("MOTOR_ID:") + String(motor_id) +
                     " " + String("TARGET:") + String(target, 1) +
                     " " + String("ANGLE:") + String(angle, 1) +
                     " " + String("MODE:") + modeStr +
