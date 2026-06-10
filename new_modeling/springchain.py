@@ -7,15 +7,27 @@ from scipy.integrate import solve_ivp
 
 
 STRAND_COLORS = ["red", "green", "blue", "orange"]
-motor_stop_angle = 28.0
 
-n = 37  # bottom motor plus n - 1 small disks
-m = 0.0001  # small disk mass
-I = 1.45e-9  # small disk inertia
-k = 100_000.0  # spring stiffness
+n = 36+1  # bottom motor plus n - 1 small disks
+k = 500_000.0  # spring stiffness
 c = 1.0  # spring damping
 l0 = 0.0045  # spring rest length
+
 R = 0.005  # spring attach radius
+m = 0.0001  # spacer disk mass
+I = 1.45e-9  # spacer disk inertia
+
+
+motor_stop_angle = 28 #28
+spacer_thickness = 0.0020 #really 1.2mm thickness but leave some buffer
+spacer_end_height = (l0-spacer_thickness)*n #if end condition is spacer distance, end when disk0 is here
+END_CONDITION = 'motor height'
+# END_CONDITION = 'motor angle'
+
+# R = 0.011  # spring attach radius
+# m = 0.000227  # spacer disk mass
+# I = 11.73e-9  # spacer disk inertia
+# motor_stop_angle = 13
 
 M0 = 0.100  # motor mass
 I0 = 4e-6  # motor inertia
@@ -34,6 +46,8 @@ class Params:
     I0: float = I0
     spring_count: int = 4
     motor_stop_angle: float = motor_stop_angle
+    spacer_end_height: float = spacer_end_height
+    end_condition: str = END_CONDITION
     max_time: float = 0.08
     samples: int = 900
 
@@ -64,24 +78,28 @@ def unpack(y, p):
     return h, theta, h_dot, theta_dot
 
 
-def spring_loads(h, theta, h_dot, theta_dot, p):
+def spring_segment_loads(h, theta, h_dot, theta_dot, p):
     top_h = p.n * p.l0
     upper_h = np.r_[h[1:], top_h]
     upper_theta = np.r_[theta[1:], 0.0]
     upper_h_dot = np.r_[h_dot[1:], 0.0]
     upper_theta_dot = np.r_[theta_dot[1:], 0.0]
 
-    dh = upper_h - h
-    dtheta = upper_theta - theta
-    dh_dot = upper_h_dot - h_dot
-    dtheta_dot = upper_theta_dot - theta_dot
-    spring_len = np.sqrt(np.maximum(dh * dh + 2 * p.R * p.R * (1 - np.cos(dtheta)), 1e-14))
-    spring_len_dot = (dh * dh_dot + p.R * p.R * np.sin(dtheta) * dtheta_dot) / spring_len
+    delta_h = upper_h - h
+    delta_h_dot = upper_h_dot - h_dot
+    delta_theta = upper_theta - theta
+    delta_theta_dot = upper_theta_dot - theta_dot
+    spring_len = np.sqrt(np.maximum(delta_h * delta_h + 2 * p.R * p.R * (1 - np.cos(delta_theta)), 1e-14))
+    spring_len_dot = (delta_h * delta_h_dot + p.R * p.R * np.sin(delta_theta) * delta_theta_dot) / spring_len
 
     load = p.spring_count * (p.k * (spring_len - p.l0) + p.c * spring_len_dot) / spring_len
-    vertical = load * dh
-    twist = load * p.R * p.R * np.sin(dtheta)
+    vertical = load * delta_h
+    twist = load * p.R * p.R * np.sin(delta_theta)
+    return vertical, twist
 
+
+def spring_loads(h, theta, h_dot, theta_dot, p):
+    vertical, twist = spring_segment_loads(h, theta, h_dot, theta_dot, p)
     force = vertical.copy()
     torque = twist.copy()
     force[1:] -= vertical[:-1]
@@ -107,7 +125,15 @@ def simulate(p=Params()):
     theta0 = np.zeros(p.n)
     y0 = np.r_[h0, theta0, np.zeros(p.n), np.zeros(p.n)]
 
+    end_condition = p.end_condition.lower()
+    if end_condition == "spacer distance":
+        end_condition = "motor height"
+    if end_condition not in ("motor angle", "motor height"):
+        raise ValueError("end_condition must be 'motor angle' or 'motor height'")
+
     def stop_at_target(t, y):
+        if end_condition == "motor height":
+            return y[0] - p.spacer_end_height
         return y[p.n] - p.motor_stop_angle
 
     stop_at_target.terminal = True
@@ -126,7 +152,7 @@ def simulate(p=Params()):
     if not solve.success:
         raise RuntimeError(solve.message)
     if len(solve.t_events[0]) == 0:
-        raise RuntimeError("motor disk did not reach the stop angle")
+        raise RuntimeError(f"simulation did not reach {p.end_condition}")
 
     t_end = solve.t_events[0][0]
     t = np.linspace(0.0, t_end, p.samples)
@@ -141,6 +167,9 @@ def save_motion_plots(result, path):
     p = result.params
     time_ms = result.t * 1000
     colors = plt.cm.viridis(np.linspace(0, 1, p.n))
+    mass = np.full(p.n, p.m)
+    mass[0] = p.M0
+    com_velocity = mass @ result.h_dot / mass.sum()
 
     fig, axes = plt.subplots(2, 2, figsize=(13, 8), sharex=True, constrained_layout=True)
     axes = axes.ravel()
@@ -152,7 +181,16 @@ def save_motion_plots(result, path):
         axes[2].plot(time_ms, result.h_dot[i], color=color, lw=lw)
         axes[3].plot(time_ms, result.theta_dot[i], color=color, lw=lw)
 
+    axes[2].plot(
+        time_ms,
+        com_velocity,
+        color="red",
+        ls="--",
+        lw=2.0,
+        label=f"COM {com_velocity[-1]:.2f} m/s",
+    )
     axes[1].axhline(p.motor_stop_angle, color="0.25", ls="--", lw=1)
+    axes[0].axhline(p.spacer_end_height * 1000, color="0.25", ls="--", lw=1)
     axes[0].set_ylabel("height (mm)")
     axes[1].set_ylabel("angle (rad)")
     axes[2].set_ylabel("linear velocity (m/s)")
@@ -166,6 +204,7 @@ def save_motion_plots(result, path):
     for ax in axes:
         ax.grid(True, color="0.9")
     axes[0].legend(loc="upper left")
+    axes[2].legend(loc="upper left")
 
     sm = plt.cm.ScalarMappable(cmap="viridis", norm=plt.Normalize(0, p.n - 1))
     sm.set_array([])
@@ -175,22 +214,21 @@ def save_motion_plots(result, path):
     plt.close(fig)
 
 
-def get_loads(result):
+def get_segment_loads(result):
     p = result.params
     force = np.zeros_like(result.h)
     torque = np.zeros_like(result.theta)
+    motor_torque = np.zeros_like(result.t)
     for i, t in enumerate(result.t):
-        f, tau = spring_loads(
+        force[:, i], torque[:, i] = spring_segment_loads(
             result.h[:, i],
             result.theta[:, i],
             result.h_dot[:, i],
             result.theta_dot[:, i],
             p,
         )
-        tau[0] += get_motor_torque(result.theta[0, i], result.theta_dot[0, i], t)
-        force[:, i] = f
-        torque[:, i] = tau
-    return force, torque
+        motor_torque[i] = get_motor_torque(result.theta[0, i], result.theta_dot[0, i], t)
+    return force, torque, motor_torque
 
 
 def save_load_plots(result, path):
@@ -199,28 +237,33 @@ def save_load_plots(result, path):
     p = result.params
     time_ms = result.t * 1000
     colors = plt.cm.viridis(np.linspace(0, 1, p.n))
-    force, torque = get_loads(result)
+    force, torque, motor_torque = get_segment_loads(result)
 
     fig, axes = plt.subplots(2, 1, figsize=(11, 7), sharex=True, constrained_layout=True)
     for i, color in enumerate(colors):
-        lw = 2.4 if i == 0 else 0.9
-        label = "motor" if i == 0 else None
+        lw = 2.4 if i in (0, p.n - 1) else 0.9
+        label = None
+        if i == 0:
+            label = "bottom segment"
+        elif i == p.n - 1:
+            label = "top reaction"
         axes[0].plot(time_ms, force[i], color=color, lw=lw, label=label)
-        axes[1].plot(time_ms, torque[i], color=color, lw=lw)
+        axes[1].plot(time_ms, torque[i], color=color, lw=lw, label=label)
+    axes[1].plot(time_ms, motor_torque, color="black", ls="--", lw=1.5, label="motor torque")
 
-    axes[0].set_title("Net disk forces")
-    axes[1].set_title("Net disk torques")
-    axes[0].set_ylabel("force (N)")
-    axes[1].set_ylabel("torque (N m)")
+    axes[0].set_title("Spring segment vertical loads")
+    axes[1].set_title("Spring segment torques")
+    axes[0].set_ylabel("segment force on lower disk (N)")
+    axes[1].set_ylabel("segment torque on lower disk (N m)")
     axes[1].set_xlabel("time (ms)")
     for ax in axes:
         ax.grid(True, color="0.9")
-    axes[0].legend(loc="upper left")
+        ax.legend(loc="upper left")
 
     sm = plt.cm.ScalarMappable(cmap="viridis", norm=plt.Normalize(0, p.n - 1))
     sm.set_array([])
     cbar = fig.colorbar(sm, ax=axes.tolist(), pad=0.015)
-    cbar.set_label("disk index, 0 = motor")
+    cbar.set_label("segment index, 0 = bottom, top = fixed support")
     fig.savefig(path, dpi=180, bbox_inches="tight")
     plt.close(fig)
 
@@ -349,6 +392,14 @@ def main():
     parser.add_argument("--show", action="store_true", help="open the interactive 3D slider")
     parser.add_argument("--k", type=float, default=k, help="spring stiffness")
     parser.add_argument("--c", type=float, default=c, help="spring damping")
+    parser.add_argument(
+        "--end-condition",
+        choices=["motor angle", "motor height", "spacer distance"],
+        default=END_CONDITION,
+        help="simulation stop condition",
+    )
+    parser.add_argument("--motor-stop-angle", type=float, default=motor_stop_angle, help="motor angle stop value")
+    parser.add_argument("--spacer-end-height", type=float, default=spacer_end_height, help="bottom disk height stop value")
     args = parser.parse_args()
 
     if not args.show:
@@ -356,18 +407,27 @@ def main():
 
         matplotlib.use("Agg")
 
-    p = Params(k=args.k, c=args.c)
+    p = Params(
+        k=args.k,
+        c=args.c,
+        motor_stop_angle=args.motor_stop_angle,
+        spacer_end_height=args.spacer_end_height,
+        end_condition=args.end_condition,
+    )
     result = simulate(p)
 
-    out_dir = Path(__file__).resolve().parent
-    motion_path = out_dir / "springchain_height_angle.png"
-    load_path = out_dir / "springchain_force_torque.png"
-    preview_path = out_dir / "springchain_3d_preview.png"
+    out_dir = Path(__file__).resolve().parent / "plots"
+    out_dir.mkdir(exist_ok=True)
+    end_name = p.end_condition.replace(" ", "")
+    motion_path = out_dir / f"r{p.R*1000:.0f}_{end_name}_t{p.motor_stop_angle:.0f}_h{p.spacer_end_height*1000:.0f}_k{p.k:.0f}_c{p.c:.0f}_kinematic.png"
+    load_path = out_dir / f"r{p.R*1000:.0f}_{end_name}_t{p.motor_stop_angle:.0f}_h{p.spacer_end_height*1000:.0f}_k{p.k:.0f}_c{p.c:.0f}_loads.png"
+    preview_path = out_dir / f"r{p.R*1000:.0f}_{end_name}_t{p.motor_stop_angle:.0f}_h{p.spacer_end_height*1000:.0f}_k{p.k:.0f}_c{p.c:.0f}_3d.png"
     save_motion_plots(result, motion_path)
     save_load_plots(result, load_path)
     save_3d_preview(result, preview_path)
 
     gaps = np.diff(np.r_[result.h[:, -1], p.n * p.l0])
+    print(f"end condition: {p.end_condition}")
     print(f"reached target in {result.t[-1] * 1000:.2f} ms")
     print(f"motor angle: {result.theta[0, -1]:.2f} rad")
     print(f"bottom height: {result.h[0, -1] * 1000:.2f} mm")
