@@ -346,7 +346,7 @@ void stopMotor() {
     if (!motor_found) {
         return;
     }
-    multi->ctrl_volts_.set(com, 0.0f);
+    multi->ctrl_coast_.set(com);
     comSend();
 }
 
@@ -590,8 +590,7 @@ void loop() {
         if ((now_prbs - prbs_start_time) >= prbs_duration_us) {
             prbs_running = false;
             prbs_v_cmd = 0.0f;
-            multi->ctrl_volts_.set(com, 0.0f);
-            multi->ctrl_brake_.set(com);
+            multi->ctrl_coast_.set(com);
             logging = false;
             logReady = true;
             digitalWrite(LED_PIN, LOW);
@@ -654,22 +653,14 @@ void loop() {
                 }
             }
 
-            // Handle homing completion - restore previous mode, don't hold position
-            bool wasHoming = homing;
+            // Handle homing completion and always coast at rest.
             if (homing) {
                 control_mode = pre_home_mode;
                 set_velocity = pre_home_velocity;
                 homing = false;
                 Serial.println("HOME COMPLETE");
             }
-            
-            if (control_mode == MODE_VELOCITY && !wasHoming) {
-                // Hold position using angle control (but not after homing)
-                multi->ctrl_angle_.set(com, target + zero_angle);
-            } else {
-                multi->ctrl_volts_.set(com, 0.0f);
-                multi->ctrl_brake_.set(com);
-            }
+            multi->ctrl_coast_.set(com);
 
             // When movement ends, schedule logging to stop after 0.1s
             if (spinning && logging && logStopTime == 0 && !reboundLoaded) {
@@ -865,8 +856,7 @@ void loop() {
                 chainLen = 0;  // Clear chain
                 chainIdx = 0;
                 clearRebound();
-                multi->ctrl_volts_.set(com, 0.0f);
-                multi->ctrl_brake_.set(com);
+                multi->ctrl_coast_.set(com);
                 comSend();
                 commandReply("STOPPED\n");
 

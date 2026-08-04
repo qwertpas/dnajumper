@@ -3,3 +3,4 @@ deploy.md
 motor_logs/
 force_logs/
 data/
+__pycache__/
