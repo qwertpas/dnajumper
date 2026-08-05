@@ -29,6 +29,13 @@ STATE_NAMES = ("idle", "moving", "waiting", "homing")
 MODE_NAMES = ("voltage", "velocity")
 
 
+def recent_rows(rows):
+    if not rows:
+        return []
+    end = rows[-1][0]
+    return [row for row in rows if row[0] >= end - PLOT_SECONDS]
+
+
 class DataStore:
     def __init__(self, messages):
         self.messages = messages
@@ -229,6 +236,7 @@ class Window(QtWidgets.QWidget):
         self.last_message = "starting"
         self.error = ""
         self.paused = False
+        self.paused_rows = None
         self.was_connected = False
         self.rebound_count = 0
         self.last_state = 0
@@ -490,11 +498,37 @@ class Window(QtWidgets.QWidget):
 
     def toggle_pause(self):
         self.paused = not self.paused
+        if self.paused:
+            snapshot = self.data.snapshot()
+            self.paused_rows = recent_rows(snapshot[0])
+            self.draw_rows(self.paused_rows, snapshot[7])
+        else:
+            self.paused_rows = None
         self.pause_button.setText("Resume" if self.paused else "Pause")
 
     def request_status(self):
         if self.worker.connected.is_set():
             self.worker.send("STATUS")
+
+    def draw_rows(self, rows, state):
+        if not rows:
+            return
+        end = rows[-1][0]
+        visible = np.asarray(recent_rows(rows), dtype=float)
+        x = visible[:, 0] - end
+        self.angle_curve.setData(x, visible[:, 2])
+        self.velocity_curve.setData(x, visible[:, 3])
+        self.command_curve.setData(x, visible[:, 5])
+        self.battery_curve.setData(x, visible[:, 4])
+        target = (rows[-1][6] if state == 2
+                  else self.target.value())
+        trigger = rows[-1][7]
+        self.target_line.show()
+        trigger_visible = bool(np.isfinite(trigger))
+        self.trigger_line.setVisible(trigger_visible)
+        self.target_line.setValue(target)
+        if trigger_visible:
+            self.trigger_line.setValue(trigger)
 
     def update(self):
         while True:
@@ -565,23 +599,7 @@ class Window(QtWidgets.QWidget):
                 rate = ((len(rows) - rate_start - 1) /
                         (end - times[rate_start]))
             if not self.paused:
-                first = max(0, np.searchsorted(
-                    times, end - PLOT_SECONDS))
-                visible = np.asarray(rows[first:], dtype=float)
-                x = visible[:, 0] - end
-                self.angle_curve.setData(x, visible[:, 2])
-                self.velocity_curve.setData(x, visible[:, 3])
-                self.command_curve.setData(x, visible[:, 5])
-                self.battery_curve.setData(x, visible[:, 4])
-                target = (rows[-1][6] if state == 2
-                          else self.target.value())
-                trigger = rows[-1][7]
-                self.target_line.show()
-                trigger_visible = bool(np.isfinite(trigger))
-                self.trigger_line.setVisible(trigger_visible)
-                self.target_line.setValue(target)
-                if trigger_visible:
-                    self.trigger_line.setValue(trigger)
+                self.draw_rows(rows, state)
 
         state_name = STATE_NAMES[state] if state < len(STATE_NAMES) else "?"
         mode_name = MODE_NAMES[mode] if mode < len(MODE_NAMES) else "?"
@@ -601,11 +619,13 @@ class Window(QtWidgets.QWidget):
             connected and state != 3 and self.rebound_count < 8)
 
     def save_csv(self):
-        rows = self.data.snapshot()[0]
+        if self.paused_rows is not None:
+            rows = self.paused_rows
+        else:
+            rows = self.data.snapshot()[0]
+            rows = recent_rows(rows)
         if not rows:
             return
-        end = rows[-1][0]
-        rows = [row for row in rows if row[0] >= end - PLOT_SECONDS]
         directory = Path(self.settings.value("save_dir", str(LOG_DIR)))
         default = directory / f"motor_{datetime.now():%Y%m%d_%H%M%S}.csv"
         selected, _ = QtWidgets.QFileDialog.getSaveFileName(
