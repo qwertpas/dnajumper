@@ -1,10 +1,12 @@
 #!/usr/bin/env python3.11
 import asyncio
 import csv
+import importlib.util
 import queue
 import struct
 import sys
 import threading
+import time
 from collections import deque
 from datetime import datetime
 from pathlib import Path
@@ -25,8 +27,51 @@ HEADER = struct.Struct("<HHIfffHHBbBB")
 SAMPLE = struct.Struct("<HffH")
 PLOT_SECONDS = 10.0
 LOG_DIR = Path(__file__).parent / "motor_logs"
+CAPTURE_GUI = Path(
+    "/Users/chris/Kicad/mindaq/mindaq_fw/scripts/capture/capture_gui.py")
 STATE_NAMES = ("idle", "moving", "waiting", "homing")
 MODE_NAMES = ("voltage", "velocity")
+
+
+def load_capture_gui():
+    spec = importlib.util.spec_from_file_location("mindaq_capture_gui", CAPTURE_GUI)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"Cannot load {CAPTURE_GUI}")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
+capture_gui = load_capture_gui()
+capture_gui.DEFAULT_UV_PER_N = 58.47876
+
+
+class ScalePasteFilter(QtCore.QObject):
+    def __init__(self, spin):
+        super().__init__(spin)
+        self.spin = spin
+
+    def eventFilter(self, watched, event):
+        command = (QtCore.Qt.ControlModifier | QtCore.Qt.MetaModifier)
+        if (event.type() == QtCore.QEvent.KeyPress
+                and event.modifiers() & command
+                and event.key() == QtCore.Qt.Key_V):
+            text = QtWidgets.QApplication.clipboard().text().strip()
+            text = text.replace("µV/N", "").replace("uV/N", "").strip()
+            try:
+                self.spin.setValue(float(text))
+            except ValueError:
+                return False
+            return True
+        if (event.type() == QtCore.QEvent.KeyPress
+                and event.modifiers() & command
+                and event.key() == QtCore.Qt.Key_C):
+            editor = self.spin.lineEdit()
+            text = editor.selectedText() or editor.text()
+            QtWidgets.QApplication.clipboard().setText(text)
+            return True
+        return super().eventFilter(watched, event)
 
 
 def recent_rows(rows):
@@ -242,17 +287,35 @@ class Window(QtWidgets.QWidget):
         self.last_state = 0
         self.settings = QtCore.QSettings("DNA Jumper", "Motor GUI")
 
-        self.setWindowTitle("DNA Jumper")
-        self.resize(1250, 900)
-        layout = QtWidgets.QHBoxLayout(self)
+        self.setWindowTitle("DNA Jumper + minDAQ")
+        self.resize(2400, 1000)
+        self.setMinimumSize(1200, 700)
+        outer_layout = QtWidgets.QVBoxLayout(self)
+
+        self.content = QtWidgets.QWidget()
+        self.content.setMinimumSize(1400, 780)
+        content_layout = QtWidgets.QVBoxLayout(self.content)
+        content_layout.setContentsMargins(0, 0, 0, 0)
+        self.splitter = QtWidgets.QSplitter(QtCore.Qt.Horizontal)
+        content_layout.addWidget(self.splitter)
+        self.content_scroll = QtWidgets.QScrollArea()
+        self.content_scroll.setWidgetResizable(True)
+        self.content_scroll.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.content_scroll.setWidget(self.content)
+        outer_layout.addWidget(self.content_scroll, 1)
+
+        motor_page = QtWidgets.QWidget()
+        motor_page.setMinimumSize(600, 780)
+        layout = QtWidgets.QHBoxLayout(motor_page)
+        self.splitter.addWidget(motor_page)
         sidebar = QtWidgets.QWidget()
-        sidebar.setFixedWidth(300)
+        sidebar.setFixedWidth(220)
         controls = QtWidgets.QVBoxLayout(sidebar)
         self.status = QtWidgets.QLabel("starting")
         self.status.setWordWrap(True)
         controls.addWidget(self.status)
         self.device_status = QtWidgets.QLabel(
-            "Angle: — | Vbat: —")
+            "Set voltage: — | Vbat: —\nTarget: — | Angle: —")
         self.device_status.setWordWrap(True)
         controls.addWidget(self.device_status)
 
@@ -276,20 +339,6 @@ class Window(QtWidgets.QWidget):
         self.move_button = QtWidgets.QPushButton("Move")
         self.move_button.clicked.connect(self.move)
         controls.addWidget(self.move_button)
-
-        keys_box = QtWidgets.QGroupBox("Keyboard control")
-        keys_layout = QtWidgets.QFormLayout(keys_box)
-        self.enable_keys = QtWidgets.QCheckBox("Enable keys")
-        self.enable_keys.setChecked(False)
-        keys_layout.addRow(self.enable_keys)
-        self.fasthome_voltage = spin(0.1, 12.0, 1.0, 1, 0.1)
-        keys_layout.addRow("Fasthome (V)", self.fasthome_voltage)
-        self.fasthome_target = spin(-188.0, 188.0, 0.0, 1, 0.1)
-        keys_layout.addRow("Target (rad)", self.fasthome_target)
-        keys_help = QtWidgets.QLabel("M - Move | H - fasthome")
-        keys_help.setWordWrap(True)
-        keys_layout.addRow(keys_help)
-        controls.addWidget(keys_box)
 
         rebound_box = QtWidgets.QGroupBox("Rebound")
         rebound_layout = QtWidgets.QFormLayout(rebound_box)
@@ -329,11 +378,16 @@ class Window(QtWidgets.QWidget):
         save_button = QtWidgets.QPushButton("Save CSV")
         save_button.clicked.connect(self.save_csv)
         controls.addWidget(save_button)
-        self.pause_button = QtWidgets.QPushButton("Pause")
+        self.pause_button = QtWidgets.QPushButton("Pause Both")
         self.pause_button.setToolTip(
-            "Freeze the plots while streaming and recording continue")
+            "Freeze both GUIs while retaining their pre-pause data")
         self.pause_button.clicked.connect(self.toggle_pause)
         controls.addWidget(self.pause_button)
+        self.save_both_button = QtWidgets.QPushButton("Save Both")
+        self.save_both_button.setToolTip(
+            "Save paused motor data and the current minDAQ capture")
+        self.save_both_button.clicked.connect(self.save_both)
+        controls.addWidget(self.save_both_button)
         controls.addStretch(1)
         layout.addWidget(sidebar)
 
@@ -376,6 +430,30 @@ class Window(QtWidgets.QWidget):
             plot_layout.addWidget(plot)
         layout.addWidget(plots, 1)
 
+        self.mindaq_samples = capture_gui.SampleBuffer()
+        self.mindaq_messages = queue.Queue()
+        self.mindaq_reader = capture_gui.SerialReader(
+            capture_gui.SERIAL_PORT,
+            self.mindaq_samples,
+            self.mindaq_messages,
+        )
+        self.mindaq_reader.start()
+        self.mindaq = capture_gui.PlotWindow(
+            self.mindaq_reader,
+            self.mindaq_samples,
+            self.mindaq_messages,
+        )
+        self.mindaq_plot_splitter = self.mindaq.win.findChild(
+            QtWidgets.QSplitter)
+        self.mindaq_plot_splitter.setOrientation(QtCore.Qt.Vertical)
+        self.mindaq_plot_splitter.setSizes((1, 1))
+        self.compact_mindaq_controls()
+        self.mindaq.win.setMinimumSize(790, 760)
+        self.splitter.addWidget(self.mindaq.win)
+        self.splitter.setStretchFactor(0, 1)
+        self.splitter.setStretchFactor(1, 2)
+        self.splitter.setSizes((600, 800))
+
         self.hover_proxies = []
         self.add_hover(self.angle_plot, (
             ("Angle", self.angle_curve, "rad", False),
@@ -399,37 +477,7 @@ class Window(QtWidgets.QWidget):
         self.status_timer = QtCore.QTimer(self)
         self.status_timer.timeout.connect(self.request_status)
         self.status_timer.start(1000)
-        QtWidgets.QApplication.instance().installEventFilter(self)
         self.worker.start()
-
-    def eventFilter(self, watched, event):
-        if watched is self and event.type() == QtCore.QEvent.WindowDeactivate:
-            self.enable_keys.setChecked(False)
-        if (event.type() not in (QtCore.QEvent.ShortcutOverride,
-                                 QtCore.QEvent.KeyPress) or
-                not self.enable_keys.isChecked() or
-                not isinstance(watched, QtWidgets.QWidget) or
-                watched.window() is not self or
-                not self.isActiveWindow() or
-                QtWidgets.QApplication.activeModalWidget() is not None or
-                QtWidgets.QApplication.activePopupWidget() is not None or
-                event.modifiers() not in (QtCore.Qt.NoModifier,
-                                          QtCore.Qt.KeypadModifier) or
-                event.key() not in (QtCore.Qt.Key_M,
-                                    QtCore.Qt.Key_H)):
-            return super().eventFilter(watched, event)
-        # Consume armed keys before focused editors or buttons handle them.
-        event.accept()
-        if (event.type() == QtCore.QEvent.KeyPress and
-                not event.isAutoRepeat() and
-                self.worker.connected.is_set() and
-                self.move_button.isEnabled() and
-                self.data.snapshot()[7] == 0):
-            if event.key() == QtCore.Qt.Key_H:
-                self.fasthome()
-            else:
-                self.move()
-        return True
 
     def add_hover(self, plot, entries):
         view = plot.getViewBox()
@@ -481,6 +529,97 @@ class Window(QtWidgets.QWidget):
             plot.scene().sigMouseMoved, rateLimit=60, slot=hover)
         self.hover_proxies.append(proxy)
 
+    def compact_mindaq_controls(self):
+        plot = self.mindaq
+        plot.pause_button.hide()
+        plot.refresh_ports_button.setText("Refresh")
+        plot.port_box.setFixedWidth(140)
+        plot.refresh_ports_button.setFixedWidth(80)
+        plot.zero_button.setFixedWidth(60)
+        plot.pos_box.setFixedWidth(55)
+        plot.neg_box.setFixedWidth(55)
+        plot.gain_box.setFixedWidth(65)
+        plot.fir_cutoff.setFixedWidth(75)
+        plot.trigger_level.setFixedWidth(85)
+        plot.trigger_delay.setFixedWidth(85)
+        plot.trigger_window_start.setFixedWidth(90)
+        plot.trigger_window_end.setFixedWidth(80)
+        plot.uv_per_n.setSuffix("")
+        plot.uv_per_n.setFixedWidth(120)
+        plot.uv_per_n.setReadOnly(False)
+        self.scale_paste_filter = ScalePasteFilter(plot.uv_per_n)
+        plot.uv_per_n.lineEdit().installEventFilter(self.scale_paste_filter)
+        plot.trigger_pin.setFixedWidth(60)
+        plot.trigger_width.setFixedWidth(80)
+        labels = {
+            label.text(): label
+            for label in plot.win.findChildren(QtWidgets.QLabel)
+        }
+
+        def containing_layout(layout, widget):
+            if layout.indexOf(widget) >= 0:
+                return layout
+            for index in range(layout.count()):
+                child = layout.itemAt(index).layout()
+                if child is not None:
+                    found = containing_layout(child, widget)
+                    if found is not None:
+                        return found
+            return None
+
+        root_layout = plot.win.layout()
+        pulse_layout = containing_layout(root_layout, plot.trigger_width)
+        window_widgets = (
+            labels["Capture window (ms)"],
+            plot.trigger_window_start,
+            labels["to"],
+            plot.trigger_window_end,
+        )
+        pulse_widgets = (
+            labels["Scale"],
+            plot.uv_per_n,
+        )
+        filter_widgets = (
+            plot.fir_enable,
+            labels["Cutoff (Hz)"],
+            plot.fir_cutoff,
+        )
+        for widget in window_widgets + pulse_widgets + filter_widgets:
+            containing_layout(root_layout, widget).removeWidget(widget)
+
+        pulse_index = next(
+            index for index in range(root_layout.count())
+            if root_layout.itemAt(index).layout() is pulse_layout
+        )
+        window_layout = QtWidgets.QHBoxLayout()
+        window_layout.setSpacing(8)
+        for widget in window_widgets:
+            window_layout.addWidget(widget)
+        window_layout.addStretch(1)
+        root_layout.insertLayout(pulse_index, window_layout)
+
+        insert_at = pulse_layout.count() - 1
+        for widget in pulse_widgets:
+            pulse_layout.insertWidget(insert_at, widget)
+            insert_at += 1
+
+        filter_layout = QtWidgets.QHBoxLayout()
+        filter_layout.setSpacing(8)
+        for widget in filter_widgets:
+            filter_layout.addWidget(widget)
+        filter_layout.addStretch(1)
+        root_layout.insertLayout(pulse_index + 2, filter_layout)
+
+        replacements = {
+            "Scale": "Scale (uV/N)",
+            "Cutoff (Hz)": "Cutoff",
+            "Capture window (ms)": "Window (ms)",
+            "Pulse width (ms)": "Width (ms)",
+        }
+        for label in plot.win.findChildren(QtWidgets.QLabel):
+            if label.text() in replacements:
+                label.setText(replacements[label.text()])
+
     def schedule_mode(self):
         self.mode_timer.start(150)
 
@@ -509,34 +648,11 @@ class Window(QtWidgets.QWidget):
                 f"OFF_MODE {self.off_state.currentText().upper()}")
 
     def move(self):
-        if not self.worker.connected.is_set():
-            return
-        self.setpoint.interpretText()
-        self.target.interpretText()
-        self.threshold.interpretText()
-        self.delay.interpretText()
-        self.mode_timer.stop()
         self.data.begin_recording()
         self.send_mode()
         self.worker.send(
             f"MOVE {self.target.value():.5f} {self.rebound_count} "
             f"{self.threshold.value():.5f} {self.delay.value()}")
-
-    def fasthome(self):
-        if (not self.worker.connected.is_set() or
-                self.data.snapshot()[7] != 0):
-            return
-        self.fasthome_voltage.interpretText()
-        self.fasthome_target.interpretText()
-        voltage = self.fasthome_voltage.value()
-        rows = self.data.snapshot()[0]
-        if rows and 0 < rows[-1][4] < voltage:
-            self.error = "Fasthome voltage exceeds battery voltage"
-            return
-        self.mode_timer.stop()
-        self.data.begin_recording()
-        self.worker.send(f"MODE VOLTAGE {voltage:.4f}")
-        self.worker.send(f"MOVE {self.fasthome_target.value():.5f} 0")
 
     def change_count(self, amount):
         state = self.data.snapshot()[7]
@@ -571,7 +687,10 @@ class Window(QtWidgets.QWidget):
             self.draw_rows(self.paused_rows, snapshot[7])
         else:
             self.paused_rows = None
-        self.pause_button.setText("Resume" if self.paused else "Pause")
+        if self.mindaq.paused != self.paused:
+            self.mindaq.toggle_pause()
+        self.pause_button.setText(
+            "Resume Both" if self.paused else "Pause Both")
 
     def request_status(self):
         if self.worker.connected.is_set():
@@ -609,10 +728,14 @@ class Window(QtWidgets.QWidget):
                 fields = dict(
                     part.split("=", 1) for part in message.split()
                     if "=" in part)
+                label = ("Set voltage" if fields.get("MODE") == "VOLTAGE"
+                         else "Set velocity")
                 try:
                     self.device_status.setText(
-                        f"Angle: {float(fields['ANGLE']):.1f} rad | "
-                        f"Vbat: {float(fields['VBAT']):.1f} V")
+                        f"{label}: {float(fields['SET']):.1f} | "
+                        f"Vbat: {float(fields['VBAT']):.1f} V\n"
+                        f"Target: {float(fields['TARGET']):.1f} rad | "
+                        f"Angle: {float(fields['ANGLE']):.1f} rad")
                 except (KeyError, ValueError):
                     pass
                 if self.last_state in (1, 2):
@@ -648,8 +771,6 @@ class Window(QtWidgets.QWidget):
         self.last_state = state
         self.count_label.setText(str(self.rebound_count))
         connected = self.worker.connected.is_set()
-        if not connected:
-            self.enable_keys.setChecked(False)
         if connected and not self.was_connected:
             self.send_off_mode()
             self.send_mode()
@@ -700,6 +821,14 @@ class Window(QtWidgets.QWidget):
         path = Path(selected)
         if not path.suffix:
             path = path.with_suffix(".csv")
+        self.write_motor_csv(path, rows)
+        self.settings.setValue("save_dir", str(path.parent))
+        self.settings.sync()
+        self.last_message = f"saved {path}"
+        self.device_status.setText(f"Saved: {path}")
+
+    @staticmethod
+    def write_motor_csv(path, rows):
         with path.open("w", newline="") as file:
             writer = csv.writer(file)
             writer.writerow((
@@ -708,15 +837,104 @@ class Window(QtWidgets.QWidget):
                 "rebound_trigger_rad", "state", "mode",
             ))
             writer.writerows(rows)
-        self.settings.setValue("save_dir", str(path.parent))
+
+    def write_mindaq_csv(self, path, samples):
+        plot = self.mindaq
+        trace = plot.trigger_trace
+        pos = plot.pos_channel()
+        neg = plot.neg_channel()
+        latest_sample = samples[-1]
+        wall_now_s = time.time()
+        adc_header = [
+            name
+            for index in range(capture_gui.CHANNELS)
+            for name in (f"adc_{index}_uv", f"adc_{index}_raw")
+        ]
+        with path.open("w", newline="", encoding="utf-8") as handle:
+            writer = csv.writer(handle)
+            writer.writerow(
+                ["datetime", "capture_time_s", "voltage_zeroed_uv",
+                 "voltage_uv", "device_time_s", "trigger_time_s",
+                 "pulse_start_time_s", "pulse_end_time_s",
+                 "trigger_threshold_uv", "trigger_cross", "pulse_start",
+                 "pulse_active", "trigger_gpio", "trigger_edge", "seq",
+                 "pos_channel", "neg_channel"]
+                + adc_header
+                + ["gain_code", "warn_flags", "clip_flags"]
+            )
+            for sample in samples:
+                value, common_values = plot.common_csv_values(sample, pos, neg)
+                capture_time_s = (
+                    sample.timestamp_s
+                    - trace.pulse_start_seq / capture_gui.SAMPLE_RATE_HZ
+                )
+                row = [
+                    plot.sample_datetime(sample, latest_sample, wall_now_s),
+                    f"{capture_time_s:.8f}",
+                    f"{value - plot.zero_uv:.3f}",
+                    common_values[0],
+                    f"{sample.timestamp_s:.8f}",
+                ]
+                row += (
+                    plot.capture_csv_values(sample)
+                    + common_values[1:]
+                    + [sample.gain_code, sample.warn_flags, sample.clip_flags]
+                )
+                writer.writerow(row)
+
+    def save_both(self):
+        if self.paused_rows is None:
+            QtWidgets.QMessageBox.information(
+                self, "Save Both", "Pause the motor plot before saving.")
+            return
+        if not self.paused_rows:
+            QtWidgets.QMessageBox.information(
+                self, "Save Both", "There is no paused motor data.")
+            return
+        trace = self.mindaq.trigger_trace
+        if trace is None or not trace.samples:
+            QtWidgets.QMessageBox.information(
+                self, "Save Both", "There is no minDAQ capture to save.")
+            return
+
+        directory = Path(self.settings.value("save_dir", str(LOG_DIR)))
+        default = directory / f"run_{datetime.now():%Y%m%d_%H%M%S}.csv"
+        selected, _ = QtWidgets.QFileDialog.getSaveFileName(
+            self, "Save both logs", str(default), "CSV files (*.csv)")
+        if not selected:
+            return
+        base = Path(selected)
+        if base.suffix.lower() == ".csv":
+            base = base.with_suffix("")
+        motor_path = base.parent / f"{base.name}_motor.csv"
+        mindaq_path = base.parent / f"{base.name}_mindaq.csv"
+        existing = [path.name for path in (motor_path, mindaq_path)
+                    if path.exists()]
+        if existing:
+            answer = QtWidgets.QMessageBox.question(
+                self,
+                "Replace files?",
+                "Replace " + " and ".join(existing) + "?",
+                QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
+                QtWidgets.QMessageBox.No,
+            )
+            if answer != QtWidgets.QMessageBox.Yes:
+                return
+
+        base.parent.mkdir(parents=True, exist_ok=True)
+        self.write_motor_csv(motor_path, self.paused_rows)
+        self.write_mindaq_csv(mindaq_path, trace.samples)
+        self.settings.setValue("save_dir", str(base.parent))
         self.settings.sync()
-        self.last_message = f"saved {path}"
-        self.device_status.setText(f"Saved: {path}")
+        self.last_message = f"saved {motor_path.name} and {mindaq_path.name}"
+        self.device_status.setText(
+            f"Saved: {motor_path.name} + {mindaq_path.name}")
 
     def closeEvent(self, event):
-        QtWidgets.QApplication.instance().removeEventFilter(self)
         self.worker.stop()
+        self.mindaq_reader.stop()
         self.worker.join(timeout=2.0)
+        self.mindaq_reader.join(timeout=1.0)
         event.accept()
 
 
@@ -724,7 +942,7 @@ def main():
     app = QtWidgets.QApplication(sys.argv)
     pg.setConfigOptions(antialias=False)
     window = Window()
-    window.show()
+    window.showMaximized()
     sys.exit(app.exec())
 
 

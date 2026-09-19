@@ -1,0 +1,9 @@
+model,mass_start_g,mass_end_g,best_radius_mm
+no loss,1.0,12.0,11
+no loss,13.0,40.0,9
+no loss,41.0,132.0,7
+no loss,133.0,400.0,5
+common fitted loss,1.0,22.0,11
+common fitted loss,23.0,62.0,9
+common fitted loss,63.0,187.0,7
+common fitted loss,188.0,400.0,5

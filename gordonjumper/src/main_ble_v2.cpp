@@ -15,6 +15,7 @@ constexpr int LED_PIN = 48;
 constexpr uint32_t MOTOR_BAUD = 921600;
 constexpr uint32_t MOTOR_TIMEOUT_US = 3000;
 constexpr uint8_t MOTOR_TIMEOUT_LIMIT = 5;
+constexpr float MOTOR_COMMAND_TIMEOUT_S = 0.030f;
 constexpr float TARGET_LIMIT_RAD = 188.0f;
 constexpr float VOLTAGE_LIMIT = 12.0f;
 constexpr float VELOCITY_LIMIT = 300.0f;
@@ -222,6 +223,36 @@ bool findMotor() {
         return true;
     }
     Serial.println("motor not found");
+    return false;
+}
+
+bool configureMotorTimeout() {
+    while (Serial1.available()) {
+        Serial1.read();
+    }
+
+    motor->timeout_.set(com, MOTOR_COMMAND_TIMEOUT_S);
+    sendCom(com);
+    delay(50);
+
+    motor->timeout_.get(com);
+    sendCom(com);
+
+    uint32_t start = micros();
+    while (micros() - start < 10000) {
+        readCom(com, *power, *motor);
+        if (!motor->timeout_.IsFresh()) {
+            continue;
+        }
+
+        float timeout = motor->timeout_.get_reply();
+        bool valid = fabsf(timeout - MOTOR_COMMAND_TIMEOUT_S) < 0.001f;
+        Serial.printf("motor timeout=%.3fs %s\n",
+                      timeout, valid ? "ready" : "failed");
+        return valid;
+    }
+
+    Serial.println("motor timeout verification failed");
     return false;
 }
 
@@ -858,6 +889,9 @@ void setup() {
     Serial1.begin(MOTOR_BAUD, SERIAL_8N1, RX_PIN, TX_PIN);
     delay(1000);
     while (!findMotor()) {
+        delay(500);
+    }
+    while (!configureMotorTimeout()) {
         delay(500);
     }
 
