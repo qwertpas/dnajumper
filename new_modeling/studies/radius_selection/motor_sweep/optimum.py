@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from numba import njit
 from scipy.optimize import root, brentq, minimize_scalar
-from model import energy, heights, verify, INERTIA, RADII
+from new_modeling.studies.radius_selection.motor_sweep.model import energy, heights, verify, INERTIA, RADII
 
 ROOT = Path(__file__).resolve().parent / 'results/optimization'
 ROOT.mkdir(parents=True, exist_ok=True)

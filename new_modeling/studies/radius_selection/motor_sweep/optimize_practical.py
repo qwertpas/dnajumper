@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 import numpy as np
 from scipy.optimize import differential_evolution, NonlinearConstraint
-from optimize import endpoint_heights, margins
+from new_modeling.studies.radius_selection.motor_sweep.optimize import endpoint_heights, margins
 
 ROOT = Path(__file__).resolve().parent / 'results/optimization'
 ROOT.mkdir(parents=True, exist_ok=True)

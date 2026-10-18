@@ -4,7 +4,7 @@ from pathlib import Path
 import numpy as np
 from numba import njit
 from scipy.optimize import differential_evolution, NonlinearConstraint
-from model import energy, INERTIA, RADII
+from new_modeling.studies.radius_selection.motor_sweep.model import energy, INERTIA, RADII
 
 ROOT = Path(__file__).resolve().parent / 'results/optimization'
 ROOT.mkdir(parents=True, exist_ok=True)

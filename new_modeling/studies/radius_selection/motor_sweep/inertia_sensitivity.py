@@ -4,8 +4,8 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.optimize import brentq, minimize_scalar
-from model import CASES
-from model import heights, RADII, verify
+from new_modeling.studies.radius_selection.motor_sweep.model import CASES
+from new_modeling.studies.radius_selection.motor_sweep.model import heights, RADII, verify
 
 ROOT = Path(__file__).resolve().parent / 'results'
 ROOT.mkdir(parents=True, exist_ok=True)

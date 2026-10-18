@@ -7,8 +7,8 @@ from matplotlib.colors import LogNorm
 from matplotlib.ticker import FuncFormatter
 import numpy as np
 from scipy.optimize import brentq
-from model import CASES, envelope
-from model import heights, verify, RADII
+from new_modeling.studies.radius_selection.motor_sweep.model import CASES, envelope
+from new_modeling.studies.radius_selection.motor_sweep.model import heights, verify, RADII
 
 ROOT = Path(__file__).resolve().parent / 'results'
 ROOT.mkdir(parents=True, exist_ok=True)
