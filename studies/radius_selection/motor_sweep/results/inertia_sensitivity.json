@@ -1,0 +1,211 @@
+[
+  {
+    "body_mass_g": 100,
+    "power_w": 15.0,
+    "rpm_range": [
+      2500.0,
+      15000.0
+    ],
+    "endpoints": [
+      {
+        "rpm": 2500.0,
+        "target_winner_mm": 9.0,
+        "lead_at_low_inertia": 0.16087688382473475,
+        "lead_at_high_inertia": 0.1706670151491121,
+        "worst_shared_inertia_lead": 0.16087165879384657,
+        "worst_shared_inertia": 2.055850893650017e-06,
+        "worst_independent_inertia_lead": -0.15968150476677478,
+        "individual_radius_height_ranges_m": [
+          [
+            0.3353247576411841,
+            0.44226695144814077
+          ],
+          [
+            0.43841406349911904,
+            0.6056569678601946
+          ],
+          [
+            0.5089447518597966,
+            0.7090226347691557
+          ]
+        ],
+        "stress_crossings": [],
+        "max_independent_solver_error": 6.240730154871699e-11
+      },
+      {
+        "rpm": 15000.0,
+        "target_winner_mm": 5.0,
+        "lead_at_low_inertia": 0.2745705816900277,
+        "lead_at_high_inertia": 0.11060682674737765,
+        "worst_shared_inertia_lead": 0.11060682674737765,
+        "worst_shared_inertia": 1.82396e-05,
+        "worst_independent_inertia_lead": -0.04425607303242873,
+        "individual_radius_height_ranges_m": [
+          [
+            0.5687364397646125,
+            0.7558351730058802
+          ],
+          [
+            0.5120952132360512,
+            0.595071989177191
+          ],
+          [
+            0.4384694283148998,
+            0.4777907717026692
+          ]
+        ],
+        "stress_crossings": [
+          {
+            "threshold": 0.1,
+            "inertia": 1.9539276495018996e-05
+          }
+        ],
+        "max_independent_solver_error": 4.737099601470618e-12
+      }
+    ],
+    "worst_shared_winning_lead": 0.11060682674737765,
+    "worst_independent_winning_lead": -0.15968150476677478
+  },
+  {
+    "body_mass_g": 50,
+    "power_w": 9.0,
+    "rpm_range": [
+      1500.0,
+      20000.0
+    ],
+    "endpoints": [
+      {
+        "rpm": 1500.0,
+        "target_winner_mm": 9.0,
+        "lead_at_low_inertia": 0.2858773475651044,
+        "lead_at_high_inertia": 0.3296703202528266,
+        "worst_shared_inertia_lead": 0.28587734756510463,
+        "worst_shared_inertia": 1.86e-06,
+        "worst_independent_inertia_lead": 0.08531918208934863,
+        "individual_radius_height_ranges_m": [
+          [
+            0.19644307245438475,
+            0.22032986145510783
+          ],
+          [
+            0.29697445735110933,
+            0.3518529238358133
+          ],
+          [
+            0.38187272751323076,
+            0.46784838991865924
+          ]
+        ],
+        "stress_crossings": [],
+        "max_independent_solver_error": 2.346241645412306e-09
+      },
+      {
+        "rpm": 20000.0,
+        "target_winner_mm": 5.0,
+        "lead_at_low_inertia": 0.3019502894821726,
+        "lead_at_high_inertia": 0.01220720338046033,
+        "worst_shared_inertia_lead": 0.01220720338046033,
+        "worst_shared_inertia": 1.82396e-05,
+        "worst_independent_inertia_lead": -0.32861776200551274,
+        "individual_radius_height_ranges_m": [
+          [
+            0.3793724920889589,
+            0.7356824442842186
+          ],
+          [
+            0.3747972656408407,
+            0.5650618539182651
+          ],
+          [
+            0.3401242215241228,
+            0.4445968453709993
+          ]
+        ],
+        "stress_crossings": [
+          {
+            "threshold": 0.1,
+            "inertia": 1.0699937280069022e-05
+          },
+          {
+            "threshold": 0.0,
+            "inertia": 1.969523589491765e-05
+          }
+        ],
+        "max_independent_solver_error": 5.859090990156801e-12
+      }
+    ],
+    "worst_shared_winning_lead": 0.01220720338046033,
+    "worst_independent_winning_lead": -0.32861776200551274
+  },
+  {
+    "body_mass_g": 60,
+    "power_w": 16.7,
+    "rpm_range": [
+      2500.0,
+      15000.0
+    ],
+    "endpoints": [
+      {
+        "rpm": 2500.0,
+        "target_winner_mm": 9.0,
+        "lead_at_low_inertia": 0.20715031981516074,
+        "lead_at_high_inertia": 0.24232458575481042,
+        "worst_shared_inertia_lead": 0.20715031981516097,
+        "worst_shared_inertia": 1.86e-06,
+        "worst_independent_inertia_lead": -0.1160668134594326,
+        "individual_radius_height_ranges_m": [
+          [
+            0.4238955671440601,
+            0.5395756200229742
+          ],
+          [
+            0.5862329092351073,
+            0.8005935908334108
+          ],
+          [
+            0.707671243869332,
+            0.9945971010900732
+          ]
+        ],
+        "stress_crossings": [],
+        "max_independent_solver_error": 2.108986318916095e-10
+      },
+      {
+        "rpm": 15000.0,
+        "target_winner_mm": 5.0,
+        "lead_at_low_inertia": 0.20853854105319036,
+        "lead_at_high_inertia": -0.00010827690401471468,
+        "worst_shared_inertia_lead": -0.00010827690401471468,
+        "worst_shared_inertia": 1.82396e-05,
+        "worst_independent_inertia_lead": -0.23151692944418967,
+        "individual_radius_height_ranges_m": [
+          [
+            0.8465662146036589,
+            1.325145645549014
+          ],
+          [
+            0.8466578880985418,
+            1.101606849961411
+          ],
+          [
+            0.7821387142543847,
+            0.9215487783545303
+          ]
+        ],
+        "stress_crossings": [
+          {
+            "threshold": 0.1,
+            "inertia": 9.100049605214231e-06
+          },
+          {
+            "threshold": 0.0,
+            "inertia": 1.822634941115791e-05
+          }
+        ],
+        "max_independent_solver_error": 1.6142642778049776e-12
+      }
+    ],
+    "worst_shared_winning_lead": -0.00010827690401471468,
+    "worst_independent_winning_lead": -0.23151692944418967
+  }
+]
