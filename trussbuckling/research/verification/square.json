@@ -1,0 +1,14 @@
+{
+  "samples": 1001,
+  "vertices": 16,
+  "triangles_with_caps": 20,
+  "unique_edges": 38,
+  "slit_free_edges": 16,
+  "maximum_relative_edge_error": 2.220446049250313e-16,
+  "maximum_outer_radius_error": 2.220446049250313e-16,
+  "maximum_axial_envelope_violation": 0.0,
+  "transverse_intersections": [],
+  "near_contact_pairs_checked_at_80_digits": 16,
+  "endpoint_contacts": "Flat lamination at height=0; slit lips coincide at height=1",
+  "collision_check": "Numerical transverse-intersection sampling; not a continuous certificate"
+}

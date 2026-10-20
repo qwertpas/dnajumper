@@ -12,9 +12,9 @@ from datetime import datetime
 from pathlib import Path
 
 import numpy as np
+from PyQt6 import QtCore, QtWidgets
 import pyqtgraph as pg
 from bleak import BleakClient, BleakScanner
-from pyqtgraph.Qt import QtCore, QtWidgets
 
 
 BLE_NAME = "dnajumper-v2"
@@ -53,10 +53,11 @@ class ScalePasteFilter(QtCore.QObject):
         self.spin = spin
 
     def eventFilter(self, watched, event):
-        command = (QtCore.Qt.ControlModifier | QtCore.Qt.MetaModifier)
-        if (event.type() == QtCore.QEvent.KeyPress
+        command = (QtCore.Qt.KeyboardModifier.ControlModifier |
+                   QtCore.Qt.KeyboardModifier.MetaModifier)
+        if (event.type() == QtCore.QEvent.Type.KeyPress
                 and event.modifiers() & command
-                and event.key() == QtCore.Qt.Key_V):
+                and event.key() == QtCore.Qt.Key.Key_V):
             text = QtWidgets.QApplication.clipboard().text().strip()
             text = text.replace("µV/N", "").replace("uV/N", "").strip()
             try:
@@ -64,9 +65,9 @@ class ScalePasteFilter(QtCore.QObject):
             except ValueError:
                 return False
             return True
-        if (event.type() == QtCore.QEvent.KeyPress
+        if (event.type() == QtCore.QEvent.Type.KeyPress
                 and event.modifiers() & command
-                and event.key() == QtCore.Qt.Key_C):
+                and event.key() == QtCore.Qt.Key.Key_C):
             editor = self.spin.lineEdit()
             text = editor.selectedText() or editor.text()
             QtWidgets.QApplication.clipboard().setText(text)
@@ -296,11 +297,11 @@ class Window(QtWidgets.QWidget):
         self.content.setMinimumSize(1400, 780)
         content_layout = QtWidgets.QVBoxLayout(self.content)
         content_layout.setContentsMargins(0, 0, 0, 0)
-        self.splitter = QtWidgets.QSplitter(QtCore.Qt.Horizontal)
+        self.splitter = QtWidgets.QSplitter(QtCore.Qt.Orientation.Horizontal)
         content_layout.addWidget(self.splitter)
         self.content_scroll = QtWidgets.QScrollArea()
         self.content_scroll.setWidgetResizable(True)
-        self.content_scroll.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.content_scroll.setFrameShape(QtWidgets.QFrame.Shape.NoFrame)
         self.content_scroll.setWidget(self.content)
         outer_layout.addWidget(self.content_scroll, 1)
 
@@ -346,7 +347,7 @@ class Window(QtWidgets.QWidget):
         self.minus_button = QtWidgets.QPushButton("−")
         self.plus_button = QtWidgets.QPushButton("+")
         self.count_label = QtWidgets.QLabel("0")
-        self.count_label.setAlignment(QtCore.Qt.AlignCenter)
+        self.count_label.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.minus_button.clicked.connect(lambda: self.change_count(-1))
         self.plus_button.clicked.connect(lambda: self.change_count(1))
         count_layout.addWidget(self.minus_button)
@@ -404,7 +405,7 @@ class Window(QtWidgets.QWidget):
             pen=pg.mkPen("#8e44ad", width=1), label="target")
         self.trigger_line = pg.InfiniteLine(
             angle=0,
-            pen=pg.mkPen("#e67e22", width=1, style=QtCore.Qt.DashLine),
+            pen=pg.mkPen("#e67e22", width=1, style=QtCore.Qt.PenStyle.DashLine),
             label="rebound trigger")
         self.trigger_line.hide()
         self.angle_plot.addItem(self.target_line)
@@ -445,7 +446,7 @@ class Window(QtWidgets.QWidget):
         )
         self.mindaq_plot_splitter = self.mindaq.win.findChild(
             QtWidgets.QSplitter)
-        self.mindaq_plot_splitter.setOrientation(QtCore.Qt.Vertical)
+        self.mindaq_plot_splitter.setOrientation(QtCore.Qt.Orientation.Vertical)
         self.mindaq_plot_splitter.setSizes((1, 1))
         self.compact_mindaq_controls()
         self.mindaq.win.setMinimumSize(790, 760)
@@ -915,10 +916,10 @@ class Window(QtWidgets.QWidget):
                 self,
                 "Replace files?",
                 "Replace " + " and ".join(existing) + "?",
-                QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
-                QtWidgets.QMessageBox.No,
+                QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No,
+                QtWidgets.QMessageBox.StandardButton.No,
             )
-            if answer != QtWidgets.QMessageBox.Yes:
+            if answer != QtWidgets.QMessageBox.StandardButton.Yes:
                 return
 
         base.parent.mkdir(parents=True, exist_ok=True)

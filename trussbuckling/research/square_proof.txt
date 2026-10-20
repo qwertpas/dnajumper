@@ -1,0 +1,176 @@
+Square FP-ori: exact coordinates, rigidity, envelope and nonintersection
+====================================================================
+
+Construction attribution
+------------------------
+Fengrui Liu, Tatsuro Terakawa, Siying Long and Masaharu Komori,
+"Rigid-foldable cylindrical origami with tunable mechanical behaviors",
+Scientific Reports 14, 145 (2024), DOI 10.1038/s41598-023-50353-4.
+https://pmc.ncbi.nlm.nih.gov/articles/PMC10762141/
+
+This is an independently checked coordinate realization of the square,
+alpha=45-degree case of their FP-ori construction. It is not a claim to
+have invented FP-ori. The explicit envelope and nonintersection proofs
+below are deductions from these coordinates, not quotations from the paper.
+
+Model and cuts
+--------------
+Take a square prism of side length l and initial height l. On each square
+side face add both diagonals: crease the lower-left-to-upper-right diagonal
+and cut the other diagonal. At the intersection of the two diagonals the
+cut separates the center into two material points. Four rigid right
+isosceles triangles remain on each side. Vertical prism edges and the
+edges joining side triangles to the top/bottom squares are hinges.
+
+The ideal model has zero-thickness panels and perfect line hinges. A slit
+of zero or small initial width opens into a finite gap during the motion.
+Thus this is a cut-sheet mechanism, not a sealed tube. The full cut must
+reach its stated endpoints; leaving bridges across it adds constraints.
+
+Coordinates
+-----------
+It is sufficient to take l=1; multiply every coordinate by l otherwise.
+Let 0 <= theta <= pi/2, c=cos(theta), s=sin(theta), h=sqrt(c), u=sqrt(s),
+and define
+
+  D = (1+u)^2+c,
+  r = c/D,
+  p = 2*h*(1+u)/D,
+  q = ((1+u)^2-c)/D.
+
+Let Q be the 90-degree rotation about z and Rot(theta) the theta rotation.
+For k=0,1,2,3, with indices modulo four, define
+
+  B_k = Q^k (1/2, -1/2, 0),
+  T_k = Rot(theta) B_k + (0,0,h),
+  J_k = Q^k (r,0,p/2),
+  I_k = Q^k Rot(theta) (r,0,0) + (0,0,h-p/2).
+
+Each original prism side has the four triangles
+
+  D_k = (B_k, B_(k+1), J_k),
+  L_k = (B_k, T_k, J_k),
+  U_k = (T_k, T_(k+1), I_k),
+  R_k = (B_(k+1), T_(k+1), I_k).
+
+Creases are the shared edges B_k J_k and T_(k+1) I_k, in addition to
+vertical/prism-ring hinges. Cut edges are B_(k+1) J_k, B_(k+1) I_k,
+T_k J_k and T_k I_k. J_k and I_k coincide in the initial prism but
+are distinct material points thereafter.
+
+Exact panel rigidity
+--------------------
+The identities p^2+q^2=1 and
+
+  2*h*p - (c+s-1)*q = c-s+1
+
+follow by substitution. In the second identity the remaining numerator
+is 2*c*(s-u^2)=0. Also |B_k-T_k|^2=1 because h^2=c.
+These identities give, for every triangle listed above, side lengths
+
+  (1, 1/sqrt(2), 1/sqrt(2)).
+
+Thus every facet is a fixed nondegenerate triangle, not merely a set of
+fixed outer-ring edges. Shared hinge edges coincide identically because
+their two panels use the same endpoints. This proves continuous finite
+rigid folding over the entire stated interval. No triangle loses area
+even at the flat endpoint; the area of each triangle is 1/4.
+
+Constant radius and full axial collapse
+--------------------------------------
+The top and bottom vertices have radius R=1/sqrt(2) at every theta.
+The extra vertices have radius r=(1-q)/2 <= 1/2 < R. Every panel is a
+convex hull of its vertices, so all of every panel lies inside the same
+solid circular cylinder of radius R. This is an exact constant outer
+envelope, although internal vertices leave the cylindrical surface.
+
+Further,
+
+  h-p = h*(s+c-1)/D >= 0,
+
+with strict inequality for 0<theta<pi/2. Hence every side-panel vertex
+lies between z=0 and z=h. At theta=0, h=1 and J=I=(1/2,0,1/2) per side,
+giving the original square prism. At theta=pi/2, h=p=r=0 and q=1;
+the two squares coincide after a 90-degree rotation and all facets are
+flat. Intermediate slit-center separation is
+
+  |I_k-J_k|^2 = 2*r^2*(1-c) + (h-p)^2 > 0.
+
+Nonintersection for every interior state
+---------------------------------------
+The following is an analytic proof for zero-thickness panels. It does
+not rely on sampled collision detection. It permits the intended shared
+hinges and vertices. At the final flat state, face-to-face overlap is the
+intended limiting stack.
+
+1. The four bottom triangles D_k occupy disjoint azimuthal sectors
+   [k*pi/2-pi/4, k*pi/2+pi/4], apart from the common boundary rays.
+   Each extreme ray meets a bottom triangle only at its corresponding
+   B vertex. Thus bottom triangles only meet at their shared vertices.
+   The same statement holds for the top triangles U_k after rotation.
+   All D_k have z<=p/2; all U_k have z>=h-p/2. Since p<h in the open
+   interval, bottom and top triangles are strictly separated in height.
+
+2. Group the vertical triangles into pairs (L_k,R_(k-1)), one pair for
+   each vertical edge B_k T_k. A pair lies in the azimuthal interval
+
+   k*pi/2 + [min(-pi/4,theta-pi/2), max(0,theta-pi/4)].
+
+   Its width is max(theta,pi/2-theta), strictly below pi/2. Therefore
+   different vertical-edge pairs lie in disjoint sectors. The projected
+   vertices lie in a convex cone of angular width below pi, so their
+   entire triangles lie in that same angular cone. Within a pair the
+   panels are noncoplanar, as the determinant in step 4 is positive;
+   therefore they meet only on their common edge B_k T_k.
+
+3. Consider D_0 and vertical triangles. Angular sectors eliminate all
+   possibilities except L_0, L_1, R_0 and R_3. L_1 meets its sector
+   only on the ray through B_1, so only the intended vertex is common.
+   L_0 shares the crease B_0 J_0 with D_0. They are noncoplanar for
+   interior theta, since the determinant in step 4 is nonzero.
+   For R_0, use the plane of D_0 with normal N=(p,0,q). Its vertices
+   B_1,T_1,I_0 have the signed plane values
+
+     N dot (B_1-B_1) = 0,
+     N dot (T_1-B_1) = h*u*(c+1-u^2)/D > 0,
+     N dot (I_0-B_1) = 2*h*u^3*(1-u^2)/D^2 > 0.
+
+   Thus R_0 meets the plane of D_0 only at B_1.
+
+4. For D_0 versus R_3, use the plane of L_0, with normal
+
+     n = (T_0-B_0) cross (J_0-B_0).
+
+   Direct substitution, using c^2+u^4=1, gives
+
+     n dot (B_1-B_0) = -h*u/2 < 0,
+     n dot (I_3-B_0) = h*(1+u)*(c+u-u^2)/D^2 > 0.
+
+   D_0 and R_3 lie on opposite sides of this plane. D_0 meets the
+   plane on B_0 J_0; R_3 meets it on B_0 T_0. These edges have only
+   their common endpoint B_0, proving the required separation.
+
+5. Rotation by multiples of pi/2 proves the same statements for every
+   D_k. The spatial isometry in cylindrical coordinates
+
+     (radius,azimuth,z) -> (radius,theta-azimuth,h-z)
+
+   exchanges bottom and top triangles and exchanges the two vertical
+   triangle types. It therefore proves every remaining U_k case.
+   Top and bottom square caps, if present, meet side triangles only
+   at their intended edges/vertices, since other vertices have strictly
+   intermediate heights.
+
+This exhausts all triangle pair types, proving no unintended intersection
+for 0<theta<pi/2. The endpoints follow directly from the explicit initial
+prism and the continuous flat-stack limit.
+
+Verification
+------------
+verify_fp_proof.py uses exact SymPy polynomial reduction modulo
+h^2=c and c^2+u^4=1. It checks all 48 triangle edge-length identities,
+the four separation determinants, the p<=h identity and the slit gap.
+The proof of positivity uses 0<u<1 and c,h,D>0; it is not inferred from
+floating-point samples. This proves existence of the prescribed symmetric
+motion. It does not assert that a free physical assembly has only one
+degree of freedom without guides or an actuation constraint.

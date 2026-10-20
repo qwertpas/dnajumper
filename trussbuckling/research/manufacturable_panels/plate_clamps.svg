@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="450.0mm" height="250.0mm" viewBox="0 0 450.0 250.0">
+<title>Alternating plate clamp layouts in millimeters</title>
+<circle cx="112.00000000000001" cy="120.0" r="100.0" fill="none" stroke="#555" stroke-width=".4"/>
+<text x="112.00000000000001" y="10.0" text-anchor="middle" font-family="sans-serif" font-size="5">Plate A</text>
+<polygon points="212.000000,120.000000 152.000000,189.282032 148.220355,186.008764 208.220355,116.726732" fill="#ddd" stroke="#147d92" stroke-width=".35"/>
+<circle cx="212.0" cy="120.0" r="1" fill="#147d92"/>
+<text x="202.0" y="120.0" text-anchor="middle" font-family="sans-serif" font-size="3">1L</text>
+<circle cx="152.00000000000003" cy="189.28203230275508" r="1" fill="#147d92"/>
+<text x="148.00000000000003" y="182.35382907247958" text-anchor="middle" font-family="sans-serif" font-size="3">1R</text>
+<polygon points="62.000000,206.602540 32.000000,120.000000 36.724556,118.363366 66.724556,204.965906" fill="#ddd" stroke="#b85c32" stroke-width=".35"/>
+<circle cx="62.00000000000003" cy="206.60254037844388" r="1" fill="#b85c32"/>
+<text x="67.00000000000003" y="197.94228634059948" text-anchor="middle" font-family="sans-serif" font-size="3">2L</text>
+<circle cx="32.000000000000014" cy="120.00000000000001" r="1" fill="#b85c32"/>
+<text x="40.000000000000014" y="120.00000000000001" text-anchor="middle" font-family="sans-serif" font-size="3">2R</text>
+<polygon points="62.000000,33.397460 152.000000,50.717968 151.055089,55.627870 61.055089,38.307362" fill="#ddd" stroke="#805ca3" stroke-width=".35"/>
+<circle cx="61.99999999999997" cy="33.397459621556166" r="1" fill="#805ca3"/>
+<text x="66.99999999999997" y="42.05771365940055" text-anchor="middle" font-family="sans-serif" font-size="3">3L</text>
+<circle cx="151.99999999999994" cy="50.71796769724487" r="1" fill="#805ca3"/>
+<text x="147.99999999999997" y="57.64617092752039" text-anchor="middle" font-family="sans-serif" font-size="3">3R</text>
+<circle cx="337.0" cy="120.0" r="100.0" fill="none" stroke="#555" stroke-width=".4"/>
+<text x="337.0" y="10.0" text-anchor="middle" font-family="sans-serif" font-size="5">Plate B</text>
+<polygon points="417.000000,120.000000 387.000000,206.602540 382.275444,204.965906 412.275444,118.363366" fill="#ddd" stroke="#147d92" stroke-width=".35"/>
+<circle cx="417.0" cy="120.0" r="1" fill="#147d92"/>
+<text x="409.0" y="120.0" text-anchor="middle" font-family="sans-serif" font-size="3">1L</text>
+<circle cx="387.0" cy="206.60254037844385" r="1" fill="#147d92"/>
+<text x="382.0" y="197.94228634059948" text-anchor="middle" font-family="sans-serif" font-size="3">1R</text>
+<polygon points="297.000000,189.282032 237.000000,120.000000 240.779645,116.726732 300.779645,186.008764" fill="#ddd" stroke="#b85c32" stroke-width=".35"/>
+<circle cx="297.0" cy="189.2820323027551" r="1" fill="#b85c32"/>
+<text x="301.0" y="182.35382907247958" text-anchor="middle" font-family="sans-serif" font-size="3">2L</text>
+<circle cx="237.0" cy="120.00000000000001" r="1" fill="#b85c32"/>
+<text x="247.0" y="120.00000000000001" text-anchor="middle" font-family="sans-serif" font-size="3">2R</text>
+<polygon points="297.000000,50.717968 387.000000,33.397460 387.944911,38.307362 297.944911,55.627870" fill="#ddd" stroke="#805ca3" stroke-width=".35"/>
+<circle cx="296.99999999999994" cy="50.71796769724493" r="1" fill="#805ca3"/>
+<text x="300.99999999999994" y="57.64617092752044" text-anchor="middle" font-family="sans-serif" font-size="3">3L</text>
+<circle cx="386.99999999999994" cy="33.397459621556095" r="1" fill="#805ca3"/>
+<text x="381.99999999999994" y="42.05771365940048" text-anchor="middle" font-family="sans-serif" font-size="3">3R</text>
+<text x="225.0" y="234.0" text-anchor="middle" font-family="sans-serif" font-size="4">R=100 mm · r=80 mm · seam 91.652 mm · folded band depth 5 mm</text>
+<text x="225.0" y="243.00000000000003" text-anchor="middle" font-family="sans-serif" font-size="3.5">Circles: envelopes only. Provide slots or open clamp bars along the seams.</text></svg>

@@ -1,0 +1,7 @@
+{
+  "ratio": 0.8,
+  "samples_per_parity": 2005,
+  "fold_reversal_degrees": 21.78678929826181,
+  "method": "Independent edge-triangle and coplanar polygon-overlap checks; includes same-strap triangle pairs and exact fold reversal; flat endpoint excluded.",
+  "collisions": []
+}

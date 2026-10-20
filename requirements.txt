@@ -1,0 +1,4 @@
+-r trussbuckling/requirements.txt
+bleak
+pyqtgraph>=0.13.7
+pyserial

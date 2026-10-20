@@ -24,11 +24,11 @@ except ImportError:
     list_ports = None
 
 try:
+    from PyQt6 import QtCore, QtWidgets
     import pyqtgraph as pg
-    from pyqtgraph.Qt import QtCore, QtWidgets
 except ImportError as exc:
     raise SystemExit(
-        "pyqtgraph and a Qt binding are required. Install pyqtgraph plus PyQt5/PyQt6/PySide6."
+        "PyQt6 and pyqtgraph are required. Run: python3 -m pip install -r requirements.txt"
     ) from exc
 
 BAUD = 2_000_000

@@ -402,9 +402,13 @@ def main():
     parser.add_argument("--spacer-end-height", type=float, default=spacer_end_height, help="bottom disk height stop value")
     args = parser.parse_args()
 
-    if not args.show:
-        import matplotlib
+    import matplotlib
+    if args.show:
+        import os
 
+        os.environ["QT_API"] = "pyqt6"
+        matplotlib.use("qtagg")
+    else:
         matplotlib.use("Agg")
 
     p = Params(

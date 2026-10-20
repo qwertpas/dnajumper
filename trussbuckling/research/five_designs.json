@@ -1,0 +1,254 @@
+{
+  "assumptions": {
+    "radius_normalization": 1.0,
+    "minimum_radius_ratio": 0.6,
+    "height0_over_radius": 1.0954451150103321,
+    "cells": 12,
+    "stroke_degrees": [
+      0,
+      75
+    ],
+    "total_EA_over_axial_load": 6000.0,
+    "equal_EA_per_cord": true,
+    "metric": "Minimum alignment Hessian eigenvalue after relaxing axial/twist coordinates; coordinates translation/R and rotation in radians; energy normalized by F*R.",
+    "end_conditions": "End centers and normals fixed; total end twist prescribed; top height free under tensile axial load.",
+    "limitations": "Local prestressed elastic model; no nonlinear post-buckling or finite-thickness contact. Numerical best found, not global-optimality proof."
+  },
+  "designs": [
+    {
+      "id": "clearance",
+      "name": "Three-radii, wider clearance",
+      "product": 0.6,
+      "angles_degrees": [
+        0.0,
+        63.00667407644474,
+        91.07916101229769,
+        211.50333703822236,
+        331.92751306414704
+      ],
+      "bottom_radii": [
+        1.0,
+        0.6,
+        1.0,
+        0.7745966692414834,
+        0.6
+      ],
+      "top_radii": [
+        0.6,
+        1.0,
+        0.6,
+        0.7745966692414833,
+        1.0
+      ],
+      "axial_load_shares": [
+        0.17834831471192372,
+        0.17834831471192364,
+        0.1080779164673458,
+        0.42714753764146113,
+        0.10807791646734573
+      ],
+      "cord_lengths_over_radius": [
+        1.16619037896906,
+        1.16619037896906,
+        1.16619037896906,
+        1.0954451150103321,
+        1.16619037896906
+      ],
+      "worst_alignment_stiffness": 2.8125331742770543,
+      "worst_twist_degrees": 75.0,
+      "first_contact_degrees": 90.00000000000003,
+      "minimum_cord_centerline_gap_over_radius": 0.03870217374906168,
+      "linear_slack_end_tilt_degrees": 0.028640264900903177,
+      "linear_slack_end_offset_over_radius": 0.004389945076308749,
+      "slack_margin_note": "Worst input direction, one pure end error at a time; local first-unloading estimate, not an experimentally validated instability threshold."
+    },
+    {
+      "id": "stiff",
+      "name": "Three-radii, higher stiffness",
+      "product": 0.6,
+      "angles_degrees": [
+        0.0,
+        67.04875375318065,
+        90.74360666589763,
+        213.52437687659034,
+        336.30514708728305
+      ],
+      "bottom_radii": [
+        1.0,
+        0.6,
+        1.0,
+        0.7745966692414834,
+        0.6
+      ],
+      "top_radii": [
+        0.6,
+        1.0,
+        0.6,
+        0.7745966692414833,
+        1.0
+      ],
+      "axial_load_shares": [
+        0.17329667721022177,
+        0.17329667721022168,
+        0.11383943567925832,
+        0.42572777422103986,
+        0.11383943567925826
+      ],
+      "cord_lengths_over_radius": [
+        1.16619037896906,
+        1.16619037896906,
+        1.16619037896906,
+        1.0954451150103321,
+        1.16619037896906
+      ],
+      "worst_alignment_stiffness": 2.8298850247825578,
+      "worst_twist_degrees": 75.0,
+      "first_contact_degrees": 79.9999999999607,
+      "minimum_cord_centerline_gap_over_radius": 0.011848348911128025,
+      "linear_slack_end_tilt_degrees": 0.030482628472427945,
+      "linear_slack_end_offset_over_radius": 0.004660532105097463,
+      "slack_margin_note": "Worst input direction, one pure end error at a time; local first-unloading estimate, not an experimentally validated instability threshold."
+    },
+    {
+      "id": "balanced",
+      "name": "Balanced cord loading",
+      "product": 0.6,
+      "angles_degrees": [
+        0.0,
+        83.71164679353524,
+        105.11796143390737,
+        221.85582339676762,
+        338.59368535962784
+      ],
+      "bottom_radii": [
+        1.0,
+        0.6,
+        0.9488911294910684,
+        0.7745966692414834,
+        0.6323170080869089
+      ],
+      "top_radii": [
+        0.6,
+        1.0,
+        0.6323170080869089,
+        0.7745966692414833,
+        0.9488911294910682
+      ],
+      "axial_load_shares": [
+        0.15889131569760945,
+        0.15889131569760936,
+        0.15000000000000405,
+        0.3822173686047732,
+        0.15000000000000396
+      ],
+      "cord_lengths_over_radius": [
+        1.16619037896906,
+        1.16619037896906,
+        1.1402715353558623,
+        1.0954451150103321,
+        1.1402715353558621
+      ],
+      "worst_alignment_stiffness": 2.3372539386546993,
+      "worst_twist_degrees": 75.0,
+      "first_contact_degrees": 80.0000000000007,
+      "minimum_cord_centerline_gap_over_radius": 0.010557377406550527,
+      "linear_slack_end_tilt_degrees": 0.03448739608753183,
+      "linear_slack_end_offset_over_radius": 0.005446580280183802,
+      "slack_margin_note": "Worst input direction, one pure end error at a time; local first-unloading estimate, not an experimentally validated instability threshold."
+    },
+    {
+      "id": "regular",
+      "name": "Regular pentagon",
+      "product": 0.6,
+      "angles_degrees": [
+        0.0,
+        72.0,
+        144.0,
+        216.0,
+        288.0
+      ],
+      "bottom_radii": [
+        1.0,
+        0.6,
+        1.0,
+        0.7075804345384914,
+        0.7075804345384914
+      ],
+      "top_radii": [
+        0.6,
+        1.0,
+        0.6,
+        0.8479601338769929,
+        0.8479601338769929
+      ],
+      "axial_load_shares": [
+        0.17314313383448857,
+        0.2279054830136352,
+        0.17314313383448862,
+        0.21290412465869377,
+        0.2129041246586939
+      ],
+      "cord_lengths_over_radius": [
+        1.16619037896906,
+        1.16619037896906,
+        1.16619037896906,
+        1.1044032144042175,
+        1.1044032144042175
+      ],
+      "worst_alignment_stiffness": 1.331904574697753,
+      "worst_twist_degrees": 73.44167337498152,
+      "first_contact_degrees": 142.02378269098867,
+      "minimum_cord_centerline_gap_over_radius": 0.37321152334961094,
+      "linear_slack_end_tilt_degrees": 0.056147330547994014,
+      "linear_slack_end_offset_over_radius": 0.009499235531690915,
+      "slack_margin_note": "Worst input direction, one pure end error at a time; local first-unloading estimate, not an experimentally validated instability threshold."
+    },
+    {
+      "id": "free",
+      "name": "Unrestricted numerical best",
+      "product": 0.6,
+      "angles_degrees": [
+        0.0,
+        66.89067003373117,
+        91.78865905640382,
+        222.6202900625174,
+        336.3051470872658
+      ],
+      "bottom_radii": [
+        1.0,
+        0.6,
+        1.0,
+        0.8582627446758405,
+        0.6
+      ],
+      "top_radii": [
+        0.6,
+        1.0,
+        0.6,
+        0.6990866185466498,
+        1.0
+      ],
+      "axial_load_shares": [
+        0.21943844072443722,
+        0.1113957038765068,
+        0.19638260841806923,
+        0.4227832469810228,
+        0.04999999999996404
+      ],
+      "cord_lengths_over_radius": [
+        1.16619037896906,
+        1.16619037896906,
+        1.16619037896906,
+        1.1069494293460276,
+        1.16619037896906
+      ],
+      "worst_alignment_stiffness": 2.860717478839524,
+      "worst_twist_degrees": 75.0,
+      "first_contact_degrees": 80.00000000000284,
+      "minimum_cord_centerline_gap_over_radius": 0.011848348911231894,
+      "linear_slack_end_tilt_degrees": 0.014827372768183194,
+      "linear_slack_end_offset_over_radius": 0.0022705849982888374,
+      "slack_margin_note": "Worst input direction, one pure end error at a time; local first-unloading estimate, not an experimentally validated instability threshold."
+    }
+  ]
+}

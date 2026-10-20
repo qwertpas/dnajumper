@@ -1,0 +1,1196 @@
+{
+  "model": "12 cells, 3 strips, a=.65R, b=R, EA_strip=1, R=1",
+  "limitations": [
+    "Independent elastic warp fibers; carrier, clamps, contact and yarn slip omitted.",
+    "Positive tangent eigenvalues are local stability, not global stability.",
+    "Translation scaled by R; rotations in radians; Hessian divided by EA_strip*R.",
+    "Under a positive tensile load the chain has positive height even at 90 degrees."
+  ],
+  "representative": "force=.01 corresponds to F=10 N and EA_strip=1000 N",
+  "rows": [
+    {
+      "force_over_total_ea": 0.001,
+      "angle": 15,
+      "material": "panel",
+      "minimum_strain": 0.0009733159459561769,
+      "maximum_strain": 0.0010640712653349205,
+      "height": 1.1218164351626807,
+      "unloaded_height": 1.1205818016440339,
+      "minimum_full": 0.00011591025024311705,
+      "minimum_tilt": 0.0027277506507660445,
+      "minimum_axial": 0.00011591025024351765,
+      "equilibrium_error": 4.153070303023615e-15,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.001,
+      "angle": 15,
+      "material": "edges",
+      "minimum_strain": 0.0010641951804866157,
+      "maximum_strain": 0.0010641951804866157,
+      "height": 1.1219326274165107,
+      "unloaded_height": 1.1205818016440339,
+      "minimum_full": 0.00011589755942352991,
+      "minimum_tilt": 0.005015560465998631,
+      "minimum_axial": 0.00011589755942325382,
+      "equilibrium_error": 4.0805032963664445e-15,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.001,
+      "angle": 30,
+      "material": "panel",
+      "minimum_strain": 0.0010277827371534265,
+      "maximum_strain": 0.0011236138784311844,
+      "height": 1.0624295610109453,
+      "unloaded_height": 1.0610527908260599,
+      "minimum_full": 0.00011550149855020515,
+      "minimum_tilt": 0.0021940288070770335,
+      "minimum_axial": 0.00011550149855033669,
+      "equilibrium_error": 4.4620806276761925e-15,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.001,
+      "angle": 30,
+      "material": "edges",
+      "minimum_strain": 0.0011237269592105914,
+      "maximum_strain": 0.0011237269592105914,
+      "height": 1.0625590921911432,
+      "unloaded_height": 1.0610527908260599,
+      "minimum_full": 0.00011548407638656863,
+      "minimum_tilt": 0.004204511857407555,
+      "minimum_axial": 0.00011548407638658404,
+      "equilibrium_error": 4.150976437578002e-15,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.001,
+      "angle": 45,
+      "material": "panel",
+      "minimum_strain": 0.0011370416185605414,
+      "maximum_strain": 0.001243053809459882,
+      "height": 0.960454750761582,
+      "unloaded_height": 0.9587694277262453,
+      "minimum_full": 0.00011921270845438353,
+      "minimum_tilt": 0.0014732787617747858,
+      "minimum_axial": 0.00011921270845460176,
+      "equilibrium_error": 2.077195837210666e-15,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.001,
+      "angle": 45,
+      "material": "edges",
+      "minimum_strain": 0.0012431316868777298,
+      "maximum_strain": 0.0012431316868777298,
+      "height": 0.9606132018089253,
+      "unloaded_height": 0.9587694277262453,
+      "minimum_full": 0.00011918201970366319,
+      "minimum_tilt": 0.0030666119630884344,
+      "minimum_axial": 0.00011918201970409868,
+      "equilibrium_error": 1.698077442546797e-15,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.001,
+      "angle": 60,
+      "material": "panel",
+      "minimum_strain": 0.0013508832858732944,
+      "maximum_strain": 0.001476818334211094,
+      "height": 0.8086057340826346,
+      "unloaded_height": 0.806225774829855,
+      "minimum_full": 0.00013769038909709942,
+      "minimum_tilt": 0.001063220369897029,
+      "minimum_axial": 0.0001376903890976523,
+      "equilibrium_error": 3.246663734298577e-15,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.001,
+      "angle": 60,
+      "material": "edges",
+      "minimum_strain": 0.0014767611349935095,
+      "maximum_strain": 0.0014767611349935095,
+      "height": 0.8088290843252451,
+      "unloaded_height": 0.806225774829855,
+      "minimum_full": 0.00013761382463529999,
+      "minimum_tilt": 0.00223259334572285,
+      "minimum_axial": 0.00013761382463497768,
+      "equilibrium_error": 1.3552527156068805e-15,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.001,
+      "angle": 75,
+      "material": "panel",
+      "minimum_strain": 0.001869493761333496,
+      "maximum_strain": 0.0020437265984551978,
+      "height": 0.5846236442628138,
+      "unloaded_height": 0.5800558237215423,
+      "minimum_full": 0.0002133289026321109,
+      "minimum_tilt": 0.0007477648976613189,
+      "minimum_axial": 0.0002133289026321082,
+      "equilibrium_error": 1.3158597543289248e-15,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.001,
+      "angle": 75,
+      "material": "edges",
+      "minimum_strain": 0.0020427730686571888,
+      "maximum_strain": 0.0020427730686571888,
+      "height": 0.5850490440936394,
+      "unloaded_height": 0.5800558237215423,
+      "minimum_full": 0.00021295166477515562,
+      "minimum_tilt": 0.0016452493465692918,
+      "minimum_axial": 0.00021295166477540043,
+      "equilibrium_error": 1.6895122453841616e-15,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.001,
+      "angle": 85,
+      "material": "panel",
+      "minimum_strain": 0.0031306293794222118,
+      "maximum_strain": 0.003422197117477488,
+      "height": 0.34959541982669057,
+      "unloaded_height": 0.33660431603286906,
+      "minimum_full": -0.0016880104883936445,
+      "minimum_tilt": -0.001688010488393636,
+      "minimum_axial": 0.00043978386506865203,
+      "equilibrium_error": 8.291097300903993e-16,
+      "negative_eigenvalues": 4
+    },
+    {
+      "force_over_total_ea": 0.001,
+      "angle": 85,
+      "material": "edges",
+      "minimum_strain": 0.003411982263688662,
+      "maximum_strain": 0.003411982263688662,
+      "height": 0.35075078805445503,
+      "unloaded_height": 0.33660431603286906,
+      "minimum_full": 0.0003415446641125804,
+      "minimum_tilt": 0.0003415446641120881,
+      "minimum_axial": 0.0004361166271834265,
+      "equilibrium_error": 6.879262784420526e-16,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.001,
+      "angle": 90,
+      "material": "panel",
+      "minimum_strain": 0.007511125166080657,
+      "maximum_strain": 0.00820900695201865,
+      "height": 0.14640614835834367,
+      "unloaded_height": 8.921997643161422e-09,
+      "minimum_full": -0.012077721202490998,
+      "minimum_tilt": -0.0120777212024911,
+      "minimum_axial": 0.0007049717542644341,
+      "equilibrium_error": 2.9034087146214554e-15,
+      "negative_eigenvalues": 10
+    },
+    {
+      "force_over_total_ea": 0.001,
+      "angle": 90,
+      "material": "edges",
+      "minimum_strain": 0.007968544786965959,
+      "maximum_strain": 0.007968544786965959,
+      "height": 0.1508669460343596,
+      "unloaded_height": 8.921997643161422e-09,
+      "minimum_full": -0.010328114003897977,
+      "minimum_tilt": -0.010328114003897977,
+      "minimum_axial": 0.0006836496092572641,
+      "equilibrium_error": 2.262946774411745e-15,
+      "negative_eigenvalues": 8
+    },
+    {
+      "force_over_total_ea": 0.0033333333333333335,
+      "angle": 15,
+      "material": "panel",
+      "minimum_strain": 0.0032441023945981584,
+      "maximum_strain": 0.003546219674374962,
+      "height": 1.1246962722303928,
+      "unloaded_height": 1.1205818016440339,
+      "minimum_full": 0.0003853217782109014,
+      "minimum_tilt": 0.0032908618242288965,
+      "minimum_axial": 0.0003853217782114418,
+      "equilibrium_error": 4.215394987282586e-15,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.0033333333333333335,
+      "angle": 15,
+      "material": "edges",
+      "minimum_strain": 0.0035461567276098283,
+      "maximum_strain": 0.0035461567276098283,
+      "height": 1.1250823429096246,
+      "unloaded_height": 1.1205818016440339,
+      "minimum_full": 0.00038518204609764233,
+      "minimum_tilt": 0.005490043409167061,
+      "minimum_axial": 0.0003851820460979349,
+      "equilibrium_error": 4.387549351614339e-15,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.0033333333333333335,
+      "angle": 30,
+      "material": "panel",
+      "minimum_strain": 0.0034245629413112155,
+      "maximum_strain": 0.0037434548909938137,
+      "height": 1.0656387408325136,
+      "unloaded_height": 1.0610527908260599,
+      "minimum_full": 0.0003835715276749854,
+      "minimum_tilt": 0.002924431843434346,
+      "minimum_axial": 0.0003835715276743694,
+      "equilibrium_error": 3.5997172311095366e-15,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.0033333333333333335,
+      "angle": 30,
+      "material": "edges",
+      "minimum_strain": 0.003743193935728417,
+      "maximum_strain": 0.003743193935728417,
+      "height": 1.066068638984781,
+      "unloaded_height": 1.0610527908260599,
+      "minimum_full": 0.00038338044824904374,
+      "minimum_tilt": 0.004814477532934341,
+      "minimum_axial": 0.00038338044824866606,
+      "equilibrium_error": 8.27463098040937e-16,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.0033333333333333335,
+      "angle": 45,
+      "material": "panel",
+      "minimum_strain": 0.003785639512821959,
+      "maximum_strain": 0.004138085395819502,
+      "height": 0.9643764715886827,
+      "unloaded_height": 0.9587694277262453,
+      "minimum_full": 0.0003948595178278386,
+      "minimum_tilt": 0.0021588484453278806,
+      "minimum_axial": 0.00039485951782808234,
+      "equilibrium_error": 5.156414710364224e-15,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.0033333333333333335,
+      "angle": 45,
+      "material": "edges",
+      "minimum_strain": 0.004137283360403865,
+      "maximum_strain": 0.004137283360403865,
+      "height": 0.9649008942875755,
+      "unloaded_height": 0.9587694277262453,
+      "minimum_full": 0.00039452586133320664,
+      "minimum_tilt": 0.0037402126690883855,
+      "minimum_axial": 0.0003945258613333521,
+      "equilibrium_error": 1.959803846984798e-15,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.0033333333333333335,
+      "angle": 60,
+      "material": "panel",
+      "minimum_strain": 0.004487768209652021,
+      "maximum_strain": 0.004905423550186638,
+      "height": 0.8141176901607442,
+      "unloaded_height": 0.806225774829855,
+      "minimum_full": 0.00045274584531876063,
+      "minimum_tilt": 0.0016525146648478169,
+      "minimum_axial": 0.0004527458453186356,
+      "equilibrium_error": 1.0612950134599591e-15,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.0033333333333333335,
+      "angle": 60,
+      "material": "edges",
+      "minimum_strain": 0.004902871764682848,
+      "maximum_strain": 0.004902871764682848,
+      "height": 0.8148514370368933,
+      "unloaded_height": 0.806225774829855,
+      "minimum_full": 0.0004519307826704891,
+      "minimum_tilt": 0.0029321121555891372,
+      "minimum_axial": 0.0004519307826702906,
+      "equilibrium_error": 4.0783348920214735e-15,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.0033333333333333335,
+      "angle": 75,
+      "material": "panel",
+      "minimum_strain": 0.006151712886686811,
+      "maximum_strain": 0.006723707674486823,
+      "height": 0.5949859063544731,
+      "unloaded_height": 0.5800558237215423,
+      "minimum_full": 0.00024362601111474995,
+      "minimum_tilt": 0.00024362601111457257,
+      "minimum_axial": 0.0006815293428352111,
+      "equilibrium_error": 9.150962797309196e-16,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.0033333333333333335,
+      "angle": 75,
+      "material": "edges",
+      "minimum_strain": 0.00671142981469397,
+      "maximum_strain": 0.00671142981469397,
+      "height": 0.5963412198870128,
+      "unloaded_height": 0.5800558237215423,
+      "minimum_full": 0.0006778321150978196,
+      "minimum_tilt": 0.0021222909720639916,
+      "minimum_axial": 0.0006778321150981868,
+      "equilibrium_error": 1.618497003086361e-15,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.0033333333333333335,
+      "angle": 85,
+      "material": "panel",
+      "minimum_strain": 0.009777650872024646,
+      "maximum_strain": 0.01068501341294037,
+      "height": 0.375814837861182,
+      "unloaded_height": 0.33660431603286906,
+      "minimum_full": -0.010463488427956955,
+      "minimum_tilt": -0.010463488427956531,
+      "minimum_axial": 0.0012296513938619665,
+      "equilibrium_error": 7.677032295462516e-16,
+      "negative_eigenvalues": 6
+    },
+    {
+      "force_over_total_ea": 0.0033333333333333335,
+      "angle": 85,
+      "material": "edges",
+      "minimum_strain": 0.010601602127429333,
+      "maximum_strain": 0.010601602127429333,
+      "height": 0.3789774452965507,
+      "unloaded_height": 0.33660431603286906,
+      "minimum_full": -0.004702860505383435,
+      "minimum_tilt": -0.0047028605053830936,
+      "minimum_axial": 0.0012062675610564266,
+      "equilibrium_error": 6.002143226879753e-16,
+      "negative_eigenvalues": 4
+    },
+    {
+      "force_over_total_ea": 0.0033333333333333335,
+      "angle": 90,
+      "material": "panel",
+      "minimum_strain": 0.01684740813730312,
+      "maximum_strain": 0.018404940255489555,
+      "height": 0.21977632378287168,
+      "unloaded_height": 8.921997643161422e-09,
+      "minimum_full": -0.026776271939816843,
+      "minimum_tilt": -0.026776271939816614,
+      "minimum_axial": 0.0015345096052863348,
+      "equilibrium_error": 2.774107441157192e-15,
+      "negative_eigenvalues": 10
+    },
+    {
+      "force_over_total_ea": 0.0033333333333333335,
+      "angle": 90,
+      "material": "edges",
+      "minimum_strain": 0.017868274330510303,
+      "maximum_strain": 0.017868274330510303,
+      "height": 0.22647165271064748,
+      "unloaded_height": 8.921997643161422e-09,
+      "minimum_full": -0.022887641522313217,
+      "minimum_tilt": -0.022887641522313797,
+      "minimum_axial": 0.0014866761187959834,
+      "equilibrium_error": 2.5717275531356165e-15,
+      "negative_eigenvalues": 8
+    },
+    {
+      "force_over_total_ea": 0.01,
+      "angle": 15,
+      "material": "panel",
+      "minimum_strain": 0.009729918694950435,
+      "maximum_strain": 0.010632874894863198,
+      "height": 1.132916974887637,
+      "unloaded_height": 1.1205818016440339,
+      "minimum_full": 0.0011471050341815474,
+      "minimum_tilt": 0.004718700946858693,
+      "minimum_axial": 0.0011471050341816706,
+      "equilibrium_error": 1.8556797808447212e-16,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.01,
+      "angle": 15,
+      "material": "edges",
+      "minimum_strain": 0.010628693959148006,
+      "maximum_strain": 0.010628693959148006,
+      "height": 1.1340647719969512,
+      "unloaded_height": 1.1205818016440339,
+      "minimum_full": 0.00114587941677607,
+      "minimum_tilt": 0.006774961671637922,
+      "minimum_axial": 0.0011458794167761314,
+      "equilibrium_error": 3.554448402276478e-15,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.01,
+      "angle": 30,
+      "material": "panel",
+      "minimum_strain": 0.010262100886446968,
+      "maximum_strain": 0.01121417214346554,
+      "height": 1.0747829881394282,
+      "unloaded_height": 1.0610527908260599,
+      "minimum_full": 0.0011386469018437194,
+      "minimum_tilt": 0.004684856672804278,
+      "minimum_axial": 0.0011386469018437697,
+      "equilibrium_error": 6.3352101342672995e-15,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.01,
+      "angle": 30,
+      "material": "edges",
+      "minimum_strain": 0.011208084163236709,
+      "maximum_strain": 0.011208084163236709,
+      "height": 1.0760570247207726,
+      "unloaded_height": 1.0610527908260599,
+      "minimum_full": 0.0011369890231275926,
+      "minimum_tilt": 0.006397026440968803,
+      "minimum_axial": 0.0011369890231274057,
+      "equilibrium_error": 3.774758283725532e-15,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.01,
+      "angle": 45,
+      "material": "panel",
+      "minimum_strain": 0.011319441599452862,
+      "maximum_strain": 0.012369011912487515,
+      "height": 0.9755012971546456,
+      "unloaded_height": 0.9587694277262453,
+      "minimum_full": 0.0011637056748230617,
+      "minimum_tilt": 0.0036756120112215844,
+      "minimum_axial": 0.0011637056748232677,
+      "equilibrium_error": 2.544466644761184e-15,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.01,
+      "angle": 45,
+      "material": "edges",
+      "minimum_strain": 0.01235794448589278,
+      "maximum_strain": 0.01235794448589278,
+      "height": 0.9770437094042301,
+      "unloaded_height": 0.9587694277262453,
+      "minimum_full": 0.001160879594425531,
+      "minimum_tilt": 0.00540810471370856,
+      "minimum_axial": 0.0011608795944254046,
+      "equilibrium_error": 1.89605275924265e-15,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.01,
+      "angle": 60,
+      "material": "panel",
+      "minimum_strain": 0.01333975732609849,
+      "maximum_strain": 0.014575318839725515,
+      "height": 0.8295653433950719,
+      "unloaded_height": 0.806225774829855,
+      "minimum_full": 0.0013084273685941175,
+      "minimum_tilt": 0.002498411559956604,
+      "minimum_axial": 0.0013084273685944174,
+      "equilibrium_error": 4.308660091038863e-15,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.01,
+      "angle": 60,
+      "material": "edges",
+      "minimum_strain": 0.014549307542634171,
+      "maximum_strain": 0.014549307542634171,
+      "height": 0.8316813681342311,
+      "unloaded_height": 0.806225774829855,
+      "minimum_full": 0.001301901825492088,
+      "minimum_tilt": 0.0044658012487902455,
+      "minimum_axial": 0.0013019018254916866,
+      "equilibrium_error": 3.6637359812630166e-15,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.01,
+      "angle": 75,
+      "material": "panel",
+      "minimum_strain": 0.017859209733181558,
+      "maximum_strain": 0.01950939470113533,
+      "height": 0.6226499177753367,
+      "unloaded_height": 0.5800558237215423,
+      "minimum_full": -0.009219583438191327,
+      "minimum_tilt": -0.009219583438191398,
+      "minimum_axial": 0.0018372449731574212,
+      "equilibrium_error": 9.363542656081608e-16,
+      "negative_eigenvalues": 4
+    },
+    {
+      "force_over_total_ea": 0.01,
+      "angle": 75,
+      "material": "edges",
+      "minimum_strain": 0.01941354288150121,
+      "maximum_strain": 0.01941354288150121,
+      "height": 0.6262846062009721,
+      "unloaded_height": 0.5800558237215423,
+      "minimum_full": 0.001316974899013004,
+      "minimum_tilt": 0.0013169748990128857,
+      "minimum_axial": 0.001812946338525402,
+      "equilibrium_error": 1.1440501324067043e-15,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.01,
+      "angle": 85,
+      "material": "panel",
+      "minimum_strain": 0.02587848668205628,
+      "maximum_strain": 0.02825955458373386,
+      "height": 0.43339184053845453,
+      "unloaded_height": 0.33660431603286906,
+      "minimum_full": -0.032682441691768385,
+      "minimum_tilt": -0.032682441691768364,
+      "minimum_axial": 0.002719286605855643,
+      "equilibrium_error": 7.254667786643632e-16,
+      "negative_eigenvalues": 8
+    },
+    {
+      "force_over_total_ea": 0.01,
+      "angle": 85,
+      "material": "edges",
+      "minimum_strain": 0.027857275328752262,
+      "maximum_strain": 0.027857275328752262,
+      "height": 0.4400685326307045,
+      "unloaded_height": 0.33660431603286906,
+      "minimum_full": -0.02227985820881055,
+      "minimum_tilt": -0.02227985820881019,
+      "minimum_axial": 0.0026393732688799465,
+      "equilibrium_error": 7.077671781985373e-16,
+      "negative_eigenvalues": 6
+    },
+    {
+      "force_over_total_ea": 0.01,
+      "angle": 90,
+      "material": "panel",
+      "minimum_strain": 0.03539878361304405,
+      "maximum_strain": 0.03863971750695616,
+      "height": 0.32003447203357505,
+      "unloaded_height": 8.921997643161422e-09,
+      "minimum_full": -0.05501845219852997,
+      "minimum_tilt": -0.055018452198529716,
+      "minimum_axial": 0.0030325986039441873,
+      "equilibrium_error": 2.6799173774225138e-15,
+      "negative_eigenvalues": 10
+    },
+    {
+      "force_over_total_ea": 0.01,
+      "angle": 90,
+      "material": "edges",
+      "minimum_strain": 0.037523008390442314,
+      "maximum_strain": 0.037523008390442314,
+      "height": 0.32978145029172795,
+      "unloaded_height": 8.921997643161422e-09,
+      "minimum_full": -0.04704189620909903,
+      "minimum_tilt": -0.047041896209099016,
+      "minimum_axial": 0.002931522783461005,
+      "equilibrium_error": 2.473715676742927e-15,
+      "negative_eigenvalues": 8
+    },
+    {
+      "force_over_total_ea": 0.05,
+      "angle": 15,
+      "material": "panel",
+      "minimum_strain": 0.04858460740333115,
+      "maximum_strain": 0.053002897856058606,
+      "height": 1.1820270224422937,
+      "unloaded_height": 1.1205818016440339,
+      "minimum_full": 0.005484668118721207,
+      "minimum_tilt": 0.011676356667323248,
+      "minimum_axial": 0.005484668118721233,
+      "equilibrium_error": 5.051514762044462e-15,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.05,
+      "angle": 15,
+      "material": "edges",
+      "minimum_strain": 0.05287452682037608,
+      "maximum_strain": 0.05287452682037608,
+      "height": 1.1874798981041845,
+      "unloaded_height": 1.1205818016440339,
+      "minimum_full": 0.005458229766944247,
+      "minimum_tilt": 0.013438946092234979,
+      "minimum_axial": 0.005458229766944371,
+      "equilibrium_error": 6.106226635438361e-16,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.05,
+      "angle": 30,
+      "material": "panel",
+      "minimum_strain": 0.050996034781746635,
+      "maximum_strain": 0.05562797916596085,
+      "height": 1.1289439815245912,
+      "unloaded_height": 1.0610527908260599,
+      "minimum_full": 0.005361757728285331,
+      "minimum_tilt": 0.012196173987174814,
+      "minimum_axial": 0.005361757728285161,
+      "equilibrium_error": 3.5497321228261658e-15,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.05,
+      "angle": 30,
+      "material": "edges",
+      "minimum_strain": 0.055460184412680746,
+      "maximum_strain": 0.055460184412680746,
+      "height": 1.1348976256351102,
+      "unloaded_height": 1.0610527908260599,
+      "minimum_full": 0.005327992763921463,
+      "minimum_tilt": 0.01376847927674202,
+      "minimum_axial": 0.005327992763920622,
+      "equilibrium_error": 3.9968028886505635e-15,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.05,
+      "angle": 45,
+      "material": "panel",
+      "minimum_strain": 0.055617374206595516,
+      "maximum_strain": 0.06065736623937856,
+      "height": 1.0400766419325667,
+      "unloaded_height": 0.9587694277262453,
+      "minimum_full": 0.005282171690712992,
+      "minimum_tilt": 0.007946634742784968,
+      "minimum_axial": 0.005282171690712938,
+      "equilibrium_error": 1.8866744104506505e-15,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.05,
+      "angle": 45,
+      "material": "edges",
+      "minimum_strain": 0.060396054218739614,
+      "maximum_strain": 0.060396054218739614,
+      "height": 1.047021690024525,
+      "unloaded_height": 0.9587694277262453,
+      "minimum_full": 0.005231221495506764,
+      "minimum_tilt": 0.012409935864472114,
+      "minimum_axial": 0.005231221495506199,
+      "equilibrium_error": 4.669875597329565e-15,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.05,
+      "angle": 60,
+      "material": "panel",
+      "minimum_strain": 0.06375556288090745,
+      "maximum_strain": 0.06950970542086954,
+      "height": 0.9148983174277443,
+      "unloaded_height": 0.806225774829855,
+      "minimum_full": -0.016390920428383342,
+      "minimum_tilt": -0.016390920428383374,
+      "minimum_axial": 0.005434296706275543,
+      "equilibrium_error": 1.676610239531584e-15,
+      "negative_eigenvalues": 2
+    },
+    {
+      "force_over_total_ea": 0.05,
+      "angle": 60,
+      "material": "edges",
+      "minimum_strain": 0.06901959237935817,
+      "maximum_strain": 0.06901959237935817,
+      "height": 0.9236542153031874,
+      "unloaded_height": 0.806225774829855,
+      "minimum_full": 0.0053426681677552455,
+      "minimum_tilt": 0.007901345216993707,
+      "minimum_axial": 0.0053426681677553045,
+      "equilibrium_error": 1.7208456881689926e-15,
+      "negative_eigenvalues": 0
+    },
+    {
+      "force_over_total_ea": 0.05,
+      "angle": 75,
+      "material": "panel",
+      "minimum_strain": 0.07852596472695605,
+      "maximum_strain": 0.08556224149241665,
+      "height": 0.7539789223578269,
+      "unloaded_height": 0.5800558237215423,
+      "minimum_full": -0.06948895296514944,
+      "minimum_tilt": -0.06948895296514838,
+      "minimum_axial": 0.006072403634116728,
+      "equilibrium_error": 3.197962727963244e-15,
+      "negative_eigenvalues": 6
+    },
+    {
+      "force_over_total_ea": 0.05,
+      "angle": 75,
+      "material": "edges",
+      "minimum_strain": 0.0844219723127757,
+      "maximum_strain": 0.0844219723127757,
+      "height": 0.7660179672159662,
+      "unloaded_height": 0.5800558237215423,
+      "minimum_full": -0.0408110182953434,
+      "minimum_tilt": -0.04081101829534257,
+      "minimum_axial": 0.005883692983930315,
+      "equilibrium_error": 1.9290125052862095e-15,
+      "negative_eigenvalues": 4
+    },
+    {
+      "force_over_total_ea": 0.05,
+      "angle": 85,
+      "material": "panel",
+      "minimum_strain": 0.09547827064290337,
+      "maximum_strain": 0.10396468320446406,
+      "height": 0.6306437130064414,
+      "unloaded_height": 0.33660431603286906,
+      "minimum_full": -0.12100754764778182,
+      "minimum_tilt": -0.1210075476477815,
+      "minimum_axial": 0.006761906824020549,
+      "equilibrium_error": 8.303362337980236e-16,
+      "negative_eigenvalues": 8
+    },
+    {
+      "force_over_total_ea": 0.05,
+      "angle": 85,
+      "material": "edges",
+      "minimum_strain": 0.1016977176500713,
+      "maximum_strain": 0.1016977176500713,
+      "height": 0.6460221149091403,
+      "unloaded_height": 0.33660431603286906,
+      "minimum_full": -0.0975361458383561,
+      "minimum_tilt": -0.09753614583835667,
+      "minimum_axial": 0.0064743439975892235,
+      "equilibrium_error": 7.7021722333370235e-16,
+      "negative_eigenvalues": 6
+    },
+    {
+      "force_over_total_ea": 0.05,
+      "angle": 90,
+      "material": "panel",
+      "minimum_strain": 0.10739995094607302,
+      "maximum_strain": 0.11689305387764026,
+      "height": 0.5672223825796994,
+      "unloaded_height": 8.921997643161422e-09,
+      "minimum_full": -0.15426556933473326,
+      "minimum_tilt": -0.15426556933473365,
+      "minimum_axial": 0.00706551931417203,
+      "equilibrium_error": 2.503097555617284e-15,
+      "negative_eigenvalues": 8
+    },
+    {
+      "force_over_total_ea": 0.05,
+      "angle": 90,
+      "material": "edges",
+      "minimum_strain": 0.11362209210734919,
+      "maximum_strain": 0.11362209210734919,
+      "height": 0.5844820769981179,
+      "unloaded_height": 8.921997643161422e-09,
+      "minimum_full": -0.13277152199544207,
+      "minimum_tilt": -0.13277152199544165,
+      "minimum_axial": 0.006742256241005957,
+      "equilibrium_error": 1.7034984534092246e-15,
+      "negative_eigenvalues": 8
+    }
+  ],
+  "critical_angles": [
+    {
+      "force_over_total_ea": 0.001,
+      "material": "panel",
+      "critical_angle": 81.8441347177409
+    },
+    {
+      "force_over_total_ea": 0.001,
+      "material": "edges",
+      "critical_angle": 85.56941502580145
+    },
+    {
+      "force_over_total_ea": 0.0033333333333333335,
+      "material": "panel",
+      "critical_angle": 75.61190356672368
+    },
+    {
+      "force_over_total_ea": 0.0033333333333333335,
+      "material": "edges",
+      "critical_angle": 81.69439080008802
+    },
+    {
+      "force_over_total_ea": 0.01,
+      "material": "panel",
+      "critical_angle": 67.55273171518958
+    },
+    {
+      "force_over_total_ea": 0.01,
+      "material": "edges",
+      "critical_angle": 76.34448995348865
+    },
+    {
+      "force_over_total_ea": 0.05,
+      "material": "panel",
+      "critical_angle": 53.01619873217941
+    },
+    {
+      "force_over_total_ea": 0.05,
+      "material": "edges",
+      "critical_angle": 64.7512175031716
+    }
+  ],
+  "finite_difference": [
+    {
+      "analytic": 1.5439430884213121,
+      "relative_errors": [
+        2.0755676081745985e-08,
+        1.7459212676316562e-09,
+        1.0505119016356034e-09
+      ]
+    },
+    {
+      "analytic": 1.9153378993803436,
+      "relative_errors": [
+        3.6104912023477665e-08,
+        3.2130712903553945e-09,
+        7.198772494339255e-12
+      ]
+    },
+    {
+      "analytic": 1.134180169060968,
+      "relative_errors": [
+        1.4096610196822814e-08,
+        1.213499486123582e-09,
+        2.3011408246070586e-09
+      ]
+    },
+    {
+      "analytic": 1.78371162306753,
+      "relative_errors": [
+        3.7592272764033814e-08,
+        3.407421870255106e-09,
+        1.2241204322150004e-10
+      ]
+    }
+  ],
+  "unstable_mode_check": {
+    "eigenvalue": -0.010463488427956495,
+    "amplitude": 0.001,
+    "energy_changes": [
+      -5.232129840493371e-09,
+      -5.231333248534309e-09
+    ],
+    "quadratic_prediction": -5.231744213978247e-09,
+    "minimum_strains": [
+      0.00975012088285121,
+      0.009749140814361734
+    ]
+  },
+  "convergence": [
+    {
+      "points": 8,
+      "minimum_strain": 0.006181823092656247,
+      "maximum_strain": 0.0067211540624547705,
+      "height": 0.5949859063544751,
+      "unloaded_height": 0.5800558237215423,
+      "minimum_full": 0.00024362601112343728,
+      "minimum_tilt": 0.00024362601112338158,
+      "minimum_axial": 0.0006815293428359193,
+      "equilibrium_error": 8.908414912862928e-16,
+      "negative_eigenvalues": 0
+    },
+    {
+      "points": 16,
+      "minimum_strain": 0.006156736031653676,
+      "maximum_strain": 0.006724781715649941,
+      "height": 0.5949859063544732,
+      "unloaded_height": 0.5800558237215423,
+      "minimum_full": 0.00024362601111467853,
+      "minimum_tilt": 0.00024362601111463839,
+      "minimum_axial": 0.0006815293428361712,
+      "equilibrium_error": 1.2557568374906014e-15,
+      "negative_eigenvalues": 0
+    },
+    {
+      "points": 24,
+      "minimum_strain": 0.006151712886686811,
+      "maximum_strain": 0.006723707674486823,
+      "height": 0.5949859063544731,
+      "unloaded_height": 0.5800558237215423,
+      "minimum_full": 0.00024362601111474995,
+      "minimum_tilt": 0.00024362601111457257,
+      "minimum_axial": 0.0006815293428352111,
+      "equilibrium_error": 9.150962797309196e-16,
+      "negative_eigenvalues": 0
+    },
+    {
+      "points": 40,
+      "minimum_strain": 0.006149059930205203,
+      "maximum_strain": 0.00672482749489034,
+      "height": 0.5949859063544732,
+      "unloaded_height": 0.5800558237215423,
+      "minimum_full": 0.00024362601111457485,
+      "minimum_tilt": 0.0002436260111148803,
+      "minimum_axial": 0.0006815293428349423,
+      "equilibrium_error": 1.2617817828444212e-15,
+      "negative_eigenvalues": 0
+    }
+  ],
+  "local_tilt": [
+    {
+      "angle": 15,
+      "rank": 5,
+      "stiffness": 0.3715775694861608,
+      "numeric_stiffness": [
+        0.37157756948616016,
+        0.37157756948616066
+      ],
+      "maximum_error": 6.106226635438361e-16
+    },
+    {
+      "angle": 45,
+      "rank": 5,
+      "stiffness": 0.05417092985457482,
+      "numeric_stiffness": [
+        0.054170929854574154,
+        0.054170929854574515
+      ],
+      "maximum_error": 6.522560269672795e-16
+    },
+    {
+      "angle": 75,
+      "rank": 5,
+      "stiffness": 0.008306228553877396,
+      "numeric_stiffness": [
+        0.00830622855387744,
+        0.00830622855387764
+      ],
+      "maximum_error": 2.411265631607762e-16
+    },
+    {
+      "angle": 85,
+      "rank": 5,
+      "stiffness": 0.00228796480183387,
+      "numeric_stiffness": [
+        0.0022879648018338515,
+        0.002287964801833965
+      ],
+      "maximum_error": 9.367506770274758e-17
+    }
+  ],
+  "textile": {
+    "seam_width": 0.35,
+    "local_allowance": 0.38754845034029006,
+    "exact_allowance": 0.38754845034028995,
+    "allowance_over_seam": 0.10728128668654313,
+    "longest_over_shortest_warp": 0.04605485957036182,
+    "rows": [
+      {
+        "angle": 0,
+        "fraction": 0,
+        "crosswise_path": 0.35,
+        "slack_vs_local_allowance": 0.09688711258507254
+      },
+      {
+        "angle": 0,
+        "fraction": 0.25,
+        "crosswise_path": 0.17499999999999996,
+        "slack_vs_local_allowance": 0.5484435562925363
+      },
+      {
+        "angle": 0,
+        "fraction": 0.5,
+        "crosswise_path": 0.03754845060805362,
+        "slack_vs_local_allowance": 0.9031128867240111
+      },
+      {
+        "angle": 0,
+        "fraction": 0.75,
+        "crosswise_path": 0.17500000000000007,
+        "slack_vs_local_allowance": 0.548443556292536
+      },
+      {
+        "angle": 0,
+        "fraction": 1,
+        "crosswise_path": 0.35000000000000003,
+        "slack_vs_local_allowance": 0.09688711258507243
+      },
+      {
+        "angle": 15,
+        "fraction": 0,
+        "crosswise_path": 0.35,
+        "slack_vs_local_allowance": 0.09688711258507254
+      },
+      {
+        "angle": 15,
+        "fraction": 0.25,
+        "crosswise_path": 0.1796239876666525,
+        "slack_vs_local_allowance": 0.5365121767125318
+      },
+      {
+        "angle": 15,
+        "fraction": 0.5,
+        "crosswise_path": 0.061366000901041495,
+        "slack_vs_local_allowance": 0.8416559249632953
+      },
+      {
+        "angle": 15,
+        "fraction": 0.75,
+        "crosswise_path": 0.17962398766665263,
+        "slack_vs_local_allowance": 0.5365121767125315
+      },
+      {
+        "angle": 15,
+        "fraction": 1,
+        "crosswise_path": 0.35000000000000003,
+        "slack_vs_local_allowance": 0.09688711258507243
+      },
+      {
+        "angle": 30,
+        "fraction": 0,
+        "crosswise_path": 0.35,
+        "slack_vs_local_allowance": 0.09688711258507254
+      },
+      {
+        "angle": 30,
+        "fraction": 0.25,
+        "crosswise_path": 0.1923958186888964,
+        "slack_vs_local_allowance": 0.5035567333066053
+      },
+      {
+        "angle": 30,
+        "fraction": 0.5,
+        "crosswise_path": 0.09946906230987154,
+        "slack_vs_local_allowance": 0.7433377369396473
+      },
+      {
+        "angle": 30,
+        "fraction": 0.75,
+        "crosswise_path": 0.19239581868889646,
+        "slack_vs_local_allowance": 0.5035567333066053
+      },
+      {
+        "angle": 30,
+        "fraction": 1,
+        "crosswise_path": 0.35000000000000003,
+        "slack_vs_local_allowance": 0.09688711258507243
+      },
+      {
+        "angle": 45,
+        "fraction": 0,
+        "crosswise_path": 0.35,
+        "slack_vs_local_allowance": 0.09688711258507254
+      },
+      {
+        "angle": 45,
+        "fraction": 0.25,
+        "crosswise_path": 0.2108668674773821,
+        "slack_vs_local_allowance": 0.4558954698638874
+      },
+      {
+        "angle": 45,
+        "fraction": 0.5,
+        "crosswise_path": 0.13968503753057976,
+        "slack_vs_local_allowance": 0.6395675497917017
+      },
+      {
+        "angle": 45,
+        "fraction": 0.75,
+        "crosswise_path": 0.21086686747738217,
+        "slack_vs_local_allowance": 0.4558954698638872
+      },
+      {
+        "angle": 45,
+        "fraction": 1,
+        "crosswise_path": 0.35000000000000003,
+        "slack_vs_local_allowance": 0.09688711258507243
+      },
+      {
+        "angle": 60,
+        "fraction": 0,
+        "crosswise_path": 0.35,
+        "slack_vs_local_allowance": 0.09688711258507254
+      },
+      {
+        "angle": 60,
+        "fraction": 0.25,
+        "crosswise_path": 0.23250906272740363,
+        "slack_vs_local_allowance": 0.40005162574318864
+      },
+      {
+        "angle": 60,
+        "fraction": 0.5,
+        "crosswise_path": 0.17893172611123023,
+        "slack_vs_local_allowance": 0.5382984348044282
+      },
+      {
+        "angle": 60,
+        "fraction": 0.75,
+        "crosswise_path": 0.23250906272740374,
+        "slack_vs_local_allowance": 0.4000516257431883
+      },
+      {
+        "angle": 60,
+        "fraction": 1,
+        "crosswise_path": 0.35000000000000003,
+        "slack_vs_local_allowance": 0.09688711258507243
+      },
+      {
+        "angle": 75,
+        "fraction": 0,
+        "crosswise_path": 0.35,
+        "slack_vs_local_allowance": 0.09688711258507254
+      },
+      {
+        "angle": 75,
+        "fraction": 0.25,
+        "crosswise_path": 0.25524273960731697,
+        "slack_vs_local_allowance": 0.34139140697582715
+      },
+      {
+        "angle": 75,
+        "fraction": 0.5,
+        "crosswise_path": 0.2157993076020991,
+        "slack_vs_local_allowance": 0.4431681834552177
+      },
+      {
+        "angle": 75,
+        "fraction": 0.75,
+        "crosswise_path": 0.2552427396073169,
+        "slack_vs_local_allowance": 0.34139140697582726
+      },
+      {
+        "angle": 75,
+        "fraction": 1,
+        "crosswise_path": 0.35000000000000003,
+        "slack_vs_local_allowance": 0.09688711258507243
+      },
+      {
+        "angle": 90,
+        "fraction": 0,
+        "crosswise_path": 0.35,
+        "slack_vs_local_allowance": 0.09688711258507254
+      },
+      {
+        "angle": 90,
+        "fraction": 0.25,
+        "crosswise_path": 0.27747154467900903,
+        "slack_vs_local_allowance": 0.2840339203127431
+      },
+      {
+        "angle": 90,
+        "fraction": 0.5,
+        "crosswise_path": 0.2493649733639237,
+        "slack_vs_local_allowance": 0.35655793967188687
+      },
+      {
+        "angle": 90,
+        "fraction": 0.75,
+        "crosswise_path": 0.2774715446790091,
+        "slack_vs_local_allowance": 0.284033920312743
+      },
+      {
+        "angle": 90,
+        "fraction": 1,
+        "crosswise_path": 0.35000000000000003,
+        "slack_vs_local_allowance": 0.09688711258507243
+      }
+    ]
+  }
+}

@@ -1,0 +1,275 @@
+{
+  "cells": 6,
+  "force_N": 40,
+  "EA_per_path_N": 1000,
+  "radius_mm": 100,
+  "model": "Three straight elastic tensile paths; no fabric continuity or attachment geometry is asserted.",
+  "coordinates": "Translations/R, rotations/radians; energy divided by EA_per_path*R.",
+  "rows": [
+    {
+      "ratio": 1.0,
+      "angle": 0,
+      "minimum_full": 0.007479027275585562,
+      "minimum_tilt": 0.007479027275585471,
+      "height": 1.4330697432047361,
+      "minimum_strain": 0.013333333333332087,
+      "equilibrium_residual": 3.9968028886505635e-15
+    },
+    {
+      "ratio": 1.0,
+      "angle": 15,
+      "minimum_full": 0.007347546286239252,
+      "minimum_tilt": 0.009083242502323445,
+      "height": 1.4094182711387908,
+      "minimum_strain": 0.013560114261043532,
+      "equilibrium_residual": 1.4502288259166107e-15
+    },
+    {
+      "ratio": 1.0,
+      "angle": 30,
+      "minimum_full": 0.007045487884542586,
+      "minimum_tilt": 0.017254612864381434,
+      "height": 1.3377766290346476,
+      "minimum_strain": 0.014296677906032063,
+      "equilibrium_residual": 4.9404924595819466e-15
+    },
+    {
+      "ratio": 1.0,
+      "angle": 45,
+      "minimum_full": 0.006827740491132939,
+      "minimum_tilt": 0.012922613631387064,
+      "height": 1.2156207966747308,
+      "minimum_strain": 0.015755964524700516,
+      "equilibrium_residual": 2.0729945537922845e-15
+    },
+    {
+      "ratio": 1.0,
+      "angle": 55,
+      "minimum_full": 0.006051679752808043,
+      "minimum_tilt": 0.006051679752808347,
+      "height": 1.1033168083538158,
+      "minimum_strain": 0.01738761219457441,
+      "equilibrium_residual": 2.3713669916602953e-15
+    },
+    {
+      "ratio": 1.0,
+      "angle": 60,
+      "minimum_full": 0.0012177223105587496,
+      "minimum_tilt": 0.0012177223105581758,
+      "height": 1.0367195380098648,
+      "minimum_strain": 0.018525257539395934,
+      "equilibrium_residual": 8.27463098040937e-16
+    },
+    {
+      "ratio": 1.0,
+      "angle": 70,
+      "minimum_full": -0.011957585374401558,
+      "minimum_tilt": -0.011957585374400238,
+      "height": 0.8790262850881185,
+      "minimum_strain": 0.021921455696199077,
+      "equilibrium_residual": 2.6721680423946736e-14
+    },
+    {
+      "ratio": 1.0,
+      "angle": 80,
+      "minimum_full": -0.0326470300538848,
+      "minimum_tilt": -0.03264703005388466,
+      "height": 0.6803936703417829,
+      "minimum_strain": 0.02850357104564738,
+      "equilibrium_residual": 6.075001612870778e-14
+    },
+    {
+      "ratio": 0.8,
+      "angle": 0,
+      "minimum_full": 0.006686171082804613,
+      "minimum_tilt": 0.008671178448383813,
+      "height": 1.282404241771147,
+      "minimum_strain": 0.01349450986776013,
+      "equilibrium_residual": 1.9810542095655137e-15
+    },
+    {
+      "ratio": 0.8,
+      "angle": 15,
+      "minimum_full": 0.006613319653225894,
+      "minimum_tilt": 0.008708060867312177,
+      "height": 1.2612707920146968,
+      "minimum_strain": 0.013723722623214085,
+      "equilibrium_residual": 1.2975731600306517e-15
+    },
+    {
+      "ratio": 0.8,
+      "angle": 30,
+      "minimum_full": 0.006461850284174828,
+      "minimum_tilt": 0.018279636285620862,
+      "height": 1.1972631608214688,
+      "minimum_strain": 0.014468030186959302,
+      "equilibrium_residual": 2.012973121523487e-14
+    },
+    {
+      "ratio": 0.8,
+      "angle": 45,
+      "minimum_full": 0.0064372952418295685,
+      "minimum_tilt": 0.014038527159296398,
+      "height": 1.0881530284665215,
+      "minimum_strain": 0.01594188049820744,
+      "equilibrium_residual": 1.6774776012695725e-15
+    },
+    {
+      "ratio": 0.8,
+      "angle": 55,
+      "minimum_full": 0.006376745349306622,
+      "minimum_tilt": 0.006376745349306523,
+      "height": 0.9878863875321761,
+      "minimum_strain": 0.017588378288522,
+      "equilibrium_residual": 9.8879238130678e-16
+    },
+    {
+      "ratio": 0.8,
+      "angle": 60,
+      "minimum_full": 0.0016692718029923505,
+      "minimum_tilt": 0.0016692718029919747,
+      "height": 0.9284543923414524,
+      "minimum_strain": 0.018735334671678983,
+      "equilibrium_residual": 9.97465998686664e-16
+    },
+    {
+      "ratio": 0.8,
+      "angle": 70,
+      "minimum_full": -0.010302657684611406,
+      "minimum_tilt": -0.01030265768461154,
+      "height": 0.7878448385934417,
+      "minimum_strain": 0.022153173446196606,
+      "equilibrium_residual": 4.4152181910561694e-14
+    },
+    {
+      "ratio": 0.8,
+      "angle": 80,
+      "minimum_full": -0.028609104193770944,
+      "minimum_tilt": -0.028609104193770517,
+      "height": 0.6111224765287316,
+      "minimum_strain": 0.02874349034822754,
+      "equilibrium_residual": 1.016617345861448e-13
+    },
+    {
+      "ratio": 0.65,
+      "angle": 0,
+      "minimum_full": 0.0060185063815969666,
+      "minimum_tilt": 0.010035092210392532,
+      "height": 1.1575428455988885,
+      "minimum_strain": 0.013929500985218501,
+      "equilibrium_residual": 2.55351295663786e-15
+    },
+    {
+      "ratio": 0.65,
+      "angle": 15,
+      "minimum_full": 0.00598239527404692,
+      "minimum_tilt": 0.009238973856271005,
+      "height": 1.1385468774851757,
+      "minimum_strain": 0.014165198377273924,
+      "equilibrium_residual": 4.211908599671688e-15
+    },
+    {
+      "ratio": 0.65,
+      "angle": 30,
+      "minimum_full": 0.005927436147012959,
+      "minimum_tilt": 0.014312919508036658,
+      "height": 1.081030199669702,
+      "minimum_strain": 0.01493011617685891,
+      "equilibrium_residual": 2.565100909457385e-13
+    },
+    {
+      "ratio": 0.65,
+      "angle": 45,
+      "minimum_full": 0.006030070610961208,
+      "minimum_tilt": 0.013721768735326352,
+      "height": 0.9830576801616516,
+      "minimum_strain": 0.016442532280442457,
+      "equilibrium_residual": 8.98586760555986e-16
+    },
+    {
+      "ratio": 0.65,
+      "angle": 55,
+      "minimum_full": 0.005945415914221157,
+      "minimum_tilt": 0.0059454159142212455,
+      "height": 0.893135486700281,
+      "minimum_strain": 0.01812800074596632,
+      "equilibrium_residual": 1.4398204850607499e-15
+    },
+    {
+      "ratio": 0.65,
+      "angle": 60,
+      "minimum_full": 0.0016025198113624663,
+      "minimum_tilt": 0.0016025198113627658,
+      "height": 0.8399022850772525,
+      "minimum_strain": 0.019299131507740874,
+      "equilibrium_residual": 8.673617379884035e-16
+    },
+    {
+      "ratio": 0.65,
+      "angle": 70,
+      "minimum_full": -0.008908399954798394,
+      "minimum_tilt": -0.008908399954799378,
+      "height": 0.714247319387758,
+      "minimum_strain": 0.02277167339933084,
+      "equilibrium_residual": 1.5184381529920188e-13
+    },
+    {
+      "ratio": 0.65,
+      "angle": 80,
+      "minimum_full": -0.0247397578984389,
+      "minimum_tilt": -0.024739757898438824,
+      "height": 0.5572629997255124,
+      "minimum_strain": 0.029375028335313136,
+      "equilibrium_residual": 1.9895890490673196e-13
+    }
+  ],
+  "critical_angles": [
+    {
+      "ratio": 1.0,
+      "angle": 61.109677970251276
+    },
+    {
+      "ratio": 0.8,
+      "angle": 61.608711235393926
+    },
+    {
+      "ratio": 0.65,
+      "angle": 61.720026768252715
+    }
+  ],
+  "independent_checks": [
+    {
+      "angle": 45,
+      "maximum_hessian_difference": 8.881784197001252e-16,
+      "weakest_eigenvalue": 0.006437295241829473,
+      "mode_step": 0.0001,
+      "energy_changes": [
+        3.218619815115176e-11,
+        3.218669775151284e-11
+      ],
+      "quadratic_prediction": 3.2186476209147366e-11
+    },
+    {
+      "angle": 60,
+      "maximum_hessian_difference": 6.661338147750939e-16,
+      "weakest_eigenvalue": 0.0016692718029911618,
+      "mode_step": 0.0001,
+      "energy_changes": [
+        8.346962010463699e-12,
+        8.345796276287842e-12
+      ],
+      "quadratic_prediction": 8.346359014955809e-12
+    },
+    {
+      "angle": 70,
+      "maximum_hessian_difference": 8.881784197001252e-16,
+      "weakest_eigenvalue": -0.01030265768461178,
+      "mode_step": 0.0001,
+      "energy_changes": [
+        -5.151404303127549e-11,
+        -5.151251647461663e-11
+      ],
+      "quadratic_prediction": -5.1513288423058904e-11
+    }
+  ]
+}

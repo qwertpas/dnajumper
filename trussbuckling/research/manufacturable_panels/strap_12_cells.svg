@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="129.651514mm" height="1694.749817mm" viewBox="-14 -14 129.65151389911682 1694.7498169838836">
+<title>Woven strap cutting and marking template in millimeters</title>
+<desc>Cut only the outline. Fold five millimeter hems, hairpin fold ten millimeter clamp bands. Mark diagonals without cutting, stitching or taping them.</desc>
+<rect x="5.0" y="0.0" width="91.65151389911681" height="10.0" fill="#e6e6e6"/>
+<text x="103.65151389911681" y="6.0" font-size="3" font-family="sans-serif">0</text>
+<rect x="5.0" y="138.06248474865697" width="91.65151389911681" height="10.0" fill="#e6e6e6"/>
+<text x="103.65151389911681" y="144.06248474865697" font-size="3" font-family="sans-serif">1</text>
+<rect x="5.0" y="276.12496949731394" width="91.65151389911681" height="10.0" fill="#e6e6e6"/>
+<text x="103.65151389911681" y="282.12496949731394" font-size="3" font-family="sans-serif">2</text>
+<rect x="5.0" y="414.1874542459709" width="91.65151389911681" height="10.0" fill="#e6e6e6"/>
+<text x="103.65151389911681" y="420.1874542459709" font-size="3" font-family="sans-serif">3</text>
+<rect x="5.0" y="552.2499389946279" width="91.65151389911681" height="10.0" fill="#e6e6e6"/>
+<text x="103.65151389911681" y="558.2499389946279" font-size="3" font-family="sans-serif">4</text>
+<rect x="5.0" y="690.3124237432849" width="91.65151389911681" height="10.0" fill="#e6e6e6"/>
+<text x="103.65151389911681" y="696.3124237432849" font-size="3" font-family="sans-serif">5</text>
+<rect x="5.0" y="828.3749084919418" width="91.65151389911681" height="10.0" fill="#e6e6e6"/>
+<text x="103.65151389911681" y="834.3749084919418" font-size="3" font-family="sans-serif">6</text>
+<rect x="5.0" y="966.4373932405988" width="91.65151389911681" height="10.0" fill="#e6e6e6"/>
+<text x="103.65151389911681" y="972.4373932405988" font-size="3" font-family="sans-serif">7</text>
+<rect x="5.0" y="1104.4998779892558" width="91.65151389911681" height="10.0" fill="#e6e6e6"/>
+<text x="103.65151389911681" y="1110.4998779892558" font-size="3" font-family="sans-serif">8</text>
+<rect x="5.0" y="1242.5623627379127" width="91.65151389911681" height="10.0" fill="#e6e6e6"/>
+<text x="103.65151389911681" y="1248.5623627379127" font-size="3" font-family="sans-serif">9</text>
+<rect x="5.0" y="1380.6248474865697" width="91.65151389911681" height="10.0" fill="#e6e6e6"/>
+<text x="103.65151389911681" y="1386.6248474865697" font-size="3" font-family="sans-serif">10</text>
+<rect x="5.0" y="1518.6873322352267" width="91.65151389911681" height="10.0" fill="#e6e6e6"/>
+<text x="103.65151389911681" y="1524.6873322352267" font-size="3" font-family="sans-serif">11</text>
+<rect x="5.0" y="1656.7498169838836" width="91.65151389911681" height="10.0" fill="#e6e6e6"/>
+<text x="103.65151389911681" y="1662.7498169838836" font-size="3" font-family="sans-serif">12</text>
+<line data-layer="CUT_OUTLINE" x1="0" y1="0" x2="101.65151389911681" y2="0" stroke="#151515" stroke-width="0.25"/>
+<line data-layer="CUT_OUTLINE" x1="101.65151389911681" y1="0" x2="101.65151389911681" y2="1666.7498169838836" stroke="#151515" stroke-width="0.25"/>
+<line data-layer="CUT_OUTLINE" x1="101.65151389911681" y1="1666.7498169838836" x2="0" y2="1666.7498169838836" stroke="#151515" stroke-width="0.25"/>
+<line data-layer="CUT_OUTLINE" x1="0" y1="1666.7498169838836" x2="0" y2="0" stroke="#151515" stroke-width="0.25"/>
+<line data-layer="MARK_HEM" x1="5.0" y1="0" x2="5.0" y2="1666.7498169838836" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_HEM" x1="96.65151389911681" y1="0" x2="96.65151389911681" y2="1666.7498169838836" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_CLAMP" x1="5.0" y1="0.0" x2="96.65151389911681" y2="0.0" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_CLAMP" x1="5.0" y1="10.0" x2="96.65151389911681" y2="10.0" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_FOLD" x1="5.0" y1="5.0" x2="96.65151389911681" y2="5.0" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_DIAGONAL" x1="5.0" y1="10.0" x2="96.65151389911681" y2="138.06248474865697" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_CLAMP" x1="5.0" y1="138.06248474865697" x2="96.65151389911681" y2="138.06248474865697" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_CLAMP" x1="5.0" y1="148.06248474865697" x2="96.65151389911681" y2="148.06248474865697" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_FOLD" x1="5.0" y1="143.06248474865697" x2="96.65151389911681" y2="143.06248474865697" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_DIAGONAL" x1="5.0" y1="148.06248474865697" x2="96.65151389911681" y2="276.12496949731394" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_CLAMP" x1="5.0" y1="276.12496949731394" x2="96.65151389911681" y2="276.12496949731394" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_CLAMP" x1="5.0" y1="286.12496949731394" x2="96.65151389911681" y2="286.12496949731394" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_FOLD" x1="5.0" y1="281.12496949731394" x2="96.65151389911681" y2="281.12496949731394" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_DIAGONAL" x1="5.0" y1="286.12496949731394" x2="96.65151389911681" y2="414.1874542459709" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_CLAMP" x1="5.0" y1="414.1874542459709" x2="96.65151389911681" y2="414.1874542459709" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_CLAMP" x1="5.0" y1="424.1874542459709" x2="96.65151389911681" y2="424.1874542459709" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_FOLD" x1="5.0" y1="419.1874542459709" x2="96.65151389911681" y2="419.1874542459709" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_DIAGONAL" x1="5.0" y1="424.1874542459709" x2="96.65151389911681" y2="552.2499389946279" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_CLAMP" x1="5.0" y1="552.2499389946279" x2="96.65151389911681" y2="552.2499389946279" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_CLAMP" x1="5.0" y1="562.2499389946279" x2="96.65151389911681" y2="562.2499389946279" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_FOLD" x1="5.0" y1="557.2499389946279" x2="96.65151389911681" y2="557.2499389946279" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_DIAGONAL" x1="5.0" y1="562.2499389946279" x2="96.65151389911681" y2="690.3124237432849" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_CLAMP" x1="5.0" y1="690.3124237432849" x2="96.65151389911681" y2="690.3124237432849" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_CLAMP" x1="5.0" y1="700.3124237432849" x2="96.65151389911681" y2="700.3124237432849" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_FOLD" x1="5.0" y1="695.3124237432849" x2="96.65151389911681" y2="695.3124237432849" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_DIAGONAL" x1="5.0" y1="700.3124237432849" x2="96.65151389911681" y2="828.3749084919418" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_CLAMP" x1="5.0" y1="828.3749084919418" x2="96.65151389911681" y2="828.3749084919418" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_CLAMP" x1="5.0" y1="838.3749084919418" x2="96.65151389911681" y2="838.3749084919418" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_FOLD" x1="5.0" y1="833.3749084919418" x2="96.65151389911681" y2="833.3749084919418" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_DIAGONAL" x1="5.0" y1="838.3749084919418" x2="96.65151389911681" y2="966.4373932405988" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_CLAMP" x1="5.0" y1="966.4373932405988" x2="96.65151389911681" y2="966.4373932405988" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_CLAMP" x1="5.0" y1="976.4373932405988" x2="96.65151389911681" y2="976.4373932405988" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_FOLD" x1="5.0" y1="971.4373932405988" x2="96.65151389911681" y2="971.4373932405988" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_DIAGONAL" x1="5.0" y1="976.4373932405988" x2="96.65151389911681" y2="1104.4998779892558" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_CLAMP" x1="5.0" y1="1104.4998779892558" x2="96.65151389911681" y2="1104.4998779892558" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_CLAMP" x1="5.0" y1="1114.4998779892558" x2="96.65151389911681" y2="1114.4998779892558" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_FOLD" x1="5.0" y1="1109.4998779892558" x2="96.65151389911681" y2="1109.4998779892558" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_DIAGONAL" x1="5.0" y1="1114.4998779892558" x2="96.65151389911681" y2="1242.5623627379127" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_CLAMP" x1="5.0" y1="1242.5623627379127" x2="96.65151389911681" y2="1242.5623627379127" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_CLAMP" x1="5.0" y1="1252.5623627379127" x2="96.65151389911681" y2="1252.5623627379127" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_FOLD" x1="5.0" y1="1247.5623627379127" x2="96.65151389911681" y2="1247.5623627379127" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_DIAGONAL" x1="5.0" y1="1252.5623627379127" x2="96.65151389911681" y2="1380.6248474865697" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_CLAMP" x1="5.0" y1="1380.6248474865697" x2="96.65151389911681" y2="1380.6248474865697" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_CLAMP" x1="5.0" y1="1390.6248474865697" x2="96.65151389911681" y2="1390.6248474865697" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_FOLD" x1="5.0" y1="1385.6248474865697" x2="96.65151389911681" y2="1385.6248474865697" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_DIAGONAL" x1="5.0" y1="1390.6248474865697" x2="96.65151389911681" y2="1518.6873322352267" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_CLAMP" x1="5.0" y1="1518.6873322352267" x2="96.65151389911681" y2="1518.6873322352267" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_CLAMP" x1="5.0" y1="1528.6873322352267" x2="96.65151389911681" y2="1528.6873322352267" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_FOLD" x1="5.0" y1="1523.6873322352267" x2="96.65151389911681" y2="1523.6873322352267" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_DIAGONAL" x1="5.0" y1="1528.6873322352267" x2="96.65151389911681" y2="1656.7498169838836" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_CLAMP" x1="5.0" y1="1656.7498169838836" x2="96.65151389911681" y2="1656.7498169838836" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_CLAMP" x1="5.0" y1="1666.7498169838836" x2="96.65151389911681" y2="1666.7498169838836" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<line data-layer="MARK_FOLD" x1="5.0" y1="1661.7498169838836" x2="96.65151389911681" y2="1661.7498169838836" stroke="#186b9b" stroke-width="0.25" stroke-dasharray="2 1"/>
+<text x="0" y="-7" font-size="3.3" font-family="sans-serif">12 cells | cut 101.652 × 1666.750 mm</text>
+<text x="0" y="-2" font-size="2.7" font-family="sans-serif">Black: cut outline · Blue: mark/fold only · Gray: clamp</text>
+</svg>

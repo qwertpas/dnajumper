@@ -1,0 +1,160 @@
+Exact triangular cell: rigidity, containment, and continuous nonintersection
+
+This is the diagonal-slit FP-ori topology with a rectangular, not square,
+side face. All panels have zero thickness. Flat endpoint contact is allowed.
+The proof covers the complete motion, including rigid triangular end caps.
+
+1. Cut pattern and coordinates
+
+Let R>0, a=R/2, b=sqrt(3)*a, and delta=2*pi/3. Each of the three extended
+side faces is a rectangle of width 2b=sqrt(3)*R and height 2a=R. Cut one
+complete diagonal; hinge the other diagonal in its two half segments.
+Each full diagonal has length 2R. The two free copies of its midpoint are
+J and I. A zero-width slit is ideal; no bridge may remain across the cut.
+
+Write Q(t) for rotation about the vertical axis. For 0<=theta<=pi/3, put
+
+  C=cos(theta), S=sin(theta), d=1-C,
+  v=sqrt(d+sqrt(3)*S), E=2-2*d+2*v+v^2,
+  h=2*a*sqrt(1-2*d),
+  q=(2*d+2*v+v^2)/E, p=h*(1+v)/(a*E), r=a*(1-q).
+
+The vertices, with k modulo 3, are
+
+  B_k=Q(k*delta)(a,-b,0),
+  T_k=Q(k*delta+theta)(a,-b,0)+(0,0,h),
+  J_k=Q(k*delta)(r,0,a*p),
+  I_k=Q(k*delta+theta)(r,0,0)+(0,0,h-a*p).
+
+Each face has four triangles:
+
+  D_k=(B_k,B_(k+1),J_k), L_k=(B_k,T_k,J_k),
+  U_k=(T_k,T_(k+1),I_k), F_k=(B_(k+1),T_(k+1),I_k).
+
+The slit lips are B_(k+1)->J_k->T_k and B_(k+1)->I_k->T_k.
+The end triangles remain rigid, parallel, and coaxial. The deployed height
+is R and the flat twist is pi/3. The end triangles differ by this rotation
+in the flat plane; they do not have to coincide vertex for vertex.
+
+2. Exact panel isometry
+
+Let X=a*(C-1)+b*S=a*(v^2-2*d), Y=a*S+b*(1-C), and
+D=2*a-(b/a)*Y. Elementary substitutions give
+
+  p^2+q^2=1,
+  h^2+4*R^2*sin(theta/2)^2=4*a^2,
+  D=h^2/(2*a)-X,
+  h*p-X*q=D.
+
+For example, the last identity follows on substituting p and q above;
+its numerator cancels using h^2=4*a^2*(1-2*d). The rim-triangle lengths are
+|B_k B_(k+1)|=2b and |B_k J_k|=|B_(k+1) J_k|=sqrt(a^2+b^2)=R.
+The vertical triangle has |B_k T_k|=2a=R; expanding |T_k J_k|^2 and using
+the last identity makes it a^2+b^2=R^2. Thus L_k is equilateral throughout.
+Reflection (radius,angle,z)->(radius,theta-angle,h-z) proves the other two
+triangle types have the same fixed lengths. This is a finite exact motion.
+
+3. Radial and axial bounds
+
+In the open interval 0<theta<pi/3,
+
+  0<d<1/2, 0<v<sqrt(2), 0<q<1, 0<r<a.
+
+The first two follow directly from theta's range; q<1 follows because
+E-(2*d+2*v+v^2)=2*(1-2*d)>0. The ring vertices have radius R, and all
+other vertices have radius r<R. Convexity of the radius-R disk puts every
+point of every triangle inside the cylinder; the maximum radius is R.
+
+Also sqrt(3)*S>=3*d, because S/d=cot(theta/2)>=sqrt(3). Consequently
+X=a*(sqrt(3)*S-d)>0 and
+
+  a*p/h=(1+v)/E<1/2,
+
+since E-2*(1+v)=X/a>0. Bottom triangles lie at or below a*p and top
+triangles at or above h-a*p, so those two families are strictly separated.
+All other vertices, and therefore all panels, lie between the end planes.
+
+4. Angular reduction of possible intersections
+
+Each D_k projects into the sector k*delta+[-pi/3,pi/3], meeting either
+bounding ray only at its rim vertex. Their interiors cannot intersect.
+The same applies to the U_k family after rotation by theta.
+
+The pair (L_k,F_(k-1)) lies in the sector
+
+  k*delta+[theta-delta,0].
+
+Its width delta-theta is strictly less than delta and less than pi, so
+it is a convex angular cone. These sectors are disjoint for different k.
+Within a pair the planes are distinct, as shown in section 6, and the two
+triangles meet only on their common B_k T_k hinge.
+
+For D_0 the only vertical triangles requiring examination are
+L_0,L_1,F_0,F_2. L_1 meets D_0's sector only on the B_1 ray, and the
+only shared point is B_1. Sections 5-6 handle the other three triangles.
+Rotational symmetry and the reflection in section 2 then cover every
+panel pair, including all comparisons involving the top triangles.
+
+5. D_0 versus F_0
+
+The plane of D_0 has normal N=(p,0,q) and passes through B_1. Direct
+substitution gives these signed distances (N need not be a unit normal):
+
+  N dot (T_1-B_1) = h*(2*d+2*v-v^3)/E > 0,
+
+  N dot (I_0-B_1) = h*G/E^2 > 0,
+  G=2*v*(sqrt(3)*S-2*d*C)+2*d*(2-d+sqrt(3)*S).
+
+For the first inequality 2*d>0 and v*(2-v^2)>0. For the second,
+sqrt(3)*S>=3*d>2*d*C, and the remaining factors are positive.
+Thus F_0 meets D_0's plane only at their shared vertex B_1.
+
+For an explicit algebra check of the second identity, its numerator
+before using the circle identity is
+
+  G=4*d^2*v-6*d*v-2*d+v^4+2*v^3.
+
+Using v^2=d+sqrt(3)*S and S^2=2*d-d^2 gives the positive expression above.
+
+6. D_0 versus L_0 and F_2; separation within a vertical pair
+
+Let m=(T_0-B_0) cross (J_0-B_0). Then
+
+  m dot (B_1-B_0) = -2*a*b*(h*q+X*p) < 0,
+
+  m dot (I_2-B_0) = 2*sqrt(3)*a^2*h*P/(3*E^2) > 0,
+  P=9-12*d+(12-4*d)*v+3*v^2-2*v^3.
+
+Every grouped term of P is positive: 9-12*d>3, 12-4*d>10, and
+3*v^2-2*v^3=v^2*(3-2*v)>0 since v<sqrt(2)<3/2.
+
+For a reproducible derivation of the second determinant, substitute
+
+  m=(a*p*Y-b*h, -a*(h*q+X*p), b*X+a*q*Y),
+  I_2-B_0=(r*(-C+sqrt(3)*S)/2-a,
+             r*(-S-sqrt(3)*C)/2+b, h-a*p).
+
+Replace C by 1-d, S by (v^2-d)/sqrt(3), p by h*(1+v)/(a*E),
+and q by (2*d+2*v+v^2)/E. Reduce the numerator by
+
+  v^4-2*d*v^2+4*d^2-6*d=0,
+
+which follows from C^2+S^2=1. The resulting expression is exactly the
+positive determinant displayed above. verify_triangle.py checks this
+identity and all panel distances with exact symbolic arithmetic.
+
+The negative first determinant shows D_0 and L_0 have distinct planes;
+they meet only on their common B_0 J_0 hinge. D_0 and F_2 lie on opposite
+sides of L_0's plane. They meet that plane respectively on B_0 J_0 and
+B_0 T_0, whose only common point is B_0. The positive second determinant
+also proves L_0 and F_2 are noncoplanar, justifying the vertical-pair claim.
+
+7. Endpoints and caps
+
+At theta=0, h=R, q=0, p=1 and J_k=I_k: the four triangles tile each
+rectangular side of the embedded triangular prism. At theta=pi/3,
+h=p=r=0 and q=1: every panel is flat inside the radius-R disk. All
+intermediate states have the strict separations proved above. Cap planes
+cannot cross side-panel interiors because their non-rim vertices have
+strict heights between 0 and h. The ideal final lamination may have
+contact and overlap; finite thickness requires a nonzero stopping height.

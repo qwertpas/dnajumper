@@ -1,0 +1,293 @@
+{
+  "model": "12 cells, q=.8, F=10 N, EA=1000 N per strap; finite shear two-facet cloth model",
+  "energy": "U_s per strap = kappa/4*(gamma_1^2+gamma_2^2), kappa=G2D*W*L",
+  "assumptions": "Total EA may include uniform body warp rigidity and equal hems, lumped exactly within the affine-facet ansatz. Independent interior deformation, bending, locking, friction, hysteresis, thickness and contact omitted. End centers and rotations fixed, except axial displacement.",
+  "rows": [
+    {
+      "ratio": 0.8,
+      "average_angle": 45,
+      "kappa_over_force_radius": 0.0,
+      "angles": [
+        45.0,
+        45.0
+      ],
+      "heights": [
+        1.0698304475762883,
+        1.0698304475762883
+      ],
+      "edge_strains": [
+        0.004006102602312822,
+        0.004006102602312822
+      ],
+      "minimum_full": 0.0004200073517179851,
+      "minimum_tilt": 0.0018025851620587507,
+      "pair_residual": 1.3183898417423734e-16,
+      "full_gradient_residual": 1.5896572252982466e-15
+    },
+    {
+      "ratio": 0.8,
+      "average_angle": 45,
+      "kappa_over_force_radius": 0.001,
+      "angles": [
+        44.978470631900734,
+        45.021529368099266
+      ],
+      "heights": [
+        1.0700314757802738,
+        1.0696329986767559
+      ],
+      "edge_strains": [
+        0.004007660514396161,
+        0.004006942898068466
+      ],
+      "minimum_full": 0.0004197944858956694,
+      "minimum_tilt": 0.001802890749148155,
+      "pair_residual": 3.885780586188048e-16,
+      "full_gradient_residual": 8.604228440844963e-16
+    },
+    {
+      "ratio": 0.8,
+      "average_angle": 45,
+      "kappa_over_force_radius": 0.01,
+      "angles": [
+        44.78364952094067,
+        45.21635047905932
+      ],
+      "heights": [
+        1.0718451639160844,
+        1.0678412555525452
+      ],
+      "edge_strains": [
+        0.0040215456541117245,
+        0.004014576039021556
+      ],
+      "minimum_full": 0.0004179080483880712,
+      "minimum_tilt": 0.001805592950751568,
+      "pair_residual": 2.896988204881268e-16,
+      "full_gradient_residual": 1.9437576548320123e-15
+    },
+    {
+      "ratio": 0.8,
+      "average_angle": 45,
+      "kappa_over_force_radius": 0.05,
+      "angles": [
+        43.895264476425425,
+        46.104735523574575
+      ],
+      "heights": [
+        1.079992576844668,
+        1.0595559167969197
+      ],
+      "edge_strains": [
+        0.004080241455260536,
+        0.004050062398991416
+      ],
+      "minimum_full": 0.00041022693287438486,
+      "minimum_tilt": 0.001816478293355443,
+      "pair_residual": 3.712308238590367e-16,
+      "full_gradient_residual": 2.6851351003776003e-15
+    },
+    {
+      "ratio": 0.8,
+      "average_angle": 60,
+      "kappa_over_force_radius": 0.0,
+      "angles": [
+        59.99999999999999,
+        59.99999999999999
+      ],
+      "heights": [
+        0.9031136156148369,
+        0.9031136156148369
+      ],
+      "edge_strains": [
+        0.004749150440201522,
+        0.004749150440201522
+      ],
+      "minimum_full": 0.00046714295205094235,
+      "minimum_tilt": 0.0013894909373112355,
+      "pair_residual": 1.7867651802561113e-16,
+      "full_gradient_residual": 1.100465205072787e-15
+    },
+    {
+      "ratio": 0.8,
+      "average_angle": 60,
+      "kappa_over_force_radius": 0.001,
+      "angles": [
+        59.99085270369508,
+        60.00914729630491
+      ],
+      "heights": [
+        0.9032405670307707,
+        0.9029924433782992
+      ],
+      "edge_strains": [
+        0.0047516116998389535,
+        0.004749872140547673
+      ],
+      "minimum_full": 0.00046680099468575435,
+      "minimum_tilt": 0.0013896554507590976,
+      "pair_residual": 1.5959455978986625e-16,
+      "full_gradient_residual": 7.435458498905589e-16
+    },
+    {
+      "ratio": 0.8,
+      "average_angle": 60,
+      "kappa_over_force_radius": 0.01,
+      "angles": [
+        59.907895713421176,
+        60.09210428657882
+      ],
+      "heights": [
+        0.9043901406597262,
+        0.9018922825614982
+      ],
+      "edge_strains": [
+        0.004773700965132521,
+        0.004756423377608954
+      ],
+      "minimum_full": 0.00046370580466939575,
+      "minimum_tilt": 0.0013911319416275423,
+      "pair_residual": 1.9081958235744878e-16,
+      "full_gradient_residual": 6.836978899693591e-16
+    },
+    {
+      "ratio": 0.8,
+      "average_angle": 60,
+      "kappa_over_force_radius": 0.05,
+      "angles": [
+        59.525061068981984,
+        60.47493893101801
+      ],
+      "heights": [
+        0.9096550878874965,
+        0.8967859537451162
+      ],
+      "edge_strains": [
+        0.004870479419277318,
+        0.004786811169682048
+      ],
+      "minimum_full": 0.0004495499288431641,
+      "minimum_tilt": 0.0013975878235295944,
+      "pair_residual": 6.591949208711867e-17,
+      "full_gradient_residual": 1.1553258350005535e-15
+    },
+    {
+      "ratio": 0.8,
+      "average_angle": 65,
+      "kappa_over_force_radius": 0.0,
+      "angles": [
+        65.0,
+        65.0
+      ],
+      "heights": [
+        0.8325485504608047,
+        0.8325485504608047
+      ],
+      "edge_strains": [
+        0.005153752978917181,
+        0.005153752978917181
+      ],
+      "minimum_full": 0.0005065049580879405,
+      "minimum_tilt": 0.0012305764251533374,
+      "pair_residual": 1.0061396160665481e-16,
+      "full_gradient_residual": 6.127910678888071e-16
+    },
+    {
+      "ratio": 0.8,
+      "average_angle": 65,
+      "kappa_over_force_radius": 0.001,
+      "angles": [
+        64.99526972382981,
+        65.00473027617019
+      ],
+      "heights": [
+        0.8326259752019044,
+        0.8324776446859613
+      ],
+      "edge_strains": [
+        0.00515654649921804,
+        0.00515425659092128
+      ],
+      "minimum_full": 0.0005061770155367298,
+      "minimum_tilt": 0.0012307057366399722,
+      "pair_residual": 1.491862189340054e-16,
+      "full_gradient_residual": 2.1690548662745e-15
+    },
+    {
+      "ratio": 0.8,
+      "average_angle": 65,
+      "kappa_over_force_radius": 0.01,
+      "angles": [
+        64.9524100202861,
+        65.04758997971392
+      ],
+      "heights": [
+        0.8333266468810331,
+        0.8318347864488708
+      ],
+      "edge_strains": [
+        0.005181656178825822,
+        0.005158820036244904
+      ],
+      "minimum_full": 0.0005032030477242535,
+      "minimum_tilt": 0.0012318690726857119,
+      "pair_residual": 1.3183898417423734e-16,
+      "full_gradient_residual": 1.3860440573054689e-15
+    },
+    {
+      "ratio": 0.8,
+      "average_angle": 65,
+      "kappa_over_force_radius": 0.05,
+      "angles": [
+        64.75547941893234,
+        65.24452058106768
+      ],
+      "heights": [
+        0.8365267777605957,
+        0.8288716956154988
+      ],
+      "edge_strains": [
+        0.005292538332372754,
+        0.005179801886074031
+      ],
+      "minimum_full": 0.000489470251303499,
+      "minimum_tilt": 0.001237025873521043,
+      "pair_residual": 2.5326962749261384e-16,
+      "full_gradient_residual": 2.080583968999683e-15
+    }
+  ],
+  "finite_difference": [
+    {
+      "step": 0.001,
+      "numeric": 1.68639830472328,
+      "analytic": 1.6863984043209044,
+      "relative_error": 5.905936824588579e-08
+    },
+    {
+      "step": 0.0003,
+      "numeric": 1.6863983956197064,
+      "analytic": 1.6863984043209044,
+      "relative_error": 5.159633667854939e-09
+    },
+    {
+      "step": 0.0001,
+      "numeric": 1.6863984042547742,
+      "analytic": 1.6863984043209044,
+      "relative_error": 3.921387274071959e-11
+    }
+  ],
+  "analytic_edge_cross_check": [
+    {
+      "angle": 45,
+      "max_hessian_difference": 3.1086244689504383e-15
+    },
+    {
+      "angle": 60,
+      "max_hessian_difference": 3.552713678800501e-15
+    },
+    {
+      "angle": 65,
+      "max_hessian_difference": 3.3306690738754696e-15
+    }
+  ]
+}

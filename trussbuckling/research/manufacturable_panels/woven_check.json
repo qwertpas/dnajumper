@@ -1,0 +1,66 @@
+{
+  "ratio": 0.8,
+  "width_over_radius": 0.9165151389911681,
+  "free_length_over_radius": 1.2806248474865698,
+  "straight_height_over_radius": 1.2649110640673518,
+  "cells": 12,
+  "clamp_band_over_radius": 0.1,
+  "clamp_footprint_depth_over_radius": 0.05,
+  "raw_length_over_radius": 16.667498169838836,
+  "samples_per_parity": 2001,
+  "maximum_errors": {
+    "yarn_metric": 1.1102230246251565e-15,
+    "equal_triangle_metric": 1.2212453270876722e-15,
+    "crease": 4.965068306494546e-16,
+    "yarn_length": 8.881784197001252e-16,
+    "cell_seam": 0.0,
+    "bridge_join": 1.5700924586837752e-16,
+    "bridge_yarn_length": 2.220446049250313e-16
+  },
+  "exact_shear_extrema": [
+    {
+      "parity": 0,
+      "shear_degrees": 35.19698784866959,
+      "twist_degrees": 70.89339464913091,
+      "metric_off_diagonal": 0.5763893564657309,
+      "minimum_yarn_angle_degrees": 54.80301215133041,
+      "area_ratio_at_maximum_shear": 0.8171752013815767
+    },
+    {
+      "parity": 1,
+      "shear_degrees": 6.516908170342511,
+      "twist_degrees": 49.10660535086911,
+      "metric_off_diagonal": 0.11349641511117661,
+      "minimum_yarn_angle_degrees": 83.4830918296575,
+      "area_ratio_at_maximum_shear": 0.9935384057785142
+    }
+  ],
+  "minimum_sampled_area_ratio": 0.8171752297664249,
+  "bridge_angular_spans_degrees": [
+    63.193888016220676,
+    63.193888016220676
+  ],
+  "continuous_collision_proof": {
+    "condition": "3/8 < r/R < 1; 0 <= theta < 90 degrees",
+    "explanation": "At each height each strap is two segments L-E-R. All three endpoints lie in an angular sector strictly narrower than 120 degrees. The other straps are rotations by 120 and 240 degrees. Adjacent cells occupy disjoint open height slabs.",
+    "even_E_dot_endpoint_lower_bound": "u^2-u*v*sin(phi)+r*v^2*cos(phi), and the reversed u/v form",
+    "positive_discriminant_condition": "4*r*cos(phi)>sin(phi)^2; phi=60 degrees gives r>3/8",
+    "even_edge_angle_bound": "phi+2*atan((1-r)/(1+r)*tan(theta/2)) < 120 degrees",
+    "odd_E_dot_endpoint_lower_bound": "r*u^2-r*u*v*sin(phi)+v^2*cos(phi), and the reversed u/v form",
+    "odd_positive_condition": "4*cos(phi)>r*sin(phi)^2; holds for 0<r<1",
+    "odd_edge_angle_bound": "0 < angle(R)-angle(L) <= phi = 60 degrees when r>3/8"
+  },
+  "limitations": [
+    "Ideal zero-thickness geometry and freely rotating yarn crossings.",
+    "Finite shear stiffness, weave locking, yarn slip, creep, clamp pressure and wear are not modeled.",
+    "A fixed-length diagonal stitch or tape would obstruct this motion.",
+    "The prescribed crease branch is geometrically possible; passive shape selection is not established.",
+    "Exactly flat is unloaded storage; finite fabric/plate thickness requires a nonzero folded gap."
+  ],
+  "millimeters_at_R100": {
+    "width": 91.65151389911681,
+    "free_length": 128.06248474865697,
+    "clamp_band": 10.0,
+    "raw_length": 1666.7498169838836
+  }
+}

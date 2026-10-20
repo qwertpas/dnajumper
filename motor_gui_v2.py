@@ -10,9 +10,9 @@ from datetime import datetime
 from pathlib import Path
 
 import numpy as np
+from PyQt6 import QtCore, QtWidgets
 import pyqtgraph as pg
 from bleak import BleakClient, BleakScanner
-from pyqtgraph.Qt import QtCore, QtWidgets
 
 
 BLE_NAME = "dnajumper-v2"
@@ -297,7 +297,7 @@ class Window(QtWidgets.QWidget):
         self.minus_button = QtWidgets.QPushButton("−")
         self.plus_button = QtWidgets.QPushButton("+")
         self.count_label = QtWidgets.QLabel("0")
-        self.count_label.setAlignment(QtCore.Qt.AlignCenter)
+        self.count_label.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.minus_button.clicked.connect(lambda: self.change_count(-1))
         self.plus_button.clicked.connect(lambda: self.change_count(1))
         count_layout.addWidget(self.minus_button)
@@ -350,7 +350,7 @@ class Window(QtWidgets.QWidget):
             pen=pg.mkPen("#8e44ad", width=1), label="target")
         self.trigger_line = pg.InfiniteLine(
             angle=0,
-            pen=pg.mkPen("#e67e22", width=1, style=QtCore.Qt.DashLine),
+            pen=pg.mkPen("#e67e22", width=1, style=QtCore.Qt.PenStyle.DashLine),
             label="rebound trigger")
         self.trigger_line.hide()
         self.angle_plot.addItem(self.target_line)
@@ -403,29 +403,29 @@ class Window(QtWidgets.QWidget):
         self.worker.start()
 
     def eventFilter(self, watched, event):
-        if watched is self and event.type() == QtCore.QEvent.WindowDeactivate:
+        if watched is self and event.type() == QtCore.QEvent.Type.WindowDeactivate:
             self.enable_keys.setChecked(False)
-        if (event.type() not in (QtCore.QEvent.ShortcutOverride,
-                                 QtCore.QEvent.KeyPress) or
+        if (event.type() not in (QtCore.QEvent.Type.ShortcutOverride,
+                                 QtCore.QEvent.Type.KeyPress) or
                 not self.enable_keys.isChecked() or
                 not isinstance(watched, QtWidgets.QWidget) or
                 watched.window() is not self or
                 not self.isActiveWindow() or
                 QtWidgets.QApplication.activeModalWidget() is not None or
                 QtWidgets.QApplication.activePopupWidget() is not None or
-                event.modifiers() not in (QtCore.Qt.NoModifier,
-                                          QtCore.Qt.KeypadModifier) or
-                event.key() not in (QtCore.Qt.Key_M,
-                                    QtCore.Qt.Key_H)):
+                event.modifiers() not in (QtCore.Qt.KeyboardModifier.NoModifier,
+                                          QtCore.Qt.KeyboardModifier.KeypadModifier) or
+                event.key() not in (QtCore.Qt.Key.Key_M,
+                                    QtCore.Qt.Key.Key_H)):
             return super().eventFilter(watched, event)
         # Consume armed keys before focused editors or buttons handle them.
         event.accept()
-        if (event.type() == QtCore.QEvent.KeyPress and
+        if (event.type() == QtCore.QEvent.Type.KeyPress and
                 not event.isAutoRepeat() and
                 self.worker.connected.is_set() and
                 self.move_button.isEnabled() and
                 self.data.snapshot()[7] == 0):
-            if event.key() == QtCore.Qt.Key_H:
+            if event.key() == QtCore.Qt.Key.Key_H:
                 self.fasthome()
             else:
                 self.move()

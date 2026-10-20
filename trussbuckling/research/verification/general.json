@@ -1,0 +1,82 @@
+[
+  {
+    "n": 4,
+    "states": 403,
+    "maximum_relative_edge_error": 4.440892098500626e-16,
+    "maximum_radius_error": 0.0,
+    "maximum_axial_error": 0.0,
+    "transverse_crossings": [],
+    "coplanar_overlaps": [],
+    "near_contact_pairs_checked_at_80_digits": 8
+  },
+  {
+    "n": 5,
+    "states": 403,
+    "maximum_relative_edge_error": 4.440892098500626e-16,
+    "maximum_radius_error": 2.220446049250313e-16,
+    "maximum_axial_error": 0.0,
+    "transverse_crossings": [],
+    "coplanar_overlaps": [],
+    "near_contact_pairs_checked_at_80_digits": 0
+  },
+  {
+    "n": 6,
+    "states": 403,
+    "maximum_relative_edge_error": 1.2212453270876722e-15,
+    "maximum_radius_error": 2.220446049250313e-16,
+    "maximum_axial_error": 0.0,
+    "transverse_crossings": [],
+    "coplanar_overlaps": [],
+    "near_contact_pairs_checked_at_80_digits": 0
+  },
+  {
+    "n": 8,
+    "states": 403,
+    "maximum_relative_edge_error": 7.771561172376096e-16,
+    "maximum_radius_error": 2.220446049250313e-16,
+    "maximum_axial_error": 0.0,
+    "transverse_crossings": [],
+    "coplanar_overlaps": [],
+    "near_contact_pairs_checked_at_80_digits": 0
+  },
+  {
+    "n": 12,
+    "states": 403,
+    "maximum_relative_edge_error": 2.55351295663786e-15,
+    "maximum_radius_error": 2.220446049250313e-16,
+    "maximum_axial_error": 0.0,
+    "transverse_crossings": [],
+    "coplanar_overlaps": [],
+    "near_contact_pairs_checked_at_80_digits": 0
+  },
+  {
+    "n": 17,
+    "states": 403,
+    "maximum_relative_edge_error": 4.107825191113079e-15,
+    "maximum_radius_error": 2.220446049250313e-16,
+    "maximum_axial_error": 0.0,
+    "transverse_crossings": [],
+    "coplanar_overlaps": [],
+    "near_contact_pairs_checked_at_80_digits": 0
+  },
+  {
+    "n": 24,
+    "states": 403,
+    "maximum_relative_edge_error": 7.327471962526033e-15,
+    "maximum_radius_error": 2.220446049250313e-16,
+    "maximum_axial_error": 0.0,
+    "transverse_crossings": [],
+    "coplanar_overlaps": [],
+    "near_contact_pairs_checked_at_80_digits": 0
+  },
+  {
+    "n": 32,
+    "states": 403,
+    "maximum_relative_edge_error": 9.103828801926284e-15,
+    "maximum_radius_error": 2.220446049250313e-16,
+    "maximum_axial_error": 0.0,
+    "transverse_crossings": [],
+    "coplanar_overlaps": [],
+    "near_contact_pairs_checked_at_80_digits": 0
+  }
+]

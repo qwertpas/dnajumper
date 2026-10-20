@@ -10,9 +10,9 @@ from collections import deque
 from datetime import datetime
 
 import numpy as np
+from PyQt6 import QtCore, QtWidgets
 import pyqtgraph as pg
 from bleak import BleakClient, BleakScanner
-from pyqtgraph.Qt import QtCore, QtWidgets
 
 
 BLE_NAME = "dnajumper-test"
